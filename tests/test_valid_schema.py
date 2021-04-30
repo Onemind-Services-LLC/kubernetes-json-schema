@@ -12,7 +12,7 @@ def metaschema(request):
     return schema
 
 
-@pytest.mark.parametrize('path', glob.glob('v[0-9].*/*.json'))
+@pytest.mark.parametrize('path', glob.glob('schema/v[0-9].*/*.json'))
 def test_valid_jsonschema(metaschema, path):
     with open(path) as data:
         resource = json.load(data)
