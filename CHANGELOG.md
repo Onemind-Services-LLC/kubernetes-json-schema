@@ -1,11 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+## [v1.0.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v1.0.0) (2021-04-30)
 
-[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/ae92552452ef9ab30958159294df92d35f813850...HEAD)
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/ae92552452ef9ab30958159294df92d35f813850...v1.0.0)
 
 **Merged pull requests:**
 
+- Added cron job [\#4](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/4) ([abhi1693](https://github.com/abhi1693))
 - Fixed Makefile syntax errors [\#3](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/3) ([abhi1693](https://github.com/abhi1693))
 - Updated build script [\#2](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/2) ([abhi1693](https://github.com/abhi1693))
 - Bump charmixer/auto-changelog-action from v1.2 to v1.3 [\#1](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/1) ([dependabot[bot]](https://github.com/apps/dependabot))
