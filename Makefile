@@ -12,3 +12,4 @@ build: ## Builds the schema
 	./build.sh
 
 tests: ## Runs tests
+	@tox
