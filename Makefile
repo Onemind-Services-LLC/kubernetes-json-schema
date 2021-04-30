@@ -20,5 +20,5 @@ build: check ## Builds the schema
 	./build.sh $(VERSION)
 	./buid.sh master
 
-tests: ## Runs tests
+test: ## Runs tests
 	@tox
