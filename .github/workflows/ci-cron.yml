@@ -25,9 +25,6 @@ jobs:
       - name: Run build
         run: make build-all
 
-      - name: Run tests
-        run: make test
-
       - name: Commit and push
         uses: test-room-7/action-update-file@v1.5.0
         with:
