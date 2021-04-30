@@ -14,15 +14,5 @@ VERSIONS=$(git ls-remote --refs --tags https://github.com/kubernetes/kubernetes.
 rm -rf master*
 
 for VERSION in $VERSIONS master; do
-  schema=https://raw.githubusercontent.com/kubernetes/kubernetes/${VERSION}/api/openapi-spec/swagger.json
-  prefix=https://kubernetesjsonschema.dev/${VERSION}/_definitions.json
-
-  openapi2jsonschema -o "${VERSION}-standalone-strict" --expanded --kubernetes --stand-alone --strict "${schema}"
-  openapi2jsonschema -o "${VERSION}-standalone" --expanded --kubernetes --stand-alone "${schema}"
-  openapi2jsonschema -o "${VERSION}-local" --expanded --kubernetes "${schema}"
-  openapi2jsonschema -o "${VERSION}" --expanded --kubernetes --prefix "${prefix}" "${schema}"
-  openapi2jsonschema -o "${VERSION}-standalone-strict" --kubernetes --stand-alone --strict "${schema}"
-  openapi2jsonschema -o "${VERSION}-standalone" --kubernetes --stand-alone "${schema}"
-  openapi2jsonschema -o "${VERSION}-local" --kubernetes "${schema}"
-  openapi2jsonschema -o "${VERSION}" --kubernetes --prefix "${prefix}" "${schema}"
+  ./build.sh "${VERSION}"
 done
