@@ -1,14 +1,5 @@
 # Kubernetes JSON Schemas
 
-While exploring tooling for Kubernetes I had need for schemas to
-describe the definition files, and went looking for something that
-didn't require either `kubectl` or similar installed or even a working
-Kubernetes installation.
-
-It turns out that the [OpenAPI](https://www.openapis.org/) specification
-contain this information, but not in a particularly usable format for tools
-which might just want a raw [JSON Schema](http://json-schema.org/).
-
 This repository contains a set of schemas for most recent Kubernetes
 versions. For each specified Kubernetes versions you should find four
 different flavours:
@@ -60,15 +51,12 @@ tools. Here are a few ideas, some of which I've been hacking on:
 * Visual tools for crafting Kubernetes configurations
 * Tools to show changes between Kubernetes versions
 
+### Kubeval
 
-## Prior-art
-
-The discussion around wanting JSON Schemas for Kubernetes types has
-cropped up in a few places, but there are some useful comments on [this
-issue](https://github.com/kubernetes/kubernetes/issues/14987).
-[Joël Harkes](https://github.com/joelharkes) reached a [similar
-conclusion](https://github.com/jbeda/kubernetes-detached/tree/master/api/doc)
-to the approach I ended up taking.
+```
+$ kubeval --strict --schema-location https://raw.githubusercontent.com/Onemind-Services-LLC/kubernetes-json-schema/master/ deployment.yaml
+PASS - deployment.yaml contains a valid Deployment
+```
 
 
 ## Building the schemas yourself
@@ -81,4 +69,4 @@ standard APIs with additional types.
 
 # Credits
 
-https://github.com/instrumenta/kubernetes-json-schema
+This is a fork from https://github.com/instrumenta/kubernetes-json-schema
