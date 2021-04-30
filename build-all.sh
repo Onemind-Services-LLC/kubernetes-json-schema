@@ -12,7 +12,7 @@ ASYNC="$1"
 #   X.Y.Z-local - relative references, useful to avoid the network dependency
 
 # Remove master folders
-rm -rf master*
+rm -rf schema/master*
 
 if [ "${ASYNC}" -eq 1 ]; then
   for VERSION in $VERSIONS master; do
