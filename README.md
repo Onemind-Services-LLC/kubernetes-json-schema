@@ -14,12 +14,12 @@ but `kubectl` acts like the strict flavour above.
 
 ## Example
 
-Here are the links to the `deployment` schemas for Kubernetes 1.14.0:
+Here are the links to the `deployment` schemas for Kubernetes 1.20.0:
 
-* [v1.14.0/deployment.json](v1.14.0/deployment.json)
-* [v1.14.0-standalone/deployment.json](v1.14.0-standalone/deployment.json)
-* [v1.14.0-local/deployment.json](v1.14.0-local/deployment.json)
-* [v1.14.0-standalone-strict/deployment.json](v1.14.0-standalone-strict/deployment.json)
+* [v1.20.0/deployment.json](schema/v1.20.0/deployment.json)
+* [v1.20.0-standalone/deployment.json](schema/v1.20.0-standalone/deployment.json)
+* [v1.20.0-local/deployment.json](schema/v1.20.0-local/deployment.json)
+* [v1.20.0-standalone-strict/deployment.json](schema/v1.20.0-standalone-strict/deployment.json)
 
 ## Usage
 
@@ -30,7 +30,7 @@ validate a Kubernetes definition.
 Here is a very simply example using the Python [jsonschema client](https://github.com/Julian/jsonschema) and an invalid deployment file:
 
 ```
-$ jsonschema -F "{error.message}" -i hello-nginx.json v1.14.0-standalone/deployment.json
+$ jsonschema -F "{error.message}" -i hello-nginx.json v1.20.0-standalone/deployment.json
 u'template' is a required property
 ```
 
@@ -54,7 +54,7 @@ tools. Here are a few ideas, some of which I've been hacking on:
 ### Kubeval
 
 ```
-$ kubeval --strict --schema-location https://raw.githubusercontent.com/Onemind-Services-LLC/kubernetes-json-schema/master/ deployment.yaml
+$ kubeval --strict --schema-location https://raw.githubusercontent.com/Onemind-Services-LLC/kubernetes-json-schema/master/schema deployment.yaml
 PASS - deployment.yaml contains a valid Deployment
 ```
 
