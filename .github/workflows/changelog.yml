@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
       - name: "Generate changelog"
         id: changelog
-        uses: charmixer/auto-changelog-action@v1.2
+        uses: charmixer/auto-changelog-action@v1.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           exclude_labels: "skip ci,status: abandoned,type: duplicate,type: question,type: wontfix"
