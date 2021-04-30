@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- Fixed Makefile syntax errors [\#3](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/3) ([abhi1693](https://github.com/abhi1693))
 - Updated build script [\#2](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/2) ([abhi1693](https://github.com/abhi1693))
 - Bump charmixer/auto-changelog-action from v1.2 to v1.3 [\#1](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/1) ([dependabot[bot]](https://github.com/apps/dependabot))
 
