@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+VERSIONS=$(git ls-remote --refs --tags https://github.com/kubernetes/kubernetes.git | cut -d/ -f3 | grep -e '^v1\.[0-9]\{2\}\.[0-9]\{1,2\}$')
+
+# This script uses openapi2jsonschema to generate a set of JSON schemas for
+# the specified Kubernetes versions in three different flavours:
+#
+#   X.Y.Z - URL referenced based on the specified GitHub repository
+#   X.Y.Z-standalone - de-referenced schemas, more useful as standalone documents
+#   X.Y.Z-standalone-strict - de-referenced schemas, more useful as standalone documents, additionalProperties disallowed
+#   X.Y.Z-local - relative references, useful to avoid the network dependency
+
+# Remove master folders
+rm -rf master*
+
+for VERSION in $VERSIONS master; do
+  schema=https://raw.githubusercontent.com/kubernetes/kubernetes/${VERSION}/api/openapi-spec/swagger.json
+  prefix=https://kubernetesjsonschema.dev/${VERSION}/_definitions.json
+
+  openapi2jsonschema -o "${VERSION}-standalone-strict" --expanded --kubernetes --stand-alone --strict "${schema}"
+  openapi2jsonschema -o "${VERSION}-standalone" --expanded --kubernetes --stand-alone "${schema}"
+  openapi2jsonschema -o "${VERSION}-local" --expanded --kubernetes "${schema}"
+  openapi2jsonschema -o "${VERSION}" --expanded --kubernetes --prefix "${prefix}" "${schema}"
+  openapi2jsonschema -o "${VERSION}-standalone-strict" --kubernetes --stand-alone --strict "${schema}"
+  openapi2jsonschema -o "${VERSION}-standalone" --kubernetes --stand-alone "${schema}"
+  openapi2jsonschema -o "${VERSION}-local" --kubernetes "${schema}"
+  openapi2jsonschema -o "${VERSION}" --kubernetes --prefix "${prefix}" "${schema}"
+done

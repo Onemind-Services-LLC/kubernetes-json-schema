@@ -1,0 +1,33 @@
+name: CI Cron
+
+on:
+  schedule:
+    - "0 0 */3 * *"
+
+jobs:
+  build:
+    name: Build All
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run build
+        run: make build-all
+
+      - name: Commit and push
+        uses: test-room-7/action-update-file@v1.5.0
+        with:
+          commit-msg: "[skip ci] Updated schema"
+          file-path: |
+            */*.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}

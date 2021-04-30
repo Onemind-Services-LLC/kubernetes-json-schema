@@ -15,6 +15,8 @@ check:
 		exit 1; \
 	fi
 
+build-all: ## Builds all schema
+	./build-all.sh
 
 build: check ## Builds the schema
 	./build.sh $(VERSION)
