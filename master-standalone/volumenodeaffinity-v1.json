@@ -95,7 +95,8 @@
             "type": [
               "object",
               "null"
-            ]
+            ],
+            "x-kubernetes-map-type": "atomic"
           },
           "type": "array"
         }
@@ -106,7 +107,8 @@
       "type": [
         "object",
         "null"
-      ]
+      ],
+      "x-kubernetes-map-type": "atomic"
     }
   },
   "type": "object",

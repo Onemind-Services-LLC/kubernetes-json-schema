@@ -71,7 +71,8 @@
       "type": [
         "object",
         "null"
-      ]
+      ],
+      "x-kubernetes-map-type": "atomic"
     },
     "volumeName": {
       "description": "VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.",

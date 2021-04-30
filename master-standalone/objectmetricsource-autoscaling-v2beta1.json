@@ -87,7 +87,8 @@
       "type": [
         "object",
         "null"
-      ]
+      ],
+      "x-kubernetes-map-type": "atomic"
     },
     "target": {
       "description": "CrossVersionObjectReference contains enough information to let you identify the referred resource.",

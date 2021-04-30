@@ -1,5 +1,5 @@
 {
-  "description": "Event is a report of an event somewhere in the cluster.",
+  "description": "Event is a report of an event somewhere in the cluster.  Events have a limited retention time and triggers and messages may evolve with time.  Event consumers should not rely on the timing of an event with a given Reason reflecting a consistent underlying trigger, or the continued existence of events with that Reason.  Events should be treated as informative, best-effort, supplemental data.",
   "properties": {
     "action": {
       "description": "What action was taken/failed regarding to the Regarding object.",
@@ -99,6 +99,7 @@
         "object",
         "null"
       ],
+      "x-kubernetes-map-type": "atomic",
       "additionalProperties": false
     },
     "kind": {
@@ -255,6 +256,13 @@
                   "null"
                 ]
               },
+              "subresource": {
+                "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
               "time": {
                 "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
                 "format": "date-time",
@@ -283,7 +291,7 @@
           ]
         },
         "namespace": {
-          "description": "Namespace defines the space within each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
+          "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
           "type": [
             "string",
             "null"
@@ -335,6 +343,7 @@
               "object",
               "null"
             ],
+            "x-kubernetes-map-type": "atomic",
             "additionalProperties": false
           },
           "type": [
@@ -436,6 +445,7 @@
         "object",
         "null"
       ],
+      "x-kubernetes-map-type": "atomic",
       "additionalProperties": false
     },
     "reportingComponent": {
@@ -466,13 +476,6 @@
         "lastObservedTime": {
           "description": "MicroTime is version of Time with microsecond level precision.",
           "format": "date-time",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "state": {
-          "description": "State of this Series: Ongoing or Finished Deprecated. Planned removal for 1.18",
           "type": [
             "string",
             "null"

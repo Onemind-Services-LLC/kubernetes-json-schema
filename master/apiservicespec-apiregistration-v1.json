@@ -7,7 +7,8 @@
       "type": [
         "string",
         "null"
-      ]
+      ],
+      "x-kubernetes-list-type": "atomic"
     },
     "group": {
       "description": "Group is the API group name this server hosts",

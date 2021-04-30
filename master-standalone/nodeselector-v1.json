@@ -92,7 +92,8 @@
         "type": [
           "object",
           "null"
-        ]
+        ],
+        "x-kubernetes-map-type": "atomic"
       },
       "type": [
         "array",
@@ -104,5 +105,6 @@
     "nodeSelectorTerms"
   ],
   "type": "object",
+  "x-kubernetes-map-type": "atomic",
   "$schema": "http://json-schema.org/schema#"
 }

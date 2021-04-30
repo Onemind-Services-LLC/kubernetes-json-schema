@@ -140,11 +140,6 @@
       "version": "v1beta2"
     },
     {
-      "group": "auditregistration.k8s.io",
-      "kind": "DeleteOptions",
-      "version": "v1alpha1"
-    },
-    {
       "group": "authentication.k8s.io",
       "kind": "DeleteOptions",
       "version": "v1"
@@ -190,9 +185,9 @@
       "version": "v1beta1"
     },
     {
-      "group": "batch",
+      "group": "certificates.k8s.io",
       "kind": "DeleteOptions",
-      "version": "v2alpha1"
+      "version": "v1"
     },
     {
       "group": "certificates.k8s.io",
@@ -212,12 +207,17 @@
     {
       "group": "discovery.k8s.io",
       "kind": "DeleteOptions",
-      "version": "v1alpha1"
+      "version": "v1"
     },
     {
       "group": "discovery.k8s.io",
       "kind": "DeleteOptions",
       "version": "v1beta1"
+    },
+    {
+      "group": "events.k8s.io",
+      "kind": "DeleteOptions",
+      "version": "v1"
     },
     {
       "group": "events.k8s.io",
@@ -235,7 +235,17 @@
       "version": "v1alpha1"
     },
     {
+      "group": "flowcontrol.apiserver.k8s.io",
+      "kind": "DeleteOptions",
+      "version": "v1beta1"
+    },
+    {
       "group": "imagepolicy.k8s.io",
+      "kind": "DeleteOptions",
+      "version": "v1alpha1"
+    },
+    {
+      "group": "internal.apiserver.k8s.io",
       "kind": "DeleteOptions",
       "version": "v1alpha1"
     },
@@ -252,12 +262,22 @@
     {
       "group": "node.k8s.io",
       "kind": "DeleteOptions",
+      "version": "v1"
+    },
+    {
+      "group": "node.k8s.io",
+      "kind": "DeleteOptions",
       "version": "v1alpha1"
     },
     {
       "group": "node.k8s.io",
       "kind": "DeleteOptions",
       "version": "v1beta1"
+    },
+    {
+      "group": "policy",
+      "kind": "DeleteOptions",
+      "version": "v1"
     },
     {
       "group": "policy",
@@ -293,11 +313,6 @@
       "group": "scheduling.k8s.io",
       "kind": "DeleteOptions",
       "version": "v1beta1"
-    },
-    {
-      "group": "settings.k8s.io",
-      "kind": "DeleteOptions",
-      "version": "v1alpha1"
     },
     {
       "group": "storage.k8s.io",

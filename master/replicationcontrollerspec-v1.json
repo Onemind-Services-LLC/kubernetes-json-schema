@@ -28,7 +28,8 @@
       "type": [
         "object",
         "null"
-      ]
+      ],
+      "x-kubernetes-map-type": "atomic"
     },
     "template": {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.PodTemplateSpec",

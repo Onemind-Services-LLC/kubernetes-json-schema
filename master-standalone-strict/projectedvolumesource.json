@@ -105,6 +105,7 @@
                         "object",
                         "null"
                       ],
+                      "x-kubernetes-map-type": "atomic",
                       "additionalProperties": false
                     },
                     "mode": {
@@ -157,6 +158,7 @@
                         "object",
                         "null"
                       ],
+                      "x-kubernetes-map-type": "atomic",
                       "additionalProperties": false
                     }
                   },
@@ -287,9 +289,6 @@
       ]
     }
   },
-  "required": [
-    "sources"
-  ],
   "type": "object",
   "additionalProperties": false,
   "$schema": "http://json-schema.org/schema#"

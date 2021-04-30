@@ -75,6 +75,7 @@
                   "object",
                   "null"
                 ],
+                "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
               },
               "fieldRef": {
@@ -99,6 +100,7 @@
                   "object",
                   "null"
                 ],
+                "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
               },
               "resourceFieldRef": {
@@ -139,6 +141,7 @@
                   "object",
                   "null"
                 ],
+                "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
               },
               "secretKeyRef": {
@@ -170,6 +173,7 @@
                   "object",
                   "null"
                 ],
+                "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
               }
             },
@@ -761,6 +765,14 @@
           ],
           "additionalProperties": false
         },
+        "terminationGracePeriodSeconds": {
+          "description": "Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate.",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
         "timeoutSeconds": {
           "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
           "format": "int32",
@@ -1010,6 +1022,14 @@
           ],
           "additionalProperties": false
         },
+        "terminationGracePeriodSeconds": {
+          "description": "Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate.",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
         "timeoutSeconds": {
           "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
           "format": "int32",
@@ -1045,7 +1065,7 @@
               }
             ]
           },
-          "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+          "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
           "type": [
             "object",
             "null"
@@ -1068,7 +1088,7 @@
               }
             ]
           },
-          "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+          "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
           "type": [
             "object",
             "null"
@@ -1206,6 +1226,38 @@
           "type": [
             "object",
             "null"
+          ],
+          "additionalProperties": false
+        },
+        "seccompProfile": {
+          "description": "SeccompProfile defines a pod/container's seccomp profile settings. Only one profile source may be set.",
+          "properties": {
+            "localhostProfile": {
+              "description": "localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is \"Localhost\".",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "description": "type indicates which kind of seccomp profile will be applied. Valid options are:\n\nLocalhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": [
+            "object",
+            "null"
+          ],
+          "x-kubernetes-unions": [
+            {
+              "discriminator": "type",
+              "fields-to-discriminateBy": {
+                "localhostProfile": "LocalhostProfile"
+              }
+            }
           ],
           "additionalProperties": false
         },
@@ -1419,6 +1471,14 @@
             "null"
           ],
           "additionalProperties": false
+        },
+        "terminationGracePeriodSeconds": {
+          "description": "Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate.",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
         },
         "timeoutSeconds": {
           "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",

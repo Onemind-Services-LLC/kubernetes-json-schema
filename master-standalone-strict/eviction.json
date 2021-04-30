@@ -154,11 +154,6 @@
           "version": "v1beta2"
         },
         {
-          "group": "auditregistration.k8s.io",
-          "kind": "DeleteOptions",
-          "version": "v1alpha1"
-        },
-        {
           "group": "authentication.k8s.io",
           "kind": "DeleteOptions",
           "version": "v1"
@@ -204,9 +199,9 @@
           "version": "v1beta1"
         },
         {
-          "group": "batch",
+          "group": "certificates.k8s.io",
           "kind": "DeleteOptions",
-          "version": "v2alpha1"
+          "version": "v1"
         },
         {
           "group": "certificates.k8s.io",
@@ -226,12 +221,17 @@
         {
           "group": "discovery.k8s.io",
           "kind": "DeleteOptions",
-          "version": "v1alpha1"
+          "version": "v1"
         },
         {
           "group": "discovery.k8s.io",
           "kind": "DeleteOptions",
           "version": "v1beta1"
+        },
+        {
+          "group": "events.k8s.io",
+          "kind": "DeleteOptions",
+          "version": "v1"
         },
         {
           "group": "events.k8s.io",
@@ -249,7 +249,17 @@
           "version": "v1alpha1"
         },
         {
+          "group": "flowcontrol.apiserver.k8s.io",
+          "kind": "DeleteOptions",
+          "version": "v1beta1"
+        },
+        {
           "group": "imagepolicy.k8s.io",
+          "kind": "DeleteOptions",
+          "version": "v1alpha1"
+        },
+        {
+          "group": "internal.apiserver.k8s.io",
           "kind": "DeleteOptions",
           "version": "v1alpha1"
         },
@@ -266,12 +276,22 @@
         {
           "group": "node.k8s.io",
           "kind": "DeleteOptions",
+          "version": "v1"
+        },
+        {
+          "group": "node.k8s.io",
+          "kind": "DeleteOptions",
           "version": "v1alpha1"
         },
         {
           "group": "node.k8s.io",
           "kind": "DeleteOptions",
           "version": "v1beta1"
+        },
+        {
+          "group": "policy",
+          "kind": "DeleteOptions",
+          "version": "v1"
         },
         {
           "group": "policy",
@@ -307,11 +327,6 @@
           "group": "scheduling.k8s.io",
           "kind": "DeleteOptions",
           "version": "v1beta1"
-        },
-        {
-          "group": "settings.k8s.io",
-          "kind": "DeleteOptions",
-          "version": "v1alpha1"
         },
         {
           "group": "storage.k8s.io",
@@ -470,6 +485,13 @@
                   "null"
                 ]
               },
+              "subresource": {
+                "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
               "time": {
                 "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
                 "format": "date-time",
@@ -498,7 +520,7 @@
           ]
         },
         "namespace": {
-          "description": "Namespace defines the space within each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
+          "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
           "type": [
             "string",
             "null"
@@ -550,6 +572,7 @@
               "object",
               "null"
             ],
+            "x-kubernetes-map-type": "atomic",
             "additionalProperties": false
           },
           "type": [
@@ -593,7 +616,7 @@
     {
       "group": "policy",
       "kind": "Eviction",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "additionalProperties": false,

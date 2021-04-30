@@ -165,6 +165,13 @@
                         "null"
                       ]
                     },
+                    "subresource": {
+                      "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
                     "time": {
                       "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
                       "format": "date-time",
@@ -193,7 +200,7 @@
                 ]
               },
               "namespace": {
-                "description": "Namespace defines the space within each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
+                "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
                 "type": [
                   "string",
                   "null"
@@ -245,6 +252,7 @@
                     "object",
                     "null"
                   ],
+                  "x-kubernetes-map-type": "atomic",
                   "additionalProperties": false
                 },
                 "type": [
@@ -427,6 +435,83 @@
                 "items": {
                   "description": "MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).",
                   "properties": {
+                    "containerResource": {
+                      "description": "ContainerResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.  Only one \"target\" type should be set.",
+                      "properties": {
+                        "container": {
+                          "description": "container is the name of the container in the pods of the scaling target",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "name is the name of the resource in question.",
+                          "type": "string"
+                        },
+                        "target": {
+                          "description": "MetricTarget defines the target value, average value, or average utilization of a specific metric",
+                          "properties": {
+                            "averageUtilization": {
+                              "description": "averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type",
+                              "format": "int32",
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "averageValue": {
+                              "oneOf": [
+                                {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              ]
+                            },
+                            "type": {
+                              "description": "type represents whether the metric type is Utilization, Value, or AverageValue",
+                              "type": "string"
+                            },
+                            "value": {
+                              "oneOf": [
+                                {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ],
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "target",
+                        "container"
+                      ],
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false
+                    },
                     "external": {
                       "description": "ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).",
                       "properties": {
@@ -502,6 +587,7 @@
                                 "object",
                                 "null"
                               ],
+                              "x-kubernetes-map-type": "atomic",
                               "additionalProperties": false
                             }
                           },
@@ -677,6 +763,7 @@
                                 "object",
                                 "null"
                               ],
+                              "x-kubernetes-map-type": "atomic",
                               "additionalProperties": false
                             }
                           },
@@ -827,6 +914,7 @@
                                 "object",
                                 "null"
                               ],
+                              "x-kubernetes-map-type": "atomic",
                               "additionalProperties": false
                             }
                           },
@@ -974,7 +1062,7 @@
                       "additionalProperties": false
                     },
                     "type": {
-                      "description": "type is the type of metric source.  It should be one of \"Object\", \"Pods\" or \"Resource\", each mapping to a matching field in the object.",
+                      "description": "type is the type of metric source.  It should be one of \"ContainerResource\", \"External\", \"Object\", \"Pods\" or \"Resource\", each mapping to a matching field in the object. Note: \"ContainerResource\" type is available on when the feature-gate HPAContainerMetrics is enabled",
                       "type": "string"
                     }
                   },
@@ -1093,6 +1181,76 @@
                 "items": {
                   "description": "MetricStatus describes the last-read state of a single metric.",
                   "properties": {
+                    "containerResource": {
+                      "description": "ContainerResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing a single container in each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.",
+                      "properties": {
+                        "container": {
+                          "description": "Container is the name of the container in the pods of the scaling target",
+                          "type": "string"
+                        },
+                        "current": {
+                          "description": "MetricValueStatus holds the current value for a metric",
+                          "properties": {
+                            "averageUtilization": {
+                              "description": "currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.",
+                              "format": "int32",
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "averageValue": {
+                              "oneOf": [
+                                {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              ]
+                            },
+                            "value": {
+                              "oneOf": [
+                                {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "name": {
+                          "description": "Name is the name of the resource in question.",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "current",
+                        "container"
+                      ],
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false
+                    },
                     "external": {
                       "description": "ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.",
                       "properties": {
@@ -1215,6 +1373,7 @@
                                 "object",
                                 "null"
                               ],
+                              "x-kubernetes-map-type": "atomic",
                               "additionalProperties": false
                             }
                           },
@@ -1383,6 +1542,7 @@
                                 "object",
                                 "null"
                               ],
+                              "x-kubernetes-map-type": "atomic",
                               "additionalProperties": false
                             }
                           },
@@ -1526,6 +1686,7 @@
                                 "object",
                                 "null"
                               ],
+                              "x-kubernetes-map-type": "atomic",
                               "additionalProperties": false
                             }
                           },
@@ -1612,7 +1773,7 @@
                       "additionalProperties": false
                     },
                     "type": {
-                      "description": "type is the type of metric source.  It will be one of \"Object\", \"Pods\" or \"Resource\", each corresponds to a matching field in the object.",
+                      "description": "type is the type of metric source.  It will be one of \"ContainerResource\", \"External\", \"Object\", \"Pods\" or \"Resource\", each corresponds to a matching field in the object. Note: \"ContainerResource\" type is available on when the feature-gate HPAContainerMetrics is enabled",
                       "type": "string"
                     }
                   },

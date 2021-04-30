@@ -10,7 +10,7 @@
       ]
     },
     "limitResponse": {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.flowcontrol.v1alpha1.LimitResponse",
+      "$ref": "_definitions.json#/definitions/io.k8s.api.flowcontrol.v1beta1.LimitResponse",
       "description": "`limitResponse` indicates what to do with requests that can not be executed right now"
     }
   },

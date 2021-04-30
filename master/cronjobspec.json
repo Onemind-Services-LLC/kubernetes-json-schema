@@ -9,7 +9,7 @@
       ]
     },
     "failedJobsHistoryLimit": {
-      "description": "The number of failed finished jobs to retain. This is a pointer to distinguish between explicit zero and not specified.",
+      "description": "The number of failed finished jobs to retain. This is a pointer to distinguish between explicit zero and not specified. Defaults to 1.",
       "format": "int32",
       "type": [
         "integer",
@@ -17,7 +17,7 @@
       ]
     },
     "jobTemplate": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.batch.v2alpha1.JobTemplateSpec",
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.batch.v1beta1.JobTemplateSpec",
       "description": "Specifies the job that will be created when executing a CronJob."
     },
     "schedule": {
@@ -36,7 +36,7 @@
       ]
     },
     "successfulJobsHistoryLimit": {
-      "description": "The number of successful finished jobs to retain. This is a pointer to distinguish between explicit zero and not specified.",
+      "description": "The number of successful finished jobs to retain. This is a pointer to distinguish between explicit zero and not specified. Defaults to 3.",
       "format": "int32",
       "type": [
         "integer",

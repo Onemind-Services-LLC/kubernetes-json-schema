@@ -9,11 +9,16 @@
       "type": [
         "array",
         "null"
-      ]
+      ],
+      "x-kubernetes-list-type": "atomic"
     },
     "lastScheduleTime": {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
       "description": "Information when was the last time the job was successfully scheduled."
+    },
+    "lastSuccessfulTime": {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+      "description": "Information when was the last time the job successfully completed."
     }
   },
   "type": "object",

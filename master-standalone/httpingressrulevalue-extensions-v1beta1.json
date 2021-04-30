@@ -35,7 +35,8 @@
                 "type": [
                   "object",
                   "null"
-                ]
+                ],
+                "x-kubernetes-map-type": "atomic"
               },
               "serviceName": {
                 "description": "Specifies the name of the referenced service.",

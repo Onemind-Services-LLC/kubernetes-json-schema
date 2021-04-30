@@ -27,7 +27,7 @@
     },
     "csi": {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.CSIVolumeSource",
-      "description": "CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature)."
+      "description": "CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature)."
     },
     "downwardAPI": {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.DownwardAPIVolumeSource",
@@ -36,6 +36,10 @@
     "emptyDir": {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.EmptyDirVolumeSource",
       "description": "EmptyDir represents a temporary directory that shares a pod's lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir"
+    },
+    "ephemeral": {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.EphemeralVolumeSource",
+      "description": "Ephemeral represents a volume that is handled by a cluster storage driver. The volume's lifecycle is tied to the pod that defines it - it will be created before the pod starts, and deleted when the pod is removed.\n\nUse this if: a) the volume is only needed while the pod runs, b) features of normal volumes like restoring from snapshot or capacity\n   tracking are needed,\nc) the storage driver is specified through a storage class, and d) the storage driver supports dynamic volume provisioning through\n   a PersistentVolumeClaim (see EphemeralVolumeSource for more\n   information on the connection between this volume type\n   and PersistentVolumeClaim).\n\nUse PersistentVolumeClaim or one of the vendor-specific APIs for volumes that persist for longer than the lifecycle of an individual pod.\n\nUse CSI for light-weight local ephemeral volumes if the CSI driver is meant to be used that way - see the documentation of the driver for more information.\n\nA pod can use both types of ephemeral volumes and persistent volumes at the same time.\n\nThis is a beta feature and only available when the GenericEphemeralVolume feature gate is enabled."
     },
     "fc": {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.FCVolumeSource",

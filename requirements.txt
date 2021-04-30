@@ -4,3 +4,4 @@ pytest-flake8
 flake8
 tox
 pytest-xdist
+openapi2jsonschema

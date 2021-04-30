@@ -13,10 +13,15 @@ declare -a arr=(
     master
     )
 
-# This list is used only list of already genrated schema definition
+# This list is used only list of already generated schema definition
 # (or when we need to rebuild all definitions)
 declare -a arr2=(
     # master
+    # v1.19.x
+    v1.19.3
+    v1.19.2
+    v1.19.1
+    v1.19.0
     # v1.18.x
     v1.18.1
     v1.18.0
@@ -27,6 +32,12 @@ declare -a arr2=(
     v1.17.1
     v1.17.0
     # v1.16.x
+    v1.16.10
+    v1.16.9
+    v1.16.8
+    v1.16.7
+    v1.16.6
+    v1.16.5
     v1.16.4
     v1.16.3
     v1.16.2
@@ -79,6 +90,7 @@ declare -a arr2=(
     v1.12.1
     v1.12.0
     # v1.11.x
+    v1.11.10
     v1.11.9
     v1.11.8
     v1.11.7

@@ -90,7 +90,8 @@
       "type": [
         "object",
         "null"
-      ]
+      ],
+      "x-kubernetes-map-type": "atomic"
     },
     "weight": {
       "description": "Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.",

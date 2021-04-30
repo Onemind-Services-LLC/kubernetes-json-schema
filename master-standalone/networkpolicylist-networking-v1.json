@@ -165,6 +165,13 @@
                         "null"
                       ]
                     },
+                    "subresource": {
+                      "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
                     "time": {
                       "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
                       "format": "date-time",
@@ -192,7 +199,7 @@
                 ]
               },
               "namespace": {
-                "description": "Namespace defines the space within each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
+                "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
                 "type": [
                   "string",
                   "null"
@@ -243,7 +250,8 @@
                   "type": [
                     "object",
                     "null"
-                  ]
+                  ],
+                  "x-kubernetes-map-type": "atomic"
                 },
                 "type": [
                   "array",
@@ -292,6 +300,14 @@
                       "items": {
                         "description": "NetworkPolicyPort describes a port to allow traffic on",
                         "properties": {
+                          "endPort": {
+                            "description": "If set, indicates that the range of ports from port to endPort, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port. This feature is in Alpha state and should be enabled using the Feature Gate \"NetworkPolicyEndPort\".",
+                            "format": "int32",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
                           "port": {
                             "oneOf": [
                               {
@@ -423,7 +439,8 @@
                             "type": [
                               "object",
                               "null"
-                            ]
+                            ],
+                            "x-kubernetes-map-type": "atomic"
                           },
                           "podSelector": {
                             "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.",
@@ -488,7 +505,8 @@
                             "type": [
                               "object",
                               "null"
-                            ]
+                            ],
+                            "x-kubernetes-map-type": "atomic"
                           }
                         },
                         "type": [
@@ -614,7 +632,8 @@
                             "type": [
                               "object",
                               "null"
-                            ]
+                            ],
+                            "x-kubernetes-map-type": "atomic"
                           },
                           "podSelector": {
                             "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.",
@@ -679,7 +698,8 @@
                             "type": [
                               "object",
                               "null"
-                            ]
+                            ],
+                            "x-kubernetes-map-type": "atomic"
                           }
                         },
                         "type": [
@@ -697,6 +717,14 @@
                       "items": {
                         "description": "NetworkPolicyPort describes a port to allow traffic on",
                         "properties": {
+                          "endPort": {
+                            "description": "If set, indicates that the range of ports from port to endPort, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port. This feature is in Alpha state and should be enabled using the Feature Gate \"NetworkPolicyEndPort\".",
+                            "format": "int32",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
                           "port": {
                             "oneOf": [
                               {
@@ -802,10 +830,11 @@
                     ]
                   }
                 },
-                "type": "object"
+                "type": "object",
+                "x-kubernetes-map-type": "atomic"
               },
               "policyTypes": {
-                "description": "List of rule types that the NetworkPolicy relates to. Valid options are \"Ingress\", \"Egress\", or \"Ingress,Egress\". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ \"Egress\" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include \"Egress\" (since such a policy would not include an Egress section and would otherwise default to just [ \"Ingress\" ]). This field is beta-level in 1.8",
+                "description": "List of rule types that the NetworkPolicy relates to. Valid options are [\"Ingress\"], [\"Egress\"], or [\"Ingress\", \"Egress\"]. If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ \"Egress\" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include \"Egress\" (since such a policy would not include an Egress section and would otherwise default to just [ \"Ingress\" ]). This field is beta-level in 1.8",
                 "items": {
                   "type": [
                     "string",

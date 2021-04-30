@@ -6,7 +6,8 @@
       "type": [
         "string",
         "null"
-      ]
+      ],
+      "x-kubernetes-list-type": "atomic"
     },
     "conditions": {
       "description": "Conditions applied to the request, such as approval or denial.",
@@ -16,7 +17,11 @@
       "type": [
         "array",
         "null"
-      ]
+      ],
+      "x-kubernetes-list-map-keys": [
+        "type"
+      ],
+      "x-kubernetes-list-type": "map"
     }
   },
   "type": "object",

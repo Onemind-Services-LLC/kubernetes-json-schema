@@ -43,7 +43,8 @@
       "type": [
         "object",
         "null"
-      ]
+      ],
+      "x-kubernetes-map-type": "atomic"
     },
     "sslEnabled": {
       "description": "Flag to enable/disable SSL communication with Gateway, default false",
