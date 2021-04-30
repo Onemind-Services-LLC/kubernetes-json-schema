@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 VERSIONS=$(git ls-remote --refs --tags https://github.com/kubernetes/kubernetes.git | cut -d/ -f3 | grep -e '^v1\.[0-9]\{2\}\.[0-9]\{1,2\}$')
+ASYNC="$1"
 
 # This script uses openapi2jsonschema to generate a set of JSON schemas for
 # the specified Kubernetes versions in three different flavours:
@@ -13,6 +14,12 @@ VERSIONS=$(git ls-remote --refs --tags https://github.com/kubernetes/kubernetes.
 # Remove master folders
 rm -rf master*
 
-for VERSION in $VERSIONS master; do
-  ./build.sh "${VERSION}"
-done
+if [ "${ASYNC}" -eq 1 ]; then
+  for VERSION in $VERSIONS master; do
+    ./build.sh "${VERSION}" &
+  done
+else
+  for VERSION in $VERSIONS master; do
+    ./build.sh "${VERSION}"
+  done
+fi

@@ -16,7 +16,7 @@ check:
 	fi
 
 build-all: ## Builds all schema
-	./build-all.sh
+	./build-all.sh 0
 
 build: check ## Builds the schema
 	./build.sh $(VERSION)
