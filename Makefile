@@ -11,14 +11,14 @@ check:
 	@if [ -z $(VERSION) ]; then \
 		echo "VERSION was not set"; \
 		echo "Usage:"; \
-		echo "VERSION=v1.20.0 make build"
+		echo "VERSION=v1.20.0 make build" \
 		exit 1; \
 	fi
 
 
 build: check ## Builds the schema
 	./build.sh $(VERSION)
-	./buid.sh master
+	./build.sh master
 
 test: ## Runs tests
 	@tox
