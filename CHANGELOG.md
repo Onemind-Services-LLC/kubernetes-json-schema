@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.0.0...HEAD)
+
+**Merged pull requests:**
+
+- Bump charmixer/auto-changelog-action from v1.3 to v1.4 [\#5](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/5) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.0.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v1.0.0) (2021-04-30)
 
 [Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/ae92552452ef9ab30958159294df92d35f813850...v1.0.0)
