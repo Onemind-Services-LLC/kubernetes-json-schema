@@ -9,6 +9,7 @@
       ]
     },
     "items": {
+      "description": "Items is the list of APIService",
       "items": {
         "description": "APIService represents a server for a particular GroupVersion. Name must be \"version.group\".",
         "properties": {

@@ -276,6 +276,7 @@
       "additionalProperties": false
     },
     "spec": {
+      "description": "SelfSubjectRulesReviewSpec defines the specification for SelfSubjectRulesReview.",
       "properties": {
         "namespace": {
           "description": "Namespace to evaluate rules for. Required.",

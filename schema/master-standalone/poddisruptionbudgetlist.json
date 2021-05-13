@@ -9,6 +9,7 @@
       ]
     },
     "items": {
+      "description": "items list individual PodDisruptionBudget objects",
       "items": {
         "description": "PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods",
         "properties": {
