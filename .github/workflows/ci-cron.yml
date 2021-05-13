@@ -25,10 +25,9 @@ jobs:
       - name: Run build
         run: make build-all
 
-      - name: Commit and push
-        uses: test-room-7/action-update-file@v1.5.0
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit-msg: "[skip ci] Updated schema"
-          file-path: |
-            schema/**/*.json
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: '[skip ci] Updated schemas'
+          commit_user_name: Abhimanyu Saharan
+          commit_user_email: desk.abhimanyu@gmail.com
+          commit_author: Abhimanyu Saharan <desk.abhimanyu@gmail.com>
