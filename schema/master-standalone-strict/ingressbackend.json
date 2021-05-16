@@ -31,28 +31,47 @@
       "x-kubernetes-map-type": "atomic",
       "additionalProperties": false
     },
-    "serviceName": {
-      "description": "Specifies the name of the referenced service.",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "servicePort": {
-      "oneOf": [
-        {
-          "type": [
-            "string",
-            "null"
-          ]
+    "service": {
+      "description": "IngressServiceBackend references a Kubernetes Service as a Backend.",
+      "properties": {
+        "name": {
+          "description": "Name is the referenced service. The service must exist in the same namespace as the Ingress object.",
+          "type": "string"
         },
-        {
+        "port": {
+          "description": "ServiceBackendPort is the service port being referenced.",
+          "properties": {
+            "name": {
+              "description": "Name is the name of the port on the Service. This is a mutually exclusive setting with \"Number\".",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "number": {
+              "description": "Number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with \"Name\".",
+              "format": "int32",
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          },
           "type": [
-            "integer",
+            "object",
             "null"
-          ]
+          ],
+          "additionalProperties": false
         }
-      ]
+      },
+      "required": [
+        "name"
+      ],
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false
     }
   },
   "type": "object",

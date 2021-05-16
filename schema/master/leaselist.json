@@ -11,7 +11,7 @@
     "items": {
       "description": "Items is a list of schema objects.",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.coordination.v1beta1.Lease"
+        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.coordination.v1.Lease"
       },
       "type": [
         "array",
@@ -41,7 +41,7 @@
     {
       "group": "coordination.k8s.io",
       "kind": "LeaseList",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

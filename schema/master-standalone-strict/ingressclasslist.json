@@ -353,7 +353,7 @@
           {
             "group": "networking.k8s.io",
             "kind": "IngressClass",
-            "version": "v1beta1"
+            "version": "v1"
           }
         ],
         "additionalProperties": false
@@ -421,7 +421,7 @@
     {
       "group": "networking.k8s.io",
       "kind": "IngressClassList",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "additionalProperties": false,

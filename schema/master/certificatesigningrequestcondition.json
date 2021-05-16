@@ -1,4 +1,5 @@
 {
+  "description": "CertificateSigningRequestCondition describes a condition of a CertificateSigningRequest object",
   "properties": {
     "lastTransitionTime": {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
@@ -6,31 +7,31 @@
     },
     "lastUpdateTime": {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
-      "description": "timestamp for the last update to this condition"
+      "description": "lastUpdateTime is the time of the last update to this condition"
     },
     "message": {
-      "description": "human readable message with details about the request state",
+      "description": "message contains a human readable message with details about the request state",
       "type": [
         "string",
         "null"
       ]
     },
     "reason": {
-      "description": "brief reason for the request state",
+      "description": "reason indicates a brief reason for the request state",
       "type": [
         "string",
         "null"
       ]
     },
     "status": {
-      "description": "Status of the condition, one of True, False, Unknown. Approved, Denied, and Failed conditions may not be \"False\" or \"Unknown\". Defaults to \"True\". If unset, should be treated as \"True\".",
+      "description": "status of the condition, one of True, False, Unknown. Approved, Denied, and Failed conditions may not be \"False\" or \"Unknown\".",
       "type": [
         "string",
         "null"
       ]
     },
     "type": {
-      "description": "type of the condition. Known conditions include \"Approved\", \"Denied\", and \"Failed\".",
+      "description": "type of the condition. Known conditions are \"Approved\", \"Denied\", and \"Failed\".\n\nAn \"Approved\" condition is added via the /approval subresource, indicating the request was approved and should be issued by the signer.\n\nA \"Denied\" condition is added via the /approval subresource, indicating the request was denied and should not be issued by the signer.\n\nA \"Failed\" condition is added via the /status subresource, indicating the signer failed to issue the certificate.\n\nApproved and Denied conditions are mutually exclusive. Approved, Denied, and Failed conditions cannot be removed once added.\n\nOnly one condition of a given type is allowed.",
       "type": [
         "string",
         "null"
@@ -38,7 +39,8 @@
     }
   },
   "required": [
-    "type"
+    "type",
+    "status"
   ],
   "type": "object",
   "$schema": "http://json-schema.org/schema#"

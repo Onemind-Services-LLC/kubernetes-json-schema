@@ -11,7 +11,7 @@
     "items": {
       "description": "Items is a list of RoleBindings",
       "items": {
-        "$ref": "_definitions.json#/definitions/io.k8s.api.rbac.v1beta1.RoleBinding"
+        "$ref": "_definitions.json#/definitions/io.k8s.api.rbac.v1alpha1.RoleBinding"
       },
       "type": [
         "array",
@@ -41,7 +41,7 @@
     {
       "group": "rbac.authorization.k8s.io",
       "kind": "RoleBindingList",
-      "version": "v1beta1"
+      "version": "v1alpha1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

@@ -11,7 +11,7 @@
     "items": {
       "description": "Items is the list of StorageClasses",
       "items": {
-        "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1beta1.StorageClass"
+        "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.StorageClass"
       },
       "type": [
         "array",
@@ -41,7 +41,7 @@
     {
       "group": "storage.k8s.io",
       "kind": "StorageClassList",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

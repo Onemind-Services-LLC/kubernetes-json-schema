@@ -11,7 +11,7 @@
     "items": {
       "description": "Items is a list of ClusterRoles",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.rbac.v1beta1.ClusterRole"
+        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.rbac.v1alpha1.ClusterRole"
       },
       "type": [
         "array",
@@ -41,7 +41,7 @@
     {
       "group": "rbac.authorization.k8s.io",
       "kind": "ClusterRoleList",
-      "version": "v1beta1"
+      "version": "v1alpha1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

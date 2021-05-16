@@ -398,7 +398,7 @@
     {
       "group": "authentication.k8s.io",
       "kind": "TokenReview",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

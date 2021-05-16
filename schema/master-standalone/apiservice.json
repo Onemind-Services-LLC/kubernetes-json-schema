@@ -424,7 +424,7 @@
     {
       "group": "apiregistration.k8s.io",
       "kind": "APIService",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

@@ -338,7 +338,7 @@
           {
             "group": "coordination.k8s.io",
             "kind": "Lease",
-            "version": "v1beta1"
+            "version": "v1"
           }
         ]
       },
@@ -404,7 +404,7 @@
     {
       "group": "coordination.k8s.io",
       "kind": "LeaseList",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

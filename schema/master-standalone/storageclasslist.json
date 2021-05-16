@@ -396,7 +396,7 @@
           {
             "group": "storage.k8s.io",
             "kind": "StorageClass",
-            "version": "v1beta1"
+            "version": "v1"
           }
         ]
       },
@@ -462,7 +462,7 @@
     {
       "group": "storage.k8s.io",
       "kind": "StorageClassList",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

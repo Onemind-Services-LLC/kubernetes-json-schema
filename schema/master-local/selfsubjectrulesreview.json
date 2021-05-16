@@ -23,11 +23,11 @@
       "description": "Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
     },
     "spec": {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.authorization.v1beta1.SelfSubjectRulesReviewSpec",
+      "$ref": "_definitions.json#/definitions/io.k8s.api.authorization.v1.SelfSubjectRulesReviewSpec",
       "description": "Spec holds information about the request being evaluated."
     },
     "status": {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.authorization.v1beta1.SubjectRulesReviewStatus",
+      "$ref": "_definitions.json#/definitions/io.k8s.api.authorization.v1.SubjectRulesReviewStatus",
       "description": "Status is filled in by the server and indicates the set of actions a user can perform."
     }
   },
@@ -39,7 +39,7 @@
     {
       "group": "authorization.k8s.io",
       "kind": "SelfSubjectRulesReview",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

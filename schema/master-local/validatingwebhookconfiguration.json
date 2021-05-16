@@ -1,5 +1,5 @@
 {
-  "description": "ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it. Deprecated in v1.16, planned for removal in v1.19. Use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration instead.",
+  "description": "ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -25,7 +25,7 @@
     "webhooks": {
       "description": "Webhooks is a list of webhooks and the affected resources and operations.",
       "items": {
-        "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1beta1.ValidatingWebhook"
+        "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1.ValidatingWebhook"
       },
       "type": [
         "array",
@@ -40,7 +40,7 @@
     {
       "group": "admissionregistration.k8s.io",
       "kind": "ValidatingWebhookConfiguration",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

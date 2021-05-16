@@ -389,7 +389,7 @@
     {
       "group": "storage.k8s.io",
       "kind": "StorageClass",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "additionalProperties": false,

@@ -4,12 +4,13 @@
     "paths": {
       "description": "A collection of paths that map requests to backends.",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1beta1.HTTPIngressPath"
+        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1.HTTPIngressPath"
       },
       "type": [
         "array",
         "null"
-      ]
+      ],
+      "x-kubernetes-list-type": "atomic"
     }
   },
   "required": [

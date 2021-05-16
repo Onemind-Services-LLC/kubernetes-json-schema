@@ -9,7 +9,7 @@
       ]
     },
     "http": {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1beta1.HTTPIngressRuleValue"
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1.HTTPIngressRuleValue"
     }
   },
   "type": "object",

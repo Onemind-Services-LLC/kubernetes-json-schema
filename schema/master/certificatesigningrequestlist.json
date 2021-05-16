@@ -1,4 +1,5 @@
 {
+  "description": "CertificateSigningRequestList is a collection of CertificateSigningRequest objects",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -8,8 +9,9 @@
       ]
     },
     "items": {
+      "description": "items is a collection of CertificateSigningRequest objects",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.certificates.v1beta1.CertificateSigningRequest"
+        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.certificates.v1.CertificateSigningRequest"
       },
       "type": [
         "array",
@@ -38,7 +40,7 @@
     {
       "group": "certificates.k8s.io",
       "kind": "CertificateSigningRequestList",
-      "version": "v1beta1"
+      "version": "v1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

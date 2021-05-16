@@ -319,7 +319,7 @@
           {
             "group": "scheduling.k8s.io",
             "kind": "PriorityClass",
-            "version": "v1beta1"
+            "version": "v1alpha1"
           }
         ]
       },
@@ -385,7 +385,7 @@
     {
       "group": "scheduling.k8s.io",
       "kind": "PriorityClassList",
-      "version": "v1beta1"
+      "version": "v1alpha1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"
