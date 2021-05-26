@@ -7,7 +7,7 @@ on:
 
 jobs:
   automation:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Assign PR to creator
       uses: thomaseizinger/assign-pr-creator-action@v1.0.0
