@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4ca2a5ab-76c7-4de7-bf77-cc0ca47251f1/deploy-status)](https://app.netlify.com/sites/kubernetes-json-schema/deploys)
-
 # Kubernetes JSON Schemas
 
 This repository contains a set of schemas for most recent Kubernetes
