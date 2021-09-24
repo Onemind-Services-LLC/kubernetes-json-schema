@@ -1,11 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+## [v1.1.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v1.1.0) (2021-09-24)
 
-[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.0.0...HEAD)
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.0.0...v1.1.0)
 
 **Merged pull requests:**
 
+- Bump actions/setup-python from 2 to 2.2.2 [\#6](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/6) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump charmixer/auto-changelog-action from v1.3 to v1.4 [\#5](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/5) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v1.0.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v1.0.0) (2021-04-30)
