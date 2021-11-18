@@ -661,6 +661,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.GCEPersistentDiskVolumeSource"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.GRPCAction"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.GitRepoVolumeSource"
     },
     {
