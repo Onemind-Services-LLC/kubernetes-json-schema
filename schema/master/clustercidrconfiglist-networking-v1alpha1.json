@@ -1,5 +1,5 @@
 {
-  "description": "CSIStorageCapacityList is a collection of CSIStorageCapacity objects.",
+  "description": "ClusterCIDRConfigList contains a list of ClusterCIDRConfig.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -8,22 +8,18 @@
         "null"
       ],
       "enum": [
-        "storage.k8s.io/v1alpha1"
+        "networking.k8s.io/v1alpha1"
       ]
     },
     "items": {
-      "description": "Items is the list of CSIStorageCapacity objects.",
+      "description": "Items is the list of ClusterCIDRConfigs.",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.storage.v1alpha1.CSIStorageCapacity"
+        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ClusterCIDRConfig"
       },
       "type": [
         "array",
         "null"
-      ],
-      "x-kubernetes-list-map-keys": [
-        "name"
-      ],
-      "x-kubernetes-list-type": "map"
+      ]
     },
     "kind": {
       "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -32,12 +28,12 @@
         "null"
       ],
       "enum": [
-        "CSIStorageCapacityList"
+        "ClusterCIDRConfigList"
       ]
     },
     "metadata": {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
-      "description": "Standard list metadata More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
     }
   },
   "required": [
@@ -46,8 +42,8 @@
   "type": "object",
   "x-kubernetes-group-version-kind": [
     {
-      "group": "storage.k8s.io",
-      "kind": "CSIStorageCapacityList",
+      "group": "networking.k8s.io",
+      "kind": "ClusterCIDRConfigList",
       "version": "v1alpha1"
     }
   ],
