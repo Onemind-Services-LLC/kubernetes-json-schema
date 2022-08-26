@@ -9,7 +9,7 @@
       ]
     },
     "current": {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.autoscaling.v2beta2.MetricValueStatus",
+      "$ref": "_definitions.json#/definitions/io.k8s.api.autoscaling.v2.MetricValueStatus",
       "description": "current contains the current value for the given metric"
     },
     "name": {
