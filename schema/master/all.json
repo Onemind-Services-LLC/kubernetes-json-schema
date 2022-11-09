@@ -28,6 +28,39 @@
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1.WebhookClientConfig"
     },
     {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.MatchResources"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.NamedRuleWithOperations"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ParamKind"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ParamRef"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicy"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBinding"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBindingList"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBindingSpec"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyList"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicySpec"
+    },
+    {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.Validation"
+    },
+    {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.apiserverinternal.v1alpha1.ServerStorageVersion"
     },
     {
