@@ -4138,7 +4138,7 @@
         },
         "spec": {
           "$ref": "#/definitions/io.k8s.api.coordination.v1.LeaseSpec",
-          "description": "Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+          "description": "spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
       "type": "object",
@@ -4159,7 +4159,7 @@
           "type": "string"
         },
         "items": {
-          "description": "Items is a list of schema objects.",
+          "description": "items is a list of schema objects.",
           "items": {
             "$ref": "#/definitions/io.k8s.api.coordination.v1.Lease"
           },
@@ -4202,7 +4202,7 @@
           "type": "string"
         },
         "leaseDurationSeconds": {
-          "description": "leaseDurationSeconds is a duration that candidates for a lease need to wait to force acquire it. This is measure against time of last observed RenewTime.",
+          "description": "leaseDurationSeconds is a duration that candidates for a lease need to wait to force acquire it. This is measure against time of last observed renewTime.",
           "format": "int32",
           "type": "integer"
         },
@@ -14143,11 +14143,11 @@
           "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
         },
         "preemptionPolicy": {
-          "description": "PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset.",
+          "description": "preemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset.",
           "type": "string"
         },
         "value": {
-          "description": "The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.",
+          "description": "value represents the integer value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.",
           "format": "int32",
           "type": "integer"
         }
