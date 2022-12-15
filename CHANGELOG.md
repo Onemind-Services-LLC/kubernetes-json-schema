@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.1.0...HEAD)
+
+**Merged pull requests:**
+
+- Bump actions/setup-python from 2.2.2 to 4.3.1 [\#12](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/12) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/checkout from 2 to 3 [\#11](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/11) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump test-room-7/action-update-file from 1.5.0 to 1.6.0 [\#10](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/10) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump hmarr/auto-approve-action from 2.1.0 to 3.1.0 [\#9](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/9) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.1.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v1.1.0) (2021-09-24)
 
 [Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.0.0...v1.1.0)
