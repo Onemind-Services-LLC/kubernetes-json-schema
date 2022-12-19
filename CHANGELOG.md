@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+## [v2.0.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v2.0.0) (2022-12-16)
 
-[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.1.0...HEAD)
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.1.0...v2.0.0)
 
 **Merged pull requests:**
 
