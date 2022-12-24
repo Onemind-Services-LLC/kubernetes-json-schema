@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v2.0.0...HEAD)
+
+**Merged pull requests:**
+
+- Bump actions/setup-python from 4.3.1 to 4.4.0 [\#13](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/13) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v2.0.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v2.0.0) (2022-12-16)
 
 [Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v1.1.0...v2.0.0)
