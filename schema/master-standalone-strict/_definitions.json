@@ -1081,7 +1081,7 @@
         },
         "template": {
           "$ref": "#/definitions/io.k8s.api.core.v1.PodTemplateSpec",
-          "description": "An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"
+          "description": "An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). The only allowed template.spec.restartPolicy value is \"Always\". More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"
         },
         "updateStrategy": {
           "$ref": "#/definitions/io.k8s.api.apps.v1.DaemonSetUpdateStrategy",
@@ -1326,7 +1326,7 @@
         },
         "template": {
           "$ref": "#/definitions/io.k8s.api.core.v1.PodTemplateSpec",
-          "description": "Template describes the pods that will be created."
+          "description": "Template describes the pods that will be created. The only allowed template.spec.restartPolicy value is \"Always\"."
         }
       },
       "required": [
@@ -1801,7 +1801,7 @@
         },
         "template": {
           "$ref": "#/definitions/io.k8s.api.core.v1.PodTemplateSpec",
-          "description": "template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet. Each pod will be named with the format <statefulsetname>-<podindex>. For example, a pod in a StatefulSet named \"web\" with index number \"3\" would be named \"web-3\"."
+          "description": "template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet. Each pod will be named with the format <statefulsetname>-<podindex>. For example, a pod in a StatefulSet named \"web\" with index number \"3\" would be named \"web-3\". The only allowed template.spec.restartPolicy value is \"Always\"."
         },
         "updateStrategy": {
           "$ref": "#/definitions/io.k8s.api.apps.v1.StatefulSetUpdateStrategy",
@@ -3725,7 +3725,7 @@
         },
         "template": {
           "$ref": "#/definitions/io.k8s.api.core.v1.PodTemplateSpec",
-          "description": "Describes the pod that will be created when executing a job. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/"
+          "description": "Describes the pod that will be created when executing a job. The only allowed template.spec.restartPolicy values are \"Never\" or \"OnFailure\". More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/"
         },
         "ttlSecondsAfterFinished": {
           "description": "ttlSecondsAfterFinished limits the lifetime of a Job that has finished execution (either Complete or Failed). If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. When the Job is being deleted, its lifecycle guarantees (e.g. finalizers) will be honored. If this field is unset, the Job won't be automatically deleted. If this field is set to zero, the Job becomes eligible to be deleted immediately after it finishes.",
@@ -5047,6 +5047,14 @@
           "$ref": "#/definitions/io.k8s.api.core.v1.Probe",
           "description": "Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes"
         },
+        "resizePolicy": {
+          "description": "Resources resize policy for the container.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.ContainerResizePolicy"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
         "resources": {
           "$ref": "#/definitions/io.k8s.api.core.v1.ResourceRequirements",
           "description": "Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
@@ -5155,6 +5163,25 @@
       },
       "required": [
         "containerPort"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "io.k8s.api.core.v1.ContainerResizePolicy": {
+      "description": "ContainerResizePolicy represents resource resize policy for a single container.",
+      "properties": {
+        "policy": {
+          "description": "Resource resize policy applicable to the specified resource name. If not specified, it defaults to RestartNotRequired.",
+          "type": "string"
+        },
+        "resourceName": {
+          "description": "Name of the resource type to which this resource resize policy applies. Supported values: cpu, memory.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "resourceName",
+        "policy"
       ],
       "type": "object",
       "additionalProperties": false
@@ -5270,6 +5297,17 @@
         "ready": {
           "description": "Specifies whether the container has passed its readiness probe.",
           "type": "boolean"
+        },
+        "resources": {
+          "$ref": "#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+          "description": "Resources represents the compute resource requests and limits that have been successfully enacted on the running container after it has been started or has been successfully resized."
+        },
+        "resourcesAllocated": {
+          "additionalProperties": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity"
+          },
+          "description": "ResourcesAllocated represents the compute resources allocated for this container by the node. Kubelet sets this value to Container.Resources.Requests upon successful pod admission and after successfully admitting desired pod resize.",
+          "type": "object"
         },
         "restartCount": {
           "description": "The number of times the container has been restarted.",
@@ -5677,6 +5715,14 @@
         "readinessProbe": {
           "$ref": "#/definitions/io.k8s.api.core.v1.Probe",
           "description": "Probes are not allowed for ephemeral containers."
+        },
+        "resizePolicy": {
+          "description": "Resources resize policy for the container.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.ContainerResizePolicy"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
         },
         "resources": {
           "$ref": "#/definitions/io.k8s.api.core.v1.ResourceRequirements",
@@ -8267,7 +8313,7 @@
           "x-kubernetes-patch-strategy": "merge,retainKeys"
         },
         "restartPolicy": {
-          "description": "Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy",
+          "description": "Restart policy for all containers within the pod. One of Always, OnFailure, Never. In some contexts, only a subset of those values may be permitted. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy",
           "type": "string"
         },
         "runtimeClassName": {
@@ -8425,6 +8471,10 @@
         },
         "reason": {
           "description": "A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'",
+          "type": "string"
+        },
+        "resize": {
+          "description": "Status of resources resize desired for pod's containers. It is empty if no resources resize is pending. Any changes to container resources will automatically set this to \"Proposed\"",
           "type": "string"
         },
         "startTime": {
@@ -8916,7 +8966,7 @@
         },
         "template": {
           "$ref": "#/definitions/io.k8s.api.core.v1.PodTemplateSpec",
-          "description": "Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"
+          "description": "Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. The only allowed template.spec.restartPolicy value is \"Always\". More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template"
         }
       },
       "type": "object",
