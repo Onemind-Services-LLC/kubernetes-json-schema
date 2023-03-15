@@ -388,6 +388,25 @@
       "type": "object",
       "additionalProperties": false
     },
+    "io.k8s.api.admissionregistration.v1alpha1.ExpressionWarning": {
+      "description": "ExpressionWarning is a warning information that targets a specific expression.",
+      "properties": {
+        "fieldRef": {
+          "description": "The path to the field that refers the expression. For example, the reference to the expression of the first item of validations is \"spec.validations[0].expression\"",
+          "type": "string"
+        },
+        "warning": {
+          "description": "The content of type checking information in a human-readable form. Each line of the warning contains the type that the expression is checked against, followed by the type check error from the compiler.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fieldRef",
+        "warning"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.admissionregistration.v1alpha1.MatchResources": {
       "description": "MatchResources decides whether to run the admission control policy on an object based on whether it meets the match criteria. The exclude rules take precedence over include rules (if a resource matches both, it is excluded)",
       "properties": {
@@ -508,6 +527,21 @@
       "x-kubernetes-map-type": "atomic",
       "additionalProperties": false
     },
+    "io.k8s.api.admissionregistration.v1alpha1.TypeChecking": {
+      "description": "TypeChecking contains results of type checking the expressions in the ValidatingAdmissionPolicy",
+      "properties": {
+        "expressionWarnings": {
+          "description": "The type checking warnings for each expression.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.admissionregistration.v1alpha1.ExpressionWarning"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicy": {
       "description": "ValidatingAdmissionPolicy describes the definition of an admission validation policy that accepts or rejects an object without changing it.",
       "properties": {
@@ -529,6 +563,10 @@
         "spec": {
           "$ref": "#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicySpec",
           "description": "Specification of the desired behavior of the ValidatingAdmissionPolicy."
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyStatus",
+          "description": "The status of the ValidatingAdmissionPolicy, including warnings that are useful to determine if the policy behaves in the expected way. Populated by the system. Read-only."
         }
       },
       "type": "object",
@@ -708,6 +746,33 @@
       "type": "object",
       "additionalProperties": false
     },
+    "io.k8s.api.admissionregistration.v1alpha1.ValidatingAdmissionPolicyStatus": {
+      "description": "ValidatingAdmissionPolicyStatus represents the status of a ValidatingAdmissionPolicy.",
+      "properties": {
+        "conditions": {
+          "description": "The conditions represent the latest available observations of a policy's current state.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "observedGeneration": {
+          "description": "The generation observed by the controller.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "typeChecking": {
+          "$ref": "#/definitions/io.k8s.api.admissionregistration.v1alpha1.TypeChecking",
+          "description": "The results of type checking for each expression. Presence of this field indicates the completion of the type checking."
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.admissionregistration.v1alpha1.Validation": {
       "description": "Validation specifies the CEL expression which is used to apply the validation.",
       "properties": {
@@ -717,6 +782,10 @@
         },
         "message": {
           "description": "Message represents the message displayed when validation fails. The message is required if the Expression contains line breaks. The message must not contain line breaks. If unset, the message is \"failed rule: {Rule}\". e.g. \"must be a URL with the host matching spec.host\" If the Expression contains line breaks. Message is required. The message must not contain line breaks. If unset, the message is \"failed Expression: {Expression}\".",
+          "type": "string"
+        },
+        "messageExpression": {
+          "description": "messageExpression declares a CEL expression that evaluates to the validation failure message that is returned when this rule fails. Since messageExpression is used as a failure message, it must evaluate to a string. If both message and messageExpression are present on a validation, then messageExpression will be used if validation fails. If messageExpression results in a runtime error, the runtime error is logged, and the validation failure message is produced as if the messageExpression field were unset. If messageExpression evaluates to an empty string, a string with only spaces, or a string that contains line breaks, then the validation failure message will also be produced as if the messageExpression field were unset, and the fact that messageExpression produced an empty string/string with only spaces/string with line breaks will be logged. messageExpression has access to all the same variables as the `expression` except for 'authorizer' and 'authorizer.requestResource'. Example: \"object.x must be less than max (\"+string(params.max)+\")\"",
           "type": "string"
         },
         "reason": {
@@ -4502,7 +4571,7 @@
         },
         "nodeExpandSecretRef": {
           "$ref": "#/definitions/io.k8s.api.core.v1.SecretReference",
-          "description": "nodeExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeExpandVolume call. This is an alpha field and requires enabling CSINodeExpandSecret feature gate. This field is optional, may be omitted if no secret is required. If the secret object contains more than one secret, all secrets are passed."
+          "description": "nodeExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeExpandVolume call. This is a beta field which is enabled default by CSINodeExpandSecret feature gate. This field is optional, may be omitted if no secret is required. If the secret object contains more than one secret, all secrets are passed."
         },
         "nodePublishSecretRef": {
           "$ref": "#/definitions/io.k8s.api.core.v1.SecretReference",
@@ -7480,7 +7549,7 @@
       "additionalProperties": false
     },
     "io.k8s.api.core.v1.PersistentVolumeClaimCondition": {
-      "description": "PersistentVolumeClaimCondition contails details about state of pvc",
+      "description": "PersistentVolumeClaimCondition contains details about state of pvc",
       "properties": {
         "lastProbeTime": {
           "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
@@ -10285,7 +10354,7 @@
           "description": "LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain."
         },
         "matchLabelKeys": {
-          "description": "MatchLabelKeys is a set of pod label keys to select the pods over which spreading will be calculated. The keys are used to lookup values from the incoming pod labels, those key-value labels are ANDed with labelSelector to select the group of existing pods over which spreading will be calculated for the incoming pod. Keys that don't exist in the incoming pod labels will be ignored. A null or empty list means only match against labelSelector.",
+          "description": "MatchLabelKeys is a set of pod label keys to select the pods over which spreading will be calculated. The keys are used to lookup values from the incoming pod labels, those key-value labels are ANDed with labelSelector to select the group of existing pods over which spreading will be calculated for the incoming pod. The same key is forbidden to exist in both MatchLabelKeys and LabelSelector. MatchLabelKeys cannot be set when LabelSelector isn't set. Keys that don't exist in the incoming pod labels will be ignored. A null or empty list means only match against labelSelector.\n\nThis is a beta field and requires the MatchLabelKeysInPodTopologySpread feature gate to be enabled (enabled by default).",
           "items": {
             "type": "string"
           },
@@ -13709,7 +13778,7 @@
       "x-kubernetes-map-type": "atomic",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.AllocationResult": {
+    "io.k8s.api.resource.v1alpha2.AllocationResult": {
       "description": "AllocationResult contains attributed of an allocated resource.",
       "properties": {
         "availableOnNodes": {
@@ -13728,8 +13797,8 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.PodScheduling": {
-      "description": "PodScheduling objects hold information that is needed to schedule a Pod with ResourceClaims that use \"WaitForFirstConsumer\" allocation mode.\n\nThis is an alpha type and requires enabling the DynamicResourceAllocation feature gate.",
+    "io.k8s.api.resource.v1alpha2.PodSchedulingContext": {
+      "description": "PodSchedulingContext objects hold information that is needed to schedule a Pod with ResourceClaims that use \"WaitForFirstConsumer\" allocation mode.\n\nThis is an alpha type and requires enabling the DynamicResourceAllocation feature gate.",
       "properties": {
         "apiVersion": {
           "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -13739,7 +13808,7 @@
           "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
           "type": "string",
           "enum": [
-            "PodScheduling"
+            "PodSchedulingContext"
           ]
         },
         "metadata": {
@@ -13747,11 +13816,11 @@
           "description": "Standard object metadata"
         },
         "spec": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.PodSchedulingSpec",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.PodSchedulingContextSpec",
           "description": "Spec describes where resources for the Pod are needed."
         },
         "status": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.PodSchedulingStatus",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.PodSchedulingContextStatus",
           "description": "Status describes where resources for the Pod can be allocated."
         }
       },
@@ -13762,23 +13831,23 @@
       "x-kubernetes-group-version-kind": [
         {
           "group": "resource.k8s.io",
-          "kind": "PodScheduling",
-          "version": "v1alpha1"
+          "kind": "PodSchedulingContext",
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.PodSchedulingList": {
-      "description": "PodSchedulingList is a collection of Pod scheduling objects.",
+    "io.k8s.api.resource.v1alpha2.PodSchedulingContextList": {
+      "description": "PodSchedulingContextList is a collection of Pod scheduling objects.",
       "properties": {
         "apiVersion": {
           "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
           "type": "string"
         },
         "items": {
-          "description": "Items is the list of PodScheduling objects.",
+          "description": "Items is the list of PodSchedulingContext objects.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.PodScheduling"
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.PodSchedulingContext"
           },
           "type": "array"
         },
@@ -13786,7 +13855,7 @@
           "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
           "type": "string",
           "enum": [
-            "PodSchedulingList"
+            "PodSchedulingContextList"
           ]
         },
         "metadata": {
@@ -13801,14 +13870,14 @@
       "x-kubernetes-group-version-kind": [
         {
           "group": "resource.k8s.io",
-          "kind": "PodSchedulingList",
-          "version": "v1alpha1"
+          "kind": "PodSchedulingContextList",
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.PodSchedulingSpec": {
-      "description": "PodSchedulingSpec describes where resources for the Pod are needed.",
+    "io.k8s.api.resource.v1alpha2.PodSchedulingContextSpec": {
+      "description": "PodSchedulingContextSpec describes where resources for the Pod are needed.",
       "properties": {
         "potentialNodes": {
           "description": "PotentialNodes lists nodes where the Pod might be able to run.\n\nThe size of this field is limited to 128. This is large enough for many clusters. Larger clusters may need more attempts to find a node that suits all pending resources. This may get increased in the future, but not reduced.",
@@ -13826,13 +13895,13 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.PodSchedulingStatus": {
-      "description": "PodSchedulingStatus describes where resources for the Pod can be allocated.",
+    "io.k8s.api.resource.v1alpha2.PodSchedulingContextStatus": {
+      "description": "PodSchedulingContextStatus describes where resources for the Pod can be allocated.",
       "properties": {
         "resourceClaims": {
           "description": "ResourceClaims describes resource availability for each pod.spec.resourceClaim entry where the corresponding ResourceClaim uses \"WaitForFirstConsumer\" allocation mode.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimSchedulingStatus"
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimSchedulingStatus"
           },
           "type": "array",
           "x-kubernetes-list-map-keys": [
@@ -13844,7 +13913,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaim": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaim": {
       "description": "ResourceClaim describes which resources are needed by a resource consumer. Its status tracks whether the resource has been allocated and what the resulting attributes are.\n\nThis is an alpha type and requires enabling the DynamicResourceAllocation feature gate.",
       "properties": {
         "apiVersion": {
@@ -13863,11 +13932,11 @@
           "description": "Standard object metadata"
         },
         "spec": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimSpec",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimSpec",
           "description": "Spec describes the desired attributes of a resource that then needs to be allocated. It can only be set once when creating the ResourceClaim."
         },
         "status": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimStatus",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimStatus",
           "description": "Status describes whether the resource is available and with which attributes."
         }
       },
@@ -13879,12 +13948,12 @@
         {
           "group": "resource.k8s.io",
           "kind": "ResourceClaim",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimConsumerReference": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimConsumerReference": {
       "description": "ResourceClaimConsumerReference contains enough information to let you locate the consumer of a ResourceClaim. The user must be a resource in the same namespace as the ResourceClaim.",
       "properties": {
         "apiGroup": {
@@ -13912,7 +13981,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimList": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimList": {
       "description": "ResourceClaimList is a collection of claims.",
       "properties": {
         "apiVersion": {
@@ -13922,7 +13991,7 @@
         "items": {
           "description": "Items is the list of resource claims.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaim"
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaim"
           },
           "type": "array"
         },
@@ -13946,12 +14015,12 @@
         {
           "group": "resource.k8s.io",
           "kind": "ResourceClaimList",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimParametersReference": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimParametersReference": {
       "description": "ResourceClaimParametersReference contains enough information to let you locate the parameters for a ResourceClaim. The object must be in the same namespace as the ResourceClaim.",
       "properties": {
         "apiGroup": {
@@ -13974,7 +14043,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimSchedulingStatus": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimSchedulingStatus": {
       "description": "ResourceClaimSchedulingStatus contains information about one particular ResourceClaim with \"WaitForFirstConsumer\" allocation mode.",
       "properties": {
         "name": {
@@ -13993,7 +14062,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimSpec": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimSpec": {
       "description": "ResourceClaimSpec defines how a resource is to be allocated.",
       "properties": {
         "allocationMode": {
@@ -14001,7 +14070,7 @@
           "type": "string"
         },
         "parametersRef": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimParametersReference",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimParametersReference",
           "description": "ParametersRef references a separate object with arbitrary parameters that will be used by the driver when allocating a resource for the claim.\n\nThe object must be in the same namespace as the ResourceClaim."
         },
         "resourceClassName": {
@@ -14015,11 +14084,11 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimStatus": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimStatus": {
       "description": "ResourceClaimStatus tracks whether the resource has been allocated and what the resulting attributes are.",
       "properties": {
         "allocation": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.AllocationResult",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.AllocationResult",
           "description": "Allocation is set by the resource driver once a resource has been allocated successfully. If this is not specified, the resource is not yet allocated."
         },
         "deallocationRequested": {
@@ -14033,7 +14102,7 @@
         "reservedFor": {
           "description": "ReservedFor indicates which entities are currently allowed to use the claim. A Pod which references a ResourceClaim which is not reserved for that Pod will not be started.\n\nThere can be at most 32 such reservations. This may get increased in the future, but not reduced.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimConsumerReference"
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimConsumerReference"
           },
           "type": "array",
           "x-kubernetes-list-map-keys": [
@@ -14045,7 +14114,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimTemplate": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimTemplate": {
       "description": "ResourceClaimTemplate is used to produce ResourceClaim objects.",
       "properties": {
         "apiVersion": {
@@ -14064,7 +14133,7 @@
           "description": "Standard object metadata"
         },
         "spec": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimTemplateSpec",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimTemplateSpec",
           "description": "Describes the ResourceClaim that is to be generated.\n\nThis field is immutable. A ResourceClaim will get created by the control plane for a Pod when needed and then not get updated anymore."
         }
       },
@@ -14076,12 +14145,12 @@
         {
           "group": "resource.k8s.io",
           "kind": "ResourceClaimTemplate",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimTemplateList": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimTemplateList": {
       "description": "ResourceClaimTemplateList is a collection of claim templates.",
       "properties": {
         "apiVersion": {
@@ -14091,7 +14160,7 @@
         "items": {
           "description": "Items is the list of resource claim templates.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimTemplate"
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimTemplate"
           },
           "type": "array"
         },
@@ -14115,12 +14184,12 @@
         {
           "group": "resource.k8s.io",
           "kind": "ResourceClaimTemplateList",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClaimTemplateSpec": {
+    "io.k8s.api.resource.v1alpha2.ResourceClaimTemplateSpec": {
       "description": "ResourceClaimTemplateSpec contains the metadata and fields for a ResourceClaim.",
       "properties": {
         "metadata": {
@@ -14128,7 +14197,7 @@
           "description": "ObjectMeta may contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation."
         },
         "spec": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClaimSpec",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClaimSpec",
           "description": "Spec for the ResourceClaim. The entire content is copied unchanged into the ResourceClaim that gets created from this template. The same fields as in a ResourceClaim are also valid here."
         }
       },
@@ -14138,7 +14207,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClass": {
+    "io.k8s.api.resource.v1alpha2.ResourceClass": {
       "description": "ResourceClass is used by administrators to influence how resources are allocated.\n\nThis is an alpha type and requires enabling the DynamicResourceAllocation feature gate.",
       "properties": {
         "apiVersion": {
@@ -14161,7 +14230,7 @@
           "description": "Standard object metadata"
         },
         "parametersRef": {
-          "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClassParametersReference",
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClassParametersReference",
           "description": "ParametersRef references an arbitrary separate object that may hold parameters that will be used by the driver when allocating a resource that uses this class. A dynamic resource driver can distinguish between parameters stored here and and those stored in ResourceClaimSpec."
         },
         "suitableNodes": {
@@ -14177,12 +14246,12 @@
         {
           "group": "resource.k8s.io",
           "kind": "ResourceClass",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClassList": {
+    "io.k8s.api.resource.v1alpha2.ResourceClassList": {
       "description": "ResourceClassList is a collection of classes.",
       "properties": {
         "apiVersion": {
@@ -14192,7 +14261,7 @@
         "items": {
           "description": "Items is the list of resource classes.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.resource.v1alpha1.ResourceClass"
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceClass"
           },
           "type": "array"
         },
@@ -14216,12 +14285,12 @@
         {
           "group": "resource.k8s.io",
           "kind": "ResourceClassList",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.resource.v1alpha1.ResourceClassParametersReference": {
+    "io.k8s.api.resource.v1alpha2.ResourceClassParametersReference": {
       "description": "ResourceClassParametersReference contains enough information to let you locate the parameters for a ResourceClass.",
       "properties": {
         "apiGroup": {
@@ -16328,7 +16397,7 @@
         {
           "group": "resource.k8s.io",
           "kind": "DeleteOptions",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         },
         {
           "group": "scheduling.k8s.io",
@@ -16713,7 +16782,7 @@
         {
           "group": "resource.k8s.io",
           "kind": "Status",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         }
       ],
       "additionalProperties": false
@@ -17047,7 +17116,7 @@
         {
           "group": "resource.k8s.io",
           "kind": "WatchEvent",
-          "version": "v1alpha1"
+          "version": "v1alpha2"
         },
         {
           "group": "scheduling.k8s.io",

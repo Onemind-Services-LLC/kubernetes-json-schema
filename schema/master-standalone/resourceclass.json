@@ -422,7 +422,7 @@
     {
       "group": "resource.k8s.io",
       "kind": "ResourceClass",
-      "version": "v1alpha1"
+      "version": "v1alpha2"
     }
   ],
   "$schema": "http://json-schema.org/schema#"

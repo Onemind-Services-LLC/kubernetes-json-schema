@@ -596,7 +596,7 @@
           {
             "group": "resource.k8s.io",
             "kind": "ResourceClaimTemplate",
-            "version": "v1alpha1"
+            "version": "v1alpha2"
           }
         ],
         "additionalProperties": false
@@ -664,7 +664,7 @@
     {
       "group": "resource.k8s.io",
       "kind": "ResourceClaimTemplateList",
-      "version": "v1alpha1"
+      "version": "v1alpha2"
     }
   ],
   "additionalProperties": false,

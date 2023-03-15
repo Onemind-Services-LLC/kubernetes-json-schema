@@ -533,7 +533,7 @@
     {
       "group": "resource.k8s.io",
       "kind": "ResourceClaim",
-      "version": "v1alpha1"
+      "version": "v1alpha2"
     }
   ],
   "additionalProperties": false,
