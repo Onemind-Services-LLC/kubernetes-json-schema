@@ -1,6 +1,9 @@
 {
   "oneOf": [
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1.MatchCondition"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1.MutatingWebhook"
     },
     {
@@ -32,6 +35,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.ExpressionWarning"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.MatchCondition"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.admissionregistration.v1alpha1.MatchResources"
@@ -1261,6 +1267,18 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ClusterCIDRSpec"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.IPAddress"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.IPAddressList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.IPAddressSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ParentReference"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.node.v1.Overhead"
     },
     {
@@ -1376,6 +1394,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha2.ResourceClassParametersReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha2.ResourceHandle"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1.PriorityClass"

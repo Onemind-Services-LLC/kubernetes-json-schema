@@ -1,5 +1,24 @@
 {
   "definitions": {
+    "io.k8s.api.admissionregistration.v1.MatchCondition": {
+      "description": "MatchCondition represents a condition which must by fulfilled for a request to be sent to a webhook.",
+      "properties": {
+        "expression": {
+          "description": "Expression represents the expression which will be evaluated by CEL. Must evaluate to bool. CEL expressions have access to the contents of the AdmissionRequest and Authorizer, organized into CEL variables:\n\n'object' - The object from the incoming request. The value is null for DELETE requests. 'oldObject' - The existing object. The value is null for CREATE requests. 'request' - Attributes of the admission request(/pkg/apis/admission/types.go#AdmissionRequest). 'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request.\n  See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz\n'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the\n  request resource.\nDocumentation on CEL: https://kubernetes.io/docs/reference/using-api/cel/\n\nRequired.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is an identifier for this match condition, used for strategic merging of MatchConditions, as well as providing an identifier for logging purposes. A good name should be descriptive of the associated expression. Name must be a qualified name consisting of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]') with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')\n\nRequired.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "expression"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.admissionregistration.v1.MutatingWebhook": {
       "description": "MutatingWebhook describes an admission webhook and the resources and operations it applies to.",
       "properties": {
@@ -17,6 +36,19 @@
         "failurePolicy": {
           "description": "FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Fail.",
           "type": "string"
+        },
+        "matchConditions": {
+          "description": "MatchConditions is a list of conditions that must be met for a request to be sent to this webhook. Match conditions filter requests that have already been matched by the rules, namespaceSelector, and objectSelector. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.\n\nThe exact matching logic is (in order):\n  1. If ANY matchCondition evaluates to FALSE, the webhook is skipped.\n  2. If ALL matchConditions evaluate to TRUE, the webhook is called.\n  3. If any matchCondition evaluates to an error (but none are FALSE):\n     - If failurePolicy=Fail, reject the request\n     - If failurePolicy=Ignore, the error is ignored and the webhook is skipped\n\nThis is an alpha feature and managed by the AdmissionWebhookMatchConditions feature gate.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.admissionregistration.v1.MatchCondition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
         },
         "matchPolicy": {
           "description": "matchPolicy defines how the \"rules\" list is used to match incoming requests. Allowed values are \"Exact\" or \"Equivalent\".\n\n- Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.\n\n- Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.\n\nDefaults to \"Equivalent\"",
@@ -230,6 +262,19 @@
           "description": "FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Fail.",
           "type": "string"
         },
+        "matchConditions": {
+          "description": "MatchConditions is a list of conditions that must be met for a request to be sent to this webhook. Match conditions filter requests that have already been matched by the rules, namespaceSelector, and objectSelector. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.\n\nThe exact matching logic is (in order):\n  1. If ANY matchCondition evaluates to FALSE, the webhook is skipped.\n  2. If ALL matchConditions evaluate to TRUE, the webhook is called.\n  3. If any matchCondition evaluates to an error (but none are FALSE):\n     - If failurePolicy=Fail, reject the request\n     - If failurePolicy=Ignore, the error is ignored and the webhook is skipped\n\nThis is an alpha feature and managed by the AdmissionWebhookMatchConditions feature gate.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.admissionregistration.v1.MatchCondition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
+        },
         "matchPolicy": {
           "description": "matchPolicy defines how the \"rules\" list is used to match incoming requests. Allowed values are \"Exact\" or \"Equivalent\".\n\n- Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.\n\n- Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.\n\nDefaults to \"Equivalent\"",
           "type": "string"
@@ -403,6 +448,24 @@
       "required": [
         "fieldRef",
         "warning"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "io.k8s.api.admissionregistration.v1alpha1.MatchCondition": {
+      "properties": {
+        "expression": {
+          "description": "Expression represents the expression which will be evaluated by CEL. Must evaluate to bool. CEL expressions have access to the contents of the AdmissionRequest and Authorizer, organized into CEL variables:\n\n'object' - The object from the incoming request. The value is null for DELETE requests. 'oldObject' - The existing object. The value is null for CREATE requests. 'request' - Attributes of the admission request(/pkg/apis/admission/types.go#AdmissionRequest). 'authorizer' - A CEL Authorizer. May be used to perform authorization checks for the principal (user or service account) of the request.\n  See https://pkg.go.dev/k8s.io/apiserver/pkg/cel/library#Authz\n'authorizer.requestResource' - A CEL ResourceCheck constructed from the 'authorizer' and configured with the\n  request resource.\nDocumentation on CEL: https://kubernetes.io/docs/reference/using-api/cel/\n\nRequired.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is an identifier for this match condition, used for strategic merging of MatchConditions, as well as providing an identifier for logging purposes. A good name should be descriptive of the associated expression. Name must be a qualified name consisting of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]') with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')\n\nRequired.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "expression"
       ],
       "type": "object",
       "additionalProperties": false
@@ -725,6 +788,19 @@
         "failurePolicy": {
           "description": "failurePolicy defines how to handle failures for the admission policy. Failures can occur from CEL expression parse errors, type check errors, runtime errors and invalid or mis-configured policy definitions or bindings.\n\nA policy is invalid if spec.paramKind refers to a non-existent Kind. A binding is invalid if spec.paramRef.name refers to a non-existent resource.\n\nfailurePolicy does not define how validations that evaluate to false are handled.\n\nWhen failurePolicy is set to Fail, ValidatingAdmissionPolicyBinding validationActions define how failures are enforced.\n\nAllowed values are Ignore or Fail. Defaults to Fail.",
           "type": "string"
+        },
+        "matchConditions": {
+          "description": "MatchConditions is a list of conditions that must be met for a request to be validated. Match conditions filter requests that have already been matched by the rules, namespaceSelector, and objectSelector. An empty list of matchConditions matches all requests. There are a maximum of 64 match conditions allowed.\n\nIf a parameter object is provided, it can be accessed via the `params` handle in the same manner as validation expressions.\n\nThe exact matching logic is (in order):\n  1. If ANY matchCondition evaluates to FALSE, the policy is skipped.\n  2. If ALL matchConditions evaluate to TRUE, the policy is evaluated.\n  3. If any matchCondition evaluates to an error (but none are FALSE):\n     - If failurePolicy=Fail, reject the request\n     - If failurePolicy=Ignore, the policy is skipped",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.admissionregistration.v1alpha1.MatchCondition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
         },
         "matchConstraints": {
           "$ref": "#/definitions/io.k8s.api.admissionregistration.v1alpha1.MatchResources",
@@ -5313,20 +5389,20 @@
       "additionalProperties": false
     },
     "io.k8s.api.core.v1.ContainerResizePolicy": {
-      "description": "ContainerResizePolicy represents resource resize policy for a single container.",
+      "description": "ContainerResizePolicy represents resource resize policy for the container.",
       "properties": {
-        "policy": {
-          "description": "Resource resize policy applicable to the specified resource name. If not specified, it defaults to RestartNotRequired.",
+        "resourceName": {
+          "description": "Name of the resource to which this resource resize policy applies. Supported values: cpu, memory.",
           "type": "string"
         },
-        "resourceName": {
-          "description": "Name of the resource type to which this resource resize policy applies. Supported values: cpu, memory.",
+        "restartPolicy": {
+          "description": "Restart policy to apply when specified resource is resized. If not specified, it defaults to NotRequired.",
           "type": "string"
         }
       },
       "required": [
         "resourceName",
-        "policy"
+        "restartPolicy"
       ],
       "type": "object",
       "additionalProperties": false
@@ -5599,7 +5675,7 @@
       "description": "EndpointPort is a tuple that describes a single port.",
       "properties": {
         "appProtocol": {
-          "description": "The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol.",
+          "description": "The application protocol for this port. This is used as a hint for implementations to offer richer behavior for protocols that they understand. This field follows standard Kubernetes label syntax. Valid values are either:\n\n* Un-prefixed protocol names - reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names).\n\n* Kubernetes-defined prefixed names:\n  * 'kubernetes.io/h2c' - HTTP/2 over cleartext as described in https://www.rfc-editor.org/rfc/rfc7540\n  * 'kubernetes.io/grpc' - gRPC over HTTP/2 as described in https://github.com/grpc/grpc/blob/v1.51.1/doc/PROTOCOL-HTTP2.md\n\n* Other protocols should use implementation-defined prefixed names such as mycompany.com/my-custom-protocol.",
           "type": "string"
         },
         "name": {
@@ -10820,7 +10896,7 @@
       "description": "EndpointPort represents a Port used by an EndpointSlice",
       "properties": {
         "appProtocol": {
-          "description": "appProtocol represents the application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol.",
+          "description": "The application protocol for this port. This is used as a hint for implementations to offer richer behavior for protocols that they understand. This field follows standard Kubernetes label syntax. Valid values are either:\n\n* Un-prefixed protocol names - reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names).\n\n* Kubernetes-defined prefixed names:\n  * 'kubernetes.io/h2c' - HTTP/2 over cleartext as described in https://www.rfc-editor.org/rfc/rfc7540\n  * 'kubernetes.io/grpc' - gRPC over HTTP/2 as described in https://github.com/grpc/grpc/blob/v1.51.1/doc/PROTOCOL-HTTP2.md\n\n* Other protocols should use implementation-defined prefixed names such as mycompany.com/my-custom-protocol.",
           "type": "string"
         },
         "name": {
@@ -13037,6 +13113,116 @@
       "type": "object",
       "additionalProperties": false
     },
+    "io.k8s.api.networking.v1alpha1.IPAddress": {
+      "description": "IPAddress represents a single IP of a single IP Family. The object is designed to be used by APIs that operate on IP addresses. The object is used by the Service core API for allocation of IP addresses. An IP address can be represented in different formats, to guarantee the uniqueness of the IP, the name of the object is the IP address in canonical format, four decimal digits separated by dots suppressing leading zeros for IPv4 and the representation defined by RFC 5952 for IPv6. Valid: 192.168.1.5 or 2001:db8::1 or 2001:db8:aaaa:bbbb:cccc:dddd:eeee:1 Invalid: 10.01.2.3 or 2001:db8:0:0:0::1",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "IPAddress"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.networking.v1alpha1.IPAddressSpec",
+          "description": "spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        }
+      },
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "networking.k8s.io",
+          "kind": "IPAddress",
+          "version": "v1alpha1"
+        }
+      ],
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.IPAddressList": {
+      "description": "IPAddressList contains a list of IPAddress.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is the list of IPAddresses.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.networking.v1alpha1.IPAddress"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "IPAddressList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "networking.k8s.io",
+          "kind": "IPAddressList",
+          "version": "v1alpha1"
+        }
+      ],
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.IPAddressSpec": {
+      "description": "IPAddressSpec describe the attributes in an IP Address.",
+      "properties": {
+        "parentRef": {
+          "$ref": "#/definitions/io.k8s.api.networking.v1alpha1.ParentReference",
+          "description": "ParentRef references the resource that an IPAddress is attached to. An IPAddress must reference a parent object."
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.ParentReference": {
+      "description": "ParentReference describes a reference to a parent object.",
+      "properties": {
+        "group": {
+          "description": "Group is the group of the object being referenced.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is the name of the object being referenced.",
+          "type": "string"
+        },
+        "namespace": {
+          "description": "Namespace is the namespace of the object being referenced.",
+          "type": "string"
+        },
+        "resource": {
+          "description": "Resource is the resource of the object being referenced.",
+          "type": "string"
+        },
+        "uid": {
+          "description": "UID is the uid of the object being referenced.",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.node.v1.Overhead": {
       "description": "Overhead structure represents the resource overhead associated with running a pod.",
       "properties": {
@@ -13779,15 +13965,19 @@
       "additionalProperties": false
     },
     "io.k8s.api.resource.v1alpha2.AllocationResult": {
-      "description": "AllocationResult contains attributed of an allocated resource.",
+      "description": "AllocationResult contains attributes of an allocated resource.",
       "properties": {
         "availableOnNodes": {
           "$ref": "#/definitions/io.k8s.api.core.v1.NodeSelector",
-          "description": "This field will get set by the resource driver after it has allocated the resource driver to inform the scheduler where it can schedule Pods using the ResourceClaim.\n\nSetting this field is optional. If null, the resource is available everywhere."
+          "description": "This field will get set by the resource driver after it has allocated the resource to inform the scheduler where it can schedule Pods using the ResourceClaim.\n\nSetting this field is optional. If null, the resource is available everywhere."
         },
-        "resourceHandle": {
-          "description": "ResourceHandle contains arbitrary data returned by the driver after a successful allocation. This is opaque for Kubernetes. Driver documentation may explain to users how to interpret this data if needed.\n\nThe maximum size of this field is 16KiB. This may get increased in the future, but not reduced.",
-          "type": "string"
+        "resourceHandles": {
+          "description": "ResourceHandles contain the state associated with an allocation that should be maintained throughout the lifetime of a claim. Each ResourceHandle contains data that should be passed to a specific kubelet plugin once it lands on a node. This data is returned by the driver after a successful allocation and is opaque to Kubernetes. Driver documentation may explain to users how to interpret this data if needed.\n\nSetting this field is optional. It has a maximum size of 32 entries. If null (or empty), it is assumed this allocation will be processed by a single kubelet plugin with no ResourceHandle data attached. The name of the kubelet plugin invoked will match the DriverName set in the ResourceClaimStatus this AllocationResult is embedded in.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.ResourceHandle"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
         },
         "shareable": {
           "description": "Shareable determines whether the resource supports more than one consumer at a time.",
@@ -14089,7 +14279,7 @@
       "properties": {
         "allocation": {
           "$ref": "#/definitions/io.k8s.api.resource.v1alpha2.AllocationResult",
-          "description": "Allocation is set by the resource driver once a resource has been allocated successfully. If this is not specified, the resource is not yet allocated."
+          "description": "Allocation is set by the resource driver once a resource or set of resources has been allocated successfully. If this is not specified, the resources have not been allocated yet."
         },
         "deallocationRequested": {
           "description": "DeallocationRequested indicates that a ResourceClaim is to be deallocated.\n\nThe driver then must deallocate this claim and reset the field together with clearing the Allocation field.\n\nWhile DeallocationRequested is set, no new consumers may be added to ReservedFor.",
@@ -14314,6 +14504,21 @@
         "kind",
         "name"
       ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "io.k8s.api.resource.v1alpha2.ResourceHandle": {
+      "description": "ResourceHandle holds opaque resource data for processing by a specific kubelet plugin.",
+      "properties": {
+        "data": {
+          "description": "Data contains the opaque data associated with this ResourceHandle. It is set by the controller component of the resource driver whose name matches the DriverName set in the ResourceClaimStatus this ResourceHandle is embedded in. It is set at allocation time and is intended for processing by the kubelet plugin whose name matches the DriverName set in this ResourceHandle.\n\nThe maximum size of this field is 16KiB. This may get increased in the future, but not reduced.",
+          "type": "string"
+        },
+        "driverName": {
+          "description": "DriverName specifies the name of the resource driver whose kubelet plugin should be invoked to process this ResourceHandle's data once it lands on a node. This may differ from the DriverName set in ResourceClaimStatus this ResourceHandle is embedded in.",
+          "type": "string"
+        }
+      },
       "type": "object",
       "additionalProperties": false
     },

@@ -332,7 +332,7 @@
             "description": "ResourceClaimStatus tracks whether the resource has been allocated and what the resulting attributes are.",
             "properties": {
               "allocation": {
-                "description": "AllocationResult contains attributed of an allocated resource.",
+                "description": "AllocationResult contains attributes of an allocated resource.",
                 "properties": {
                   "availableOnNodes": {
                     "description": "A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.",
@@ -443,12 +443,36 @@
                     ],
                     "x-kubernetes-map-type": "atomic"
                   },
-                  "resourceHandle": {
-                    "description": "ResourceHandle contains arbitrary data returned by the driver after a successful allocation. This is opaque for Kubernetes. Driver documentation may explain to users how to interpret this data if needed.\n\nThe maximum size of this field is 16KiB. This may get increased in the future, but not reduced.",
+                  "resourceHandles": {
+                    "description": "ResourceHandles contain the state associated with an allocation that should be maintained throughout the lifetime of a claim. Each ResourceHandle contains data that should be passed to a specific kubelet plugin once it lands on a node. This data is returned by the driver after a successful allocation and is opaque to Kubernetes. Driver documentation may explain to users how to interpret this data if needed.\n\nSetting this field is optional. It has a maximum size of 32 entries. If null (or empty), it is assumed this allocation will be processed by a single kubelet plugin with no ResourceHandle data attached. The name of the kubelet plugin invoked will match the DriverName set in the ResourceClaimStatus this AllocationResult is embedded in.",
+                    "items": {
+                      "description": "ResourceHandle holds opaque resource data for processing by a specific kubelet plugin.",
+                      "properties": {
+                        "data": {
+                          "description": "Data contains the opaque data associated with this ResourceHandle. It is set by the controller component of the resource driver whose name matches the DriverName set in the ResourceClaimStatus this ResourceHandle is embedded in. It is set at allocation time and is intended for processing by the kubelet plugin whose name matches the DriverName set in this ResourceHandle.\n\nThe maximum size of this field is 16KiB. This may get increased in the future, but not reduced.",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "driverName": {
+                          "description": "DriverName specifies the name of the resource driver whose kubelet plugin should be invoked to process this ResourceHandle's data once it lands on a node. This may differ from the DriverName set in ResourceClaimStatus this ResourceHandle is embedded in.",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
                     "type": [
-                      "string",
+                      "array",
                       "null"
-                    ]
+                    ],
+                    "x-kubernetes-list-type": "atomic"
                   },
                   "shareable": {
                     "description": "Shareable determines whether the resource supports more than one consumer at a time.",
