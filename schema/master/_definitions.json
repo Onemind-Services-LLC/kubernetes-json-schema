@@ -4201,6 +4201,96 @@
       },
       "type": "object"
     },
+    "io.k8s.api.certificates.v1alpha1.ClusterTrustBundle": {
+      "description": "ClusterTrustBundle is a cluster-scoped container for X.509 trust anchors (root certificates).\n\nClusterTrustBundle objects are considered to be readable by any authenticated user in the cluster, because they can be mounted by pods using the `clusterTrustBundle` projection.  All service accounts have read access to ClusterTrustBundles by default.  Users who only have namespace-level access to a cluster can read ClusterTrustBundles by impersonating a serviceaccount that they have access to.\n\nIt can be optionally associated with a particular assigner, in which case it contains one valid set of trust anchors for that signer. Signers may have multiple associated ClusterTrustBundles; each is an independent set of trust anchors for that signer. Admission control is used to enforce that only users with permissions on the signer can create or modify the corresponding bundle.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "ClusterTrustBundle"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "metadata contains the object metadata."
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.certificates.v1alpha1.ClusterTrustBundleSpec",
+          "description": "spec contains the signer (if any) and trust anchors."
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "certificates.k8s.io",
+          "kind": "ClusterTrustBundle",
+          "version": "v1alpha1"
+        }
+      ]
+    },
+    "io.k8s.api.certificates.v1alpha1.ClusterTrustBundleList": {
+      "description": "ClusterTrustBundleList is a collection of ClusterTrustBundle objects",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is a collection of ClusterTrustBundle objects",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.certificates.v1alpha1.ClusterTrustBundle"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "ClusterTrustBundleList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "metadata contains the list metadata."
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "certificates.k8s.io",
+          "kind": "ClusterTrustBundleList",
+          "version": "v1alpha1"
+        }
+      ]
+    },
+    "io.k8s.api.certificates.v1alpha1.ClusterTrustBundleSpec": {
+      "description": "ClusterTrustBundleSpec contains the signer and trust anchors.",
+      "properties": {
+        "signerName": {
+          "description": "signerName indicates the associated signer, if any.\n\nIn order to create or update a ClusterTrustBundle that sets signerName, you must have the following cluster-scoped permission: group=certificates.k8s.io resource=signers resourceName=<the signer name> verb=attest.\n\nIf signerName is not empty, then the ClusterTrustBundle object must be named with the signer name as a prefix (translating slashes to colons). For example, for the signer name `example.com/foo`, valid ClusterTrustBundle object names include `example.com:foo:abc` and `example.com:foo:v1`.\n\nIf signerName is empty, then the ClusterTrustBundle object's name must not have such a prefix.\n\nList/watch requests for ClusterTrustBundles can filter on this field using a `spec.signerName=NAME` field selector.",
+          "type": "string"
+        },
+        "trustBundle": {
+          "description": "trustBundle contains the individual X.509 trust anchors for this bundle, as PEM bundle of PEM-wrapped, DER-formatted X.509 certificates.\n\nThe data must consist only of PEM certificate blocks that parse as valid X.509 certificates.  Each certificate must include a basic constraints extension with the CA bit set.  The API server will reject objects that contain duplicate certificates, or that use PEM block headers.\n\nUsers of ClusterTrustBundles, including Kubelet, are free to reorder and deduplicate certificate blocks in this file according to their own logic, as well as to drop PEM block headers and inter-block data.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "trustBundle"
+      ],
+      "type": "object"
+    },
     "io.k8s.api.coordination.v1.Lease": {
       "description": "Lease defines a lease concept.",
       "properties": {
@@ -15965,6 +16055,11 @@
         {
           "group": "certificates.k8s.io",
           "kind": "DeleteOptions",
+          "version": "v1alpha1"
+        },
+        {
+          "group": "certificates.k8s.io",
+          "kind": "DeleteOptions",
           "version": "v1beta1"
         },
         {
@@ -16667,6 +16762,11 @@
           "group": "certificates.k8s.io",
           "kind": "WatchEvent",
           "version": "v1"
+        },
+        {
+          "group": "certificates.k8s.io",
+          "kind": "WatchEvent",
+          "version": "v1alpha1"
         },
         {
           "group": "certificates.k8s.io",
