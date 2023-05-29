@@ -6,6 +6,10 @@
 
 **Merged pull requests:**
 
+- Bump test-room-7/action-update-file from 1.6.0 to 1.8.0 [\#19](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/19) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-python from 4.5.0 to 4.6.1 [\#18](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/18) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump hmarr/auto-approve-action from 3.1.0 to 3.2.1 [\#16](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/16) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-python from 4.4.0 to 4.5.0 [\#14](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/14) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump actions/setup-python from 4.3.1 to 4.4.0 [\#13](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/13) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v2.0.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v2.0.0) (2022-12-16)
