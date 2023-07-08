@@ -314,9 +314,7 @@
                 "properties": {
                   "key": {
                     "description": "key is the label key that the selector applies to.",
-                    "type": "string",
-                    "x-kubernetes-patch-merge-key": "key",
-                    "x-kubernetes-patch-strategy": "merge"
+                    "type": "string"
                   },
                   "operator": {
                     "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -938,9 +936,7 @@
                                           "properties": {
                                             "key": {
                                               "description": "key is the label key that the selector applies to.",
-                                              "type": "string",
-                                              "x-kubernetes-patch-merge-key": "key",
-                                              "x-kubernetes-patch-strategy": "merge"
+                                              "type": "string"
                                             },
                                             "operator": {
                                               "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1004,9 +1000,7 @@
                                           "properties": {
                                             "key": {
                                               "description": "key is the label key that the selector applies to.",
-                                              "type": "string",
-                                              "x-kubernetes-patch-merge-key": "key",
-                                              "x-kubernetes-patch-strategy": "merge"
+                                              "type": "string"
                                             },
                                             "operator": {
                                               "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1118,9 +1112,7 @@
                                       "properties": {
                                         "key": {
                                           "description": "key is the label key that the selector applies to.",
-                                          "type": "string",
-                                          "x-kubernetes-patch-merge-key": "key",
-                                          "x-kubernetes-patch-strategy": "merge"
+                                          "type": "string"
                                         },
                                         "operator": {
                                           "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1184,9 +1176,7 @@
                                       "properties": {
                                         "key": {
                                           "description": "key is the label key that the selector applies to.",
-                                          "type": "string",
-                                          "x-kubernetes-patch-merge-key": "key",
-                                          "x-kubernetes-patch-strategy": "merge"
+                                          "type": "string"
                                         },
                                         "operator": {
                                           "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1298,9 +1288,7 @@
                                           "properties": {
                                             "key": {
                                               "description": "key is the label key that the selector applies to.",
-                                              "type": "string",
-                                              "x-kubernetes-patch-merge-key": "key",
-                                              "x-kubernetes-patch-strategy": "merge"
+                                              "type": "string"
                                             },
                                             "operator": {
                                               "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1364,9 +1352,7 @@
                                           "properties": {
                                             "key": {
                                               "description": "key is the label key that the selector applies to.",
-                                              "type": "string",
-                                              "x-kubernetes-patch-merge-key": "key",
-                                              "x-kubernetes-patch-strategy": "merge"
+                                              "type": "string"
                                             },
                                             "operator": {
                                               "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1478,9 +1464,7 @@
                                       "properties": {
                                         "key": {
                                           "description": "key is the label key that the selector applies to.",
-                                          "type": "string",
-                                          "x-kubernetes-patch-merge-key": "key",
-                                          "x-kubernetes-patch-strategy": "merge"
+                                          "type": "string"
                                         },
                                         "operator": {
                                           "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -1544,9 +1528,7 @@
                                       "properties": {
                                         "key": {
                                           "description": "key is the label key that the selector applies to.",
-                                          "type": "string",
-                                          "x-kubernetes-patch-merge-key": "key",
-                                          "x-kubernetes-patch-strategy": "merge"
+                                          "type": "string"
                                         },
                                         "operator": {
                                           "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -2826,6 +2808,13 @@
                         },
                         "type": [
                           "object",
+                          "null"
+                        ]
+                      },
+                      "restartPolicy": {
+                        "description": "RestartPolicy defines the restart behavior of individual containers in a pod. This field may only be set for init containers, and the only allowed value is \"Always\". For non-init containers or when this field is not specified, the restart behavior is defined by the Pod's restart policy and the container type. Setting the RestartPolicy as \"Always\" for the init container will have the following effect: this init container will be continually restarted on exit until all regular containers have terminated. Once all regular containers have completed, all init containers with restartPolicy \"Always\" will be shut down. This lifecycle differs from normal init containers and is often referred to as a \"sidecar\" container. Although this init container still starts in the init container sequence, it does not wait for the container to complete before proceeding to the next init container. Instead, the next init container starts immediately after this init container is started, or after any startupProbe has successfully completed.",
+                        "type": [
+                          "string",
                           "null"
                         ]
                       },
@@ -4640,6 +4629,13 @@
                         },
                         "type": [
                           "object",
+                          "null"
+                        ]
+                      },
+                      "restartPolicy": {
+                        "description": "Restart policy for the container to manage the restart behavior of each container within a pod. This may only be set for init containers. You cannot set this field on ephemeral containers.",
+                        "type": [
+                          "string",
                           "null"
                         ]
                       },
@@ -6488,6 +6484,13 @@
                           "null"
                         ]
                       },
+                      "restartPolicy": {
+                        "description": "RestartPolicy defines the restart behavior of individual containers in a pod. This field may only be set for init containers, and the only allowed value is \"Always\". For non-init containers or when this field is not specified, the restart behavior is defined by the Pod's restart policy and the container type. Setting the RestartPolicy as \"Always\" for the init container will have the following effect: this init container will be continually restarted on exit until all regular containers have terminated. Once all regular containers have completed, all init containers with restartPolicy \"Always\" will be shut down. This lifecycle differs from normal init containers and is often referred to as a \"sidecar\" container. Although this init container still starts in the init container sequence, it does not wait for the container to complete before proceeding to the next init container. Instead, the next init container starts immediately after this init container is started, or after any startupProbe has successfully completed.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
                       "securityContext": {
                         "description": "SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.",
                         "properties": {
@@ -7559,9 +7562,7 @@
                               "properties": {
                                 "key": {
                                   "description": "key is the label key that the selector applies to.",
-                                  "type": "string",
-                                  "x-kubernetes-patch-merge-key": "key",
-                                  "x-kubernetes-patch-strategy": "merge"
+                                  "type": "string"
                                 },
                                 "operator": {
                                   "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
@@ -8613,9 +8614,7 @@
                                           "properties": {
                                             "key": {
                                               "description": "key is the label key that the selector applies to.",
-                                              "type": "string",
-                                              "x-kubernetes-patch-merge-key": "key",
-                                              "x-kubernetes-patch-strategy": "merge"
+                                              "type": "string"
                                             },
                                             "operator": {
                                               "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
