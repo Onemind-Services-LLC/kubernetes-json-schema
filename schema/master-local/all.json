@@ -646,6 +646,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.HostAlias"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.HostIP"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.HostPathVolumeSource"
     },
     {
