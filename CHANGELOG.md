@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/HEAD)
+
+[Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v2.1.0...HEAD)
+
+**Merged pull requests:**
+
+- Bump actions/checkout from 3 to 4 [\#21](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/21) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v2.1.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v2.1.0) (2023-07-07)
 
 [Full Changelog](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/compare/v2.0.0...v2.1.0)
