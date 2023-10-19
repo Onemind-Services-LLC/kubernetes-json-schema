@@ -1033,6 +1033,9 @@
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.SessionAffinityConfig"
     },
     {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.SleepAction"
+    },
+    {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.StorageOSPersistentVolumeSource"
     },
     {
@@ -1337,15 +1340,6 @@
     },
     {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1.ServiceBackendPort"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ClusterCIDR"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ClusterCIDRList"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ClusterCIDRSpec"
     },
     {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.IPAddress"
