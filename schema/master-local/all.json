@@ -1426,6 +1426,18 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ParentReference"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDR"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDRList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDRSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDRStatus"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.node.v1.Overhead"
     },
     {

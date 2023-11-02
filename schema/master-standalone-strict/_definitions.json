@@ -5357,7 +5357,7 @@
         },
         "nodeExpandSecretRef": {
           "$ref": "#/definitions/io.k8s.api.core.v1.SecretReference",
-          "description": "nodeExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeExpandVolume call. This is a beta field which is enabled default by CSINodeExpandSecret feature gate. This field is optional, may be omitted if no secret is required. If the secret object contains more than one secret, all secrets are passed."
+          "description": "nodeExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeExpandVolume call. This field is optional, may be omitted if no secret is required. If the secret object contains more than one secret, all secrets are passed."
         },
         "nodePublishSecretRef": {
           "$ref": "#/definitions/io.k8s.api.core.v1.SecretReference",
@@ -14626,6 +14626,116 @@
         "resource": {
           "description": "Resource is the resource of the object being referenced.",
           "type": "string"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.ServiceCIDR": {
+      "description": "ServiceCIDR defines a range of IP addresses using CIDR format (e.g. 192.168.0.0/24 or 2001:db2::/64). This range is used to allocate ClusterIPs to Service objects.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "ServiceCIDR"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDRSpec",
+          "description": "spec is the desired state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDRStatus",
+          "description": "status represents the current state of the ServiceCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        }
+      },
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "networking.k8s.io",
+          "kind": "ServiceCIDR",
+          "version": "v1alpha1"
+        }
+      ],
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.ServiceCIDRList": {
+      "description": "ServiceCIDRList contains a list of ServiceCIDR objects.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is the list of ServiceCIDRs.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.networking.v1alpha1.ServiceCIDR"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "ServiceCIDRList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "networking.k8s.io",
+          "kind": "ServiceCIDRList",
+          "version": "v1alpha1"
+        }
+      ],
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.ServiceCIDRSpec": {
+      "description": "ServiceCIDRSpec define the CIDRs the user wants to use for allocating ClusterIPs for Services.",
+      "properties": {
+        "cidrs": {
+          "description": "CIDRs defines the IP blocks in CIDR notation (e.g. \"192.168.0.0/24\" or \"2001:db8::/64\") from which to assign service cluster IPs. Max of two CIDRs is allowed, one of each IP family. This field is immutable.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    },
+    "io.k8s.api.networking.v1alpha1.ServiceCIDRStatus": {
+      "description": "ServiceCIDRStatus describes the current state of the ServiceCIDR.",
+      "properties": {
+        "conditions": {
+          "description": "conditions holds an array of metav1.Condition that describe the state of the ServiceCIDR. Current service state",
+          "items": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "type",
+          "x-kubernetes-patch-strategy": "merge"
         }
       },
       "type": "object",
