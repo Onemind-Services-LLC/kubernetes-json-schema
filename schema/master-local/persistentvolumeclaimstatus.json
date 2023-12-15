@@ -50,7 +50,7 @@
       ]
     },
     "conditions": {
-      "description": "conditions is the current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.",
+      "description": "conditions is the current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'Resizing'.",
       "items": {
         "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PersistentVolumeClaimCondition"
       },
