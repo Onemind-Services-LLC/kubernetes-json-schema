@@ -25,7 +25,7 @@ jobs:
       - name: Run build
         run: make build-all
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: '[skip ci] Updated schemas'
           commit_user_name: Abhimanyu Saharan
