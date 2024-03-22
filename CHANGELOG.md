@@ -6,6 +6,8 @@
 
 **Merged pull requests:**
 
+- Bump actions/setup-python from 4.6.1 to 5.0.0 [\#25](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/25) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump stefanzweifel/git-auto-commit-action from 4 to 5 [\#23](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/23) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump actions/checkout from 3 to 4 [\#21](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/pull/21) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v2.1.0](https://github.com/Onemind-Services-LLC/kubernetes-json-schema/tree/v2.1.0) (2023-07-07)
