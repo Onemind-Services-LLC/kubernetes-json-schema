@@ -83,6 +83,17 @@
         "null"
       ]
     },
+    "runtimeHandlers": {
+      "description": "The available runtime handlers.",
+      "items": {
+        "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.NodeRuntimeHandler"
+      },
+      "type": [
+        "array",
+        "null"
+      ],
+      "x-kubernetes-list-type": "atomic"
+    },
     "volumesAttached": {
       "description": "List of volumes that are attached to the node.",
       "items": {

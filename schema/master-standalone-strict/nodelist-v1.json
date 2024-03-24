@@ -894,6 +894,48 @@
                   "null"
                 ]
               },
+              "runtimeHandlers": {
+                "description": "The available runtime handlers.",
+                "items": {
+                  "description": "NodeRuntimeHandler is a set of runtime handler information.",
+                  "properties": {
+                    "features": {
+                      "description": "NodeRuntimeHandlerFeatures is a set of runtime features.",
+                      "properties": {
+                        "recursiveReadOnlyMounts": {
+                          "description": "RecursiveReadOnlyMounts is set to true if the runtime handler supports RecursiveReadOnlyMounts.",
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "name": {
+                      "description": "Runtime handler name. Empty for the default runtime handler.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "x-kubernetes-list-type": "atomic"
+              },
               "volumesAttached": {
                 "description": "List of volumes that are attached to the node.",
                 "items": {
