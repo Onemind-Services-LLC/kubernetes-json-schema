@@ -870,6 +870,13 @@
                       "boolean",
                       "null"
                     ]
+                  },
+                  "userNamespaces": {
+                    "description": "UserNamespaces is set to true if the runtime handler supports UserNamespaces, including for volumes.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
                   }
                 },
                 "type": [
