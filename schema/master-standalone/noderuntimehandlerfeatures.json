@@ -1,5 +1,5 @@
 {
-  "description": "NodeRuntimeHandlerFeatures is a set of runtime features.",
+  "description": "NodeRuntimeHandlerFeatures is a set of features implemented by the runtime handler.",
   "properties": {
     "recursiveReadOnlyMounts": {
       "description": "RecursiveReadOnlyMounts is set to true if the runtime handler supports RecursiveReadOnlyMounts.",
