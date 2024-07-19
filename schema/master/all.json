@@ -769,6 +769,9 @@
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.ISCSIVolumeSource"
     },
     {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.ImageVolumeSource"
+    },
+    {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.KeyToPath"
     },
     {
