@@ -1585,18 +1585,6 @@
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.OpaqueDeviceConfiguration"
     },
     {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.PodSchedulingContext"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.PodSchedulingContextList"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.PodSchedulingContextSpec"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.PodSchedulingContextStatus"
-    },
-    {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ResourceClaim"
     },
     {
@@ -1604,9 +1592,6 @@
     },
     {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ResourceClaimList"
-    },
-    {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ResourceClaimSchedulingStatus"
     },
     {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ResourceClaimSpec"
