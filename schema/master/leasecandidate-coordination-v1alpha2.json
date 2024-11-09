@@ -1,5 +1,5 @@
 {
-  "description": "LeaseCandidateList is a list of Lease objects.",
+  "description": "LeaseCandidate defines a candidate for a Lease object. Candidates are created such that coordinated leader election will pick the best leader from the list of candidates.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -8,17 +8,7 @@
         "null"
       ],
       "enum": [
-        "coordination.k8s.io/v1alpha1"
-      ]
-    },
-    "items": {
-      "description": "items is a list of schema objects.",
-      "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.coordination.v1alpha1.LeaseCandidate"
-      },
-      "type": [
-        "array",
-        "null"
+        "coordination.k8s.io/v1alpha2"
       ]
     },
     "kind": {
@@ -28,23 +18,24 @@
         "null"
       ],
       "enum": [
-        "LeaseCandidateList"
+        "LeaseCandidate"
       ]
     },
     "metadata": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
-      "description": "Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "description": "More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+    },
+    "spec": {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.coordination.v1alpha2.LeaseCandidateSpec",
+      "description": "spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
     }
   },
-  "required": [
-    "items"
-  ],
   "type": "object",
   "x-kubernetes-group-version-kind": [
     {
       "group": "coordination.k8s.io",
-      "kind": "LeaseCandidateList",
-      "version": "v1alpha1"
+      "kind": "LeaseCandidate",
+      "version": "v1alpha2"
     }
   ],
   "$schema": "http://json-schema.org/schema#"
