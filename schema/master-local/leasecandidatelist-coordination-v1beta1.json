@@ -6,12 +6,15 @@
       "type": [
         "string",
         "null"
+      ],
+      "enum": [
+        "coordination.k8s.io/v1beta1"
       ]
     },
     "items": {
       "description": "items is a list of schema objects.",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.coordination.v1beta1.LeaseCandidate"
+        "$ref": "_definitions.json#/definitions/io.k8s.api.coordination.v1beta1.LeaseCandidate"
       },
       "type": [
         "array",
@@ -29,7 +32,7 @@
       ]
     },
     "metadata": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
       "description": "Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
     }
   },
