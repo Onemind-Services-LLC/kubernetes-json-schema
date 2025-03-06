@@ -313,12 +313,6 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.authentication.v1.UserInfo"
     },
     {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.authentication.v1beta1.SelfSubjectReview"
-    },
-    {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.authentication.v1beta1.SelfSubjectReviewStatus"
-    },
-    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.authorization.v1.FieldSelectorAttributes"
     },
     {
