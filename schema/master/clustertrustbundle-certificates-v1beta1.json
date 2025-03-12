@@ -6,6 +6,9 @@
       "type": [
         "string",
         "null"
+      ],
+      "enum": [
+        "certificates.k8s.io/v1beta1"
       ]
     },
     "kind": {
@@ -19,11 +22,11 @@
       ]
     },
     "metadata": {
-      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
       "description": "metadata contains the object metadata."
     },
     "spec": {
-      "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1beta1.ClusterTrustBundleSpec",
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.certificates.v1beta1.ClusterTrustBundleSpec",
       "description": "spec contains the signer (if any) and trust anchors."
     }
   },

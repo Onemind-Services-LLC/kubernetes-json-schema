@@ -6,6 +6,9 @@
       "type": [
         "string",
         "null"
+      ],
+      "enum": [
+        "certificates.k8s.io/v1beta1"
       ]
     },
     "kind": {
@@ -160,8 +163,7 @@
             "type": [
               "object",
               "null"
-            ],
-            "additionalProperties": false
+            ]
           },
           "type": [
             "array",
@@ -229,8 +231,7 @@
               "object",
               "null"
             ],
-            "x-kubernetes-map-type": "atomic",
-            "additionalProperties": false
+            "x-kubernetes-map-type": "atomic"
           },
           "type": [
             "array",
@@ -268,8 +269,7 @@
       "type": [
         "object",
         "null"
-      ],
-      "additionalProperties": false
+      ]
     },
     "spec": {
       "description": "ClusterTrustBundleSpec contains the signer and trust anchors.",
@@ -292,8 +292,7 @@
       "type": [
         "object",
         "null"
-      ],
-      "additionalProperties": false
+      ]
     }
   },
   "required": [
@@ -307,6 +306,5 @@
       "version": "v1beta1"
     }
   ],
-  "additionalProperties": false,
   "$schema": "http://json-schema.org/schema#"
 }

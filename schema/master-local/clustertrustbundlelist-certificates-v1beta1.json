@@ -6,12 +6,15 @@
       "type": [
         "string",
         "null"
+      ],
+      "enum": [
+        "certificates.k8s.io/v1beta1"
       ]
     },
     "items": {
       "description": "items is a collection of ClusterTrustBundle objects",
       "items": {
-        "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.certificates.v1beta1.ClusterTrustBundle"
+        "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1beta1.ClusterTrustBundle"
       },
       "type": [
         "array",
@@ -29,7 +32,7 @@
       ]
     },
     "metadata": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
       "description": "metadata contains the list metadata."
     }
   },
