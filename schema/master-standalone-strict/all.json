@@ -1219,6 +1219,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.discovery.v1.EndpointSliceList"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.discovery.v1.ForNode"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.discovery.v1.ForZone"
     },
     {
@@ -1546,6 +1549,24 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceSubRequest"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaint"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaintRule"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaintRuleList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaintRuleSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaintSelector"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceToleration"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.NetworkDeviceData"
     },
     {
@@ -1646,6 +1667,12 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.DeviceSubRequest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.DeviceTaint"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.DeviceToleration"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.NetworkDeviceData"

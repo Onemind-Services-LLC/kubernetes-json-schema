@@ -20,6 +20,17 @@
         "object",
         "null"
       ]
+    },
+    "taints": {
+      "description": "If specified, these are the driver-defined taints.\n\nThe maximum number of taints is 8.\n\nThis is an alpha field and requires enabling the DRADeviceTaints feature gate.",
+      "items": {
+        "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaint"
+      },
+      "type": [
+        "array",
+        "null"
+      ],
+      "x-kubernetes-list-type": "atomic"
     }
   },
   "type": "object",
