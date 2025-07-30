@@ -7010,6 +7010,30 @@
       "type": "object",
       "additionalProperties": false
     },
+    "io.k8s.api.core.v1.ContainerExtendedResourceRequest": {
+      "description": "ContainerExtendedResourceRequest has the mapping of container name, extended resource name to the device request name.",
+      "properties": {
+        "containerName": {
+          "description": "The name of the container requesting resources.",
+          "type": "string"
+        },
+        "requestName": {
+          "description": "The name of the request in the special ResourceClaim which corresponds to the extended resource.",
+          "type": "string"
+        },
+        "resourceName": {
+          "description": "The name of the extended resource in that container which gets backed by DRA.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "containerName",
+        "resourceName",
+        "requestName"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.core.v1.ContainerImage": {
       "description": "Describe a container image",
       "properties": {
@@ -10340,6 +10364,29 @@
       "type": "object",
       "additionalProperties": false
     },
+    "io.k8s.api.core.v1.PodExtendedResourceClaimStatus": {
+      "description": "PodExtendedResourceClaimStatus is stored in the PodStatus for the extended resource requests backed by DRA. It stores the generated name for the corresponding special ResourceClaim created by the scheduler.",
+      "properties": {
+        "requestMappings": {
+          "description": "RequestMappings identifies the mapping of <container, extended resource backed by DRA> to  device request in the generated ResourceClaim.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.ContainerExtendedResourceRequest"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "resourceClaimName": {
+          "description": "ResourceClaimName is the name of the ResourceClaim that was generated for the Pod in the namespace of the Pod.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestMappings",
+        "resourceClaimName"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
     "io.k8s.api.core.v1.PodIP": {
       "description": "PodIP represents a single IP address allocated to the pod.",
       "properties": {
@@ -10851,6 +10898,10 @@
           },
           "type": "array",
           "x-kubernetes-list-type": "atomic"
+        },
+        "extendedResourceClaimStatus": {
+          "$ref": "#/definitions/io.k8s.api.core.v1.PodExtendedResourceClaimStatus",
+          "description": "Status of extended resource claim backed by DRA."
         },
         "hostIP": {
           "description": "hostIP holds the IP address of the host to which the pod is assigned. Empty if the pod has not started yet. A pod can be assigned to a node that has a problem in kubelet which in turns mean that HostIP will not be updated even if there is a node is assigned to pod",
@@ -16085,6 +16136,10 @@
     "io.k8s.api.resource.v1.AllocationResult": {
       "description": "AllocationResult contains attributes of an allocated resource.",
       "properties": {
+        "allocationTimestamp": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "AllocationTimestamp stores the time when the resources were allocated. This field is not guaranteed to be set, in which case that time is unknown.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gate."
+        },
         "devices": {
           "$ref": "#/definitions/io.k8s.api.resource.v1.DeviceAllocationResult",
           "description": "Devices is the result of allocating devices."
@@ -16160,6 +16215,26 @@
           },
           "description": "Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.",
           "type": "object"
+        },
+        "bindingConditions": {
+          "description": "BindingConditions defines the conditions for proceeding with binding. All of these conditions must be set in the per-device status conditions with a value of True to proceed with binding the pod to the node while scheduling the pod.\n\nThe maximum number of binding conditions is 4.\n\nThe conditions must be a valid condition type string.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindingFailureConditions": {
+          "description": "BindingFailureConditions defines the conditions for binding failure. They may be set in the per-device status conditions. If any is set to \"True\", a binding failure occurred.\n\nThe maximum number of binding failure conditions is 4.\n\nThe conditions must be a valid condition type string.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindsToNode": {
+          "description": "BindsToNode indicates if the usage of an allocation involving this device has to be limited to exactly the node that was chosen when allocating the claim. If set to true, the scheduler will set the ResourceClaim.Status.Allocation.NodeSelector to match the node where the allocation was made.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "type": "boolean"
         },
         "capacity": {
           "additionalProperties": {
@@ -16437,6 +16512,10 @@
           "type": "array",
           "x-kubernetes-list-type": "atomic"
         },
+        "extendedResourceName": {
+          "description": "ExtendedResourceName is the extended resource name for the devices of this class. The devices of this class can be used to satisfy a pod's extended resource requests. It has the same format as the name of a pod's extended resource. It should be unique among all the device classes in a cluster. If two device classes have the same name, then the class created later is picked to satisfy a pod's extended resource requests. If two classes are created at the same time, then the name of the class lexicographically sorted first is picked.\n\nThis is an alpha field.",
+          "type": "string"
+        },
         "selectors": {
           "description": "Each selector must be satisfied by a device which is claimed via this class.",
           "items": {
@@ -16522,6 +16601,22 @@
         "adminAccess": {
           "description": "AdminAccess indicates that this device was allocated for administrative access. See the corresponding request field for a definition of mode.\n\nThis is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.",
           "type": "boolean"
+        },
+        "bindingConditions": {
+          "description": "BindingConditions contains a copy of the BindingConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindingFailureConditions": {
+          "description": "BindingFailureConditions contains a copy of the BindingFailureConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
         },
         "device": {
           "description": "Device references one device instance via its name in the driver's resource pool. It must be a DNS label.",
@@ -17374,6 +17469,10 @@
     "io.k8s.api.resource.v1beta1.AllocationResult": {
       "description": "AllocationResult contains attributes of an allocated resource.",
       "properties": {
+        "allocationTimestamp": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "AllocationTimestamp stores the time when the resources were allocated. This field is not guaranteed to be set, in which case that time is unknown.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gate."
+        },
         "devices": {
           "$ref": "#/definitions/io.k8s.api.resource.v1beta1.DeviceAllocationResult",
           "description": "Devices is the result of allocating devices."
@@ -17399,6 +17498,26 @@
           },
           "description": "Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.",
           "type": "object"
+        },
+        "bindingConditions": {
+          "description": "BindingConditions defines the conditions for proceeding with binding. All of these conditions must be set in the per-device status conditions with a value of True to proceed with binding the pod to the node while scheduling the pod.\n\nThe maximum number of binding conditions is 4.\n\nThe conditions must be a valid condition type string.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindingFailureConditions": {
+          "description": "BindingFailureConditions defines the conditions for binding failure. They may be set in the per-device status conditions. If any is true, a binding failure occurred.\n\nThe maximum number of binding failure conditions is 4.\n\nThe conditions must be a valid condition type string.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindsToNode": {
+          "description": "BindsToNode indicates if the usage of an allocation involving this device has to be limited to exactly the node that was chosen when allocating the claim. If set to true, the scheduler will set the ResourceClaim.Status.Allocation.NodeSelector to match the node where the allocation was made.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "type": "boolean"
         },
         "capacity": {
           "additionalProperties": {
@@ -17737,6 +17856,10 @@
           "type": "array",
           "x-kubernetes-list-type": "atomic"
         },
+        "extendedResourceName": {
+          "description": "ExtendedResourceName is the extended resource name for the devices of this class. The devices of this class can be used to satisfy a pod's extended resource requests. It has the same format as the name of a pod's extended resource. It should be unique among all the device classes in a cluster. If two device classes have the same name, then the class created later is picked to satisfy a pod's extended resource requests. If two classes are created at the same time, then the name of the class lexicographically sorted first is picked.\n\nThis is an alpha field.",
+          "type": "string"
+        },
         "selectors": {
           "description": "Each selector must be satisfied by a device which is claimed via this class.",
           "items": {
@@ -17851,6 +17974,22 @@
         "adminAccess": {
           "description": "AdminAccess indicates that this device was allocated for administrative access. See the corresponding request field for a definition of mode.\n\nThis is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.",
           "type": "boolean"
+        },
+        "bindingConditions": {
+          "description": "BindingConditions contains a copy of the BindingConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindingFailureConditions": {
+          "description": "BindingFailureConditions contains a copy of the BindingFailureConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
         },
         "device": {
           "description": "Device references one device instance via its name in the driver's resource pool. It must be a DNS label.",
@@ -18484,6 +18623,10 @@
     "io.k8s.api.resource.v1beta2.AllocationResult": {
       "description": "AllocationResult contains attributes of an allocated resource.",
       "properties": {
+        "allocationTimestamp": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "AllocationTimestamp stores the time when the resources were allocated. This field is not guaranteed to be set, in which case that time is unknown.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gate."
+        },
         "devices": {
           "$ref": "#/definitions/io.k8s.api.resource.v1beta2.DeviceAllocationResult",
           "description": "Devices is the result of allocating devices."
@@ -18559,6 +18702,26 @@
           },
           "description": "Attributes defines the set of attributes for this device. The name of each attribute must be unique in that set.\n\nThe maximum number of attributes and capacities combined is 32.",
           "type": "object"
+        },
+        "bindingConditions": {
+          "description": "BindingConditions defines the conditions for proceeding with binding. All of these conditions must be set in the per-device status conditions with a value of True to proceed with binding the pod to the node while scheduling the pod.\n\nThe maximum number of binding conditions is 4.\n\nThe conditions must be a valid condition type string.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindingFailureConditions": {
+          "description": "BindingFailureConditions defines the conditions for binding failure. They may be set in the per-device status conditions. If any is set to \"True\", a binding failure occurred.\n\nThe maximum number of binding failure conditions is 4.\n\nThe conditions must be a valid condition type string.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindsToNode": {
+          "description": "BindsToNode indicates if the usage of an allocation involving this device has to be limited to exactly the node that was chosen when allocating the claim. If set to true, the scheduler will set the ResourceClaim.Status.Allocation.NodeSelector to match the node where the allocation was made.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "type": "boolean"
         },
         "capacity": {
           "additionalProperties": {
@@ -18836,6 +18999,10 @@
           "type": "array",
           "x-kubernetes-list-type": "atomic"
         },
+        "extendedResourceName": {
+          "description": "ExtendedResourceName is the extended resource name for the devices of this class. The devices of this class can be used to satisfy a pod's extended resource requests. It has the same format as the name of a pod's extended resource. It should be unique among all the device classes in a cluster. If two device classes have the same name, then the class created later is picked to satisfy a pod's extended resource requests. If two classes are created at the same time, then the name of the class lexicographically sorted first is picked.\n\nThis is an alpha field.",
+          "type": "string"
+        },
         "selectors": {
           "description": "Each selector must be satisfied by a device which is claimed via this class.",
           "items": {
@@ -18921,6 +19088,22 @@
         "adminAccess": {
           "description": "AdminAccess indicates that this device was allocated for administrative access. See the corresponding request field for a definition of mode.\n\nThis is an alpha field and requires enabling the DRAAdminAccess feature gate. Admin access is disabled if this field is unset or set to false, otherwise it is enabled.",
           "type": "boolean"
+        },
+        "bindingConditions": {
+          "description": "BindingConditions contains a copy of the BindingConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "bindingFailureConditions": {
+          "description": "BindingFailureConditions contains a copy of the BindingFailureConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
         },
         "device": {
           "description": "Device references one device instance via its name in the driver's resource pool. It must be a DNS label.",

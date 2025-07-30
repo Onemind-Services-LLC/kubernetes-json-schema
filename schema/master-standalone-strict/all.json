@@ -655,6 +655,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.Container"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ContainerExtendedResourceRequest"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ContainerImage"
     },
     {
@@ -977,6 +980,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PodDNSConfigOption"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PodExtendedResourceClaimStatus"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PodIP"

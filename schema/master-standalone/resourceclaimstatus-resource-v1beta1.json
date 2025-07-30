@@ -4,6 +4,14 @@
     "allocation": {
       "description": "AllocationResult contains attributes of an allocated resource.",
       "properties": {
+        "allocationTimestamp": {
+          "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "devices": {
           "description": "DeviceAllocationResult is the result of allocating devices.",
           "properties": {
@@ -77,6 +85,34 @@
                       "boolean",
                       "null"
                     ]
+                  },
+                  "bindingConditions": {
+                    "description": "BindingConditions contains a copy of the BindingConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "bindingFailureConditions": {
+                    "description": "BindingFailureConditions contains a copy of the BindingFailureConditions from the corresponding ResourceSlice at the time of allocation.\n\nThis is an alpha field and requires enabling the DRADeviceBindingConditions and DRAResourceClaimDeviceStatus feature gates.",
+                    "items": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "x-kubernetes-list-type": "atomic"
                   },
                   "device": {
                     "description": "Device references one device instance via its name in the driver's resource pool. It must be a DNS label.",
