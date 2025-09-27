@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-# All k8s versions, starting from 1.27
+# All k8s versions, starting from 1.31
 VERSIONS=$(git ls-remote --refs --tags https://github.com/kubernetes/kubernetes.git \
   | cut -d/ -f3 \
-  | grep -E '^v1\.(2[7-9]|[3-9][0-9])\.[0-9]+$')
+  | grep -E '^v1\.(3[1-9]|[4-9][0-9])\.[0-9]+$')
 
 # This script uses openapi2jsonschema to generate a set of JSON schemas for
 # the specified Kubernetes versions in three different flavours:
