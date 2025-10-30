@@ -1,5 +1,5 @@
 {
-  "description": "StorageVersionMigration represents a migration of stored data to the latest storage version.",
+  "description": "StorageVersionMigrationList is a collection of storage version migrations.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -8,7 +8,17 @@
         "null"
       ],
       "enum": [
-        "storagemigration.k8s.io/v1alpha1"
+        "storagemigration.k8s.io/v1beta1"
+      ]
+    },
+    "items": {
+      "description": "Items is the list of StorageVersionMigration",
+      "items": {
+        "$ref": "_definitions.json#/definitions/io.k8s.api.storagemigration.v1beta1.StorageVersionMigration"
+      },
+      "type": [
+        "array",
+        "null"
       ]
     },
     "kind": {
@@ -18,28 +28,23 @@
         "null"
       ],
       "enum": [
-        "StorageVersionMigration"
+        "StorageVersionMigrationList"
       ]
     },
     "metadata": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
-      "description": "Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
-    },
-    "spec": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec",
-      "description": "Specification of the migration."
-    },
-    "status": {
-      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationStatus",
-      "description": "Status of the migration."
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+      "description": "Standard list metadata More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
     }
   },
+  "required": [
+    "items"
+  ],
   "type": "object",
   "x-kubernetes-group-version-kind": [
     {
       "group": "storagemigration.k8s.io",
-      "kind": "StorageVersionMigration",
-      "version": "v1alpha1"
+      "kind": "StorageVersionMigrationList",
+      "version": "v1beta1"
     }
   ],
   "$schema": "http://json-schema.org/schema#"
