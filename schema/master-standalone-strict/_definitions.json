@@ -15730,12 +15730,6 @@
           "type": "integer"
         }
       },
-      "required": [
-        "disruptionsAllowed",
-        "currentHealthy",
-        "desiredHealthy",
-        "expectedPods"
-      ],
       "type": "object",
       "additionalProperties": false
     },
