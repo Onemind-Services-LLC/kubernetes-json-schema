@@ -491,6 +491,9 @@
           "description": "spec defines the desired behavior of the ValidatingAdmissionPolicyBinding."
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -1798,6 +1801,11 @@
           "x-kubernetes-list-type": "set"
         }
       },
+      "required": [
+        "apiServerID",
+        "encodingVersion",
+        "decodableVersions"
+      ],
       "type": "object",
       "additionalProperties": false
     },
@@ -1829,8 +1837,7 @@
         }
       },
       "required": [
-        "spec",
-        "status"
+        "metadata"
       ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
@@ -3783,6 +3790,9 @@
           "description": "status is the current information about the autoscaler."
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -4155,6 +4165,9 @@
           "description": "status is the current information about the autoscaler."
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -4621,6 +4634,9 @@
           "description": "Current status of a cron job. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -5854,6 +5870,9 @@
           "description": "spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -5962,6 +5981,9 @@
           "description": "spec contains the specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -14412,6 +14434,9 @@
           "description": "spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -15231,6 +15256,9 @@
           "description": "spec is the desired state of the IPAddress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
