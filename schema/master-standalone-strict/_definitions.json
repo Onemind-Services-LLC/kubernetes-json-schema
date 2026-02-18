@@ -3108,9 +3108,6 @@
           "description": "status is filled in by the server and indicates whether the token can be authenticated."
         }
       },
-      "required": [
-        "spec"
-      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -3142,9 +3139,6 @@
           "type": "integer"
         }
       },
-      "required": [
-        "audiences"
-      ],
       "type": "object",
       "additionalProperties": false
     },
@@ -3160,10 +3154,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "token",
-        "expirationTimestamp"
-      ],
       "type": "object",
       "additionalProperties": false
     },
@@ -3223,6 +3213,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "token"
+      ],
       "type": "object",
       "additionalProperties": false
     },

@@ -3014,9 +3014,6 @@
           "description": "status is filled in by the server and indicates whether the token can be authenticated."
         }
       },
-      "required": [
-        "spec"
-      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -3047,9 +3044,6 @@
           "type": "integer"
         }
       },
-      "required": [
-        "audiences"
-      ],
       "type": "object"
     },
     "io.k8s.api.authentication.v1.TokenRequestStatus": {
@@ -3064,10 +3058,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "token",
-        "expirationTimestamp"
-      ],
       "type": "object"
     },
     "io.k8s.api.authentication.v1.TokenReview": {
@@ -3125,6 +3115,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "token"
+      ],
       "type": "object"
     },
     "io.k8s.api.authentication.v1.TokenReviewStatus": {
