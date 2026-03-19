@@ -901,6 +901,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.NodeAffinity"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.NodeAllocatableResourceClaimStatus"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.NodeCondition"
     },
     {
@@ -1639,6 +1642,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1.NetworkDeviceData"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1.NodeAllocatableResourceMapping"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1.OpaqueDeviceConfiguration"
     },
     {
@@ -1783,6 +1789,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.NetworkDeviceData"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.NodeAllocatableResourceMapping"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.OpaqueDeviceConfiguration"
     },
     {
@@ -1922,6 +1931,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta2.NetworkDeviceData"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta2.NodeAllocatableResourceMapping"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta2.OpaqueDeviceConfiguration"
