@@ -20952,11 +20952,38 @@
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.BasicSchedulingPolicy": {
+    "io.k8s.api.scheduling.v1alpha3.AllDisruptionMode": {
+      "description": "AllDisruptionMode specifies that children can only be disrupted together.",
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1alpha3.BasicSchedulingPolicy": {
       "description": "BasicSchedulingPolicy indicates that standard Kubernetes scheduling behavior should be used.",
       "type": "object"
     },
-    "io.k8s.api.scheduling.v1alpha2.GangSchedulingPolicy": {
+    "io.k8s.api.scheduling.v1alpha3.DisruptionMode": {
+      "description": "DisruptionMode defines how individual entities within a group can be disrupted. Exactly one mode can be set.",
+      "properties": {
+        "all": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.AllDisruptionMode",
+          "description": "All specifies that all children can only be disrupted together."
+        },
+        "single": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.SingleDisruptionMode",
+          "description": "Single specifies that children can be disrupted independently from each other."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "all": "All",
+            "single": "Single"
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "io.k8s.api.scheduling.v1alpha3.GangSchedulingPolicy": {
       "description": "GangSchedulingPolicy defines the parameters for gang scheduling.",
       "properties": {
         "minCount": {
@@ -20971,7 +20998,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroup": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroup": {
       "description": "PodGroup represents a runtime instance of pods grouped together. PodGroups are created by workload controllers (Job, LWS, JobSet, etc...) from Workload.podGroupTemplates. PodGroup API enablement is toggled by the GenericWorkload feature gate.",
       "properties": {
         "apiVersion": {
@@ -20990,11 +21017,11 @@
           "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
         },
         "spec": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupSpec",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupSpec",
           "description": "Spec defines the desired state of the PodGroup."
         },
         "status": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupStatus",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupStatus",
           "description": "Status represents the current observed state of the PodGroup."
         }
       },
@@ -21006,12 +21033,12 @@
         {
           "group": "scheduling.k8s.io",
           "kind": "PodGroup",
-          "version": "v1alpha2"
+          "version": "v1alpha3"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupList": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupList": {
       "description": "PodGroupList contains a list of PodGroup resources.",
       "properties": {
         "apiVersion": {
@@ -21021,7 +21048,7 @@
         "items": {
           "description": "Items is the list of PodGroups.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroup"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroup"
           },
           "type": "array"
         },
@@ -21045,12 +21072,12 @@
         {
           "group": "scheduling.k8s.io",
           "kind": "PodGroupList",
-          "version": "v1alpha2"
+          "version": "v1alpha3"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupResourceClaim": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupResourceClaim": {
       "description": "PodGroupResourceClaim references exactly one ResourceClaim, either directly or by naming a ResourceClaimTemplate which is then turned into a ResourceClaim for the PodGroup.\n\nIt adds a name to it that uniquely identifies the ResourceClaim inside the PodGroup. Pods that need access to the ResourceClaim define a matching reference in its own Spec.ResourceClaims. The Pod's claim must match all fields of the PodGroup's claim exactly.",
       "properties": {
         "name": {
@@ -21072,7 +21099,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupResourceClaimStatus": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupResourceClaimStatus": {
       "description": "PodGroupResourceClaimStatus is stored in the PodGroupStatus for each PodGroupResourceClaim which references a ResourceClaimTemplate. It stores the generated name for the corresponding ResourceClaim.",
       "properties": {
         "name": {
@@ -21090,13 +21117,13 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingConstraints": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupSchedulingConstraints": {
       "description": "PodGroupSchedulingConstraints defines scheduling constraints (e.g. topology) for a PodGroup.",
       "properties": {
         "topology": {
           "description": "Topology defines the topology constraints for the pod group. Currently only a single topology constraint can be specified. This may change in the future.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.TopologyConstraint"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.TopologyConstraint"
           },
           "type": "array",
           "x-kubernetes-list-type": "atomic"
@@ -21105,15 +21132,15 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingPolicy": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupSchedulingPolicy": {
       "description": "PodGroupSchedulingPolicy defines the scheduling configuration for a PodGroup. Exactly one policy must be set.",
       "properties": {
         "basic": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.BasicSchedulingPolicy",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.BasicSchedulingPolicy",
           "description": "Basic specifies that the pods in this group should be scheduled using standard Kubernetes scheduling behavior."
         },
         "gang": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.GangSchedulingPolicy",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.GangSchedulingPolicy",
           "description": "Gang specifies that the pods in this group should be scheduled using all-or-nothing semantics."
         }
       },
@@ -21128,15 +21155,15 @@
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupSpec": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupSpec": {
       "description": "PodGroupSpec defines the desired state of a PodGroup.",
       "properties": {
         "disruptionMode": {
-          "description": "DisruptionMode defines the mode in which a given PodGroup can be disrupted. Controllers are expected to fill this field by copying it from a PodGroupTemplate. One of Pod, PodGroup. Defaults to Pod if unset. This field is immutable. This field is available only when the WorkloadAwarePreemption feature gate is enabled.",
-          "type": "string"
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.DisruptionMode",
+          "description": "DisruptionMode defines the mode in which a given PodGroup can be disrupted. Controllers are expected to fill this field by copying it from a PodGroupTemplate. One of Single, All. Defaults to Single if unset. This field is immutable. This field is available only when the WorkloadAwarePreemption feature gate is enabled."
         },
         "podGroupTemplateRef": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupTemplateReference",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupTemplateReference",
           "description": "PodGroupTemplateRef references an optional PodGroup template within other object (e.g. Workload) that was used to create the PodGroup. This field is immutable."
         },
         "priority": {
@@ -21151,7 +21178,7 @@
         "resourceClaims": {
           "description": "ResourceClaims defines which ResourceClaims may be shared among Pods in the group. Pods consume the devices allocated to a PodGroup's claim by defining a claim in its own Spec.ResourceClaims that matches the PodGroup's claim exactly. The claim must have the same name and refer to the same ResourceClaim or ResourceClaimTemplate.\n\nThis is an alpha-level field and requires that the DRAWorkloadResourceClaims feature gate is enabled.\n\nThis field is immutable.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupResourceClaim"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupResourceClaim"
           },
           "type": "array",
           "x-kubernetes-list-map-keys": [
@@ -21162,11 +21189,11 @@
           "x-kubernetes-patch-strategy": "merge,retainKeys"
         },
         "schedulingConstraints": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingConstraints",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupSchedulingConstraints",
           "description": "SchedulingConstraints defines optional scheduling constraints (e.g. topology) for this PodGroup. Controllers are expected to fill this field by copying it from a PodGroupTemplate. This field is immutable. This field is only available when the TopologyAwareWorkloadScheduling feature gate is enabled."
         },
         "schedulingPolicy": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingPolicy",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupSchedulingPolicy",
           "description": "SchedulingPolicy defines the scheduling policy for this instance of the PodGroup. Controllers are expected to fill this field by copying it from a PodGroupTemplate. This field is immutable."
         }
       },
@@ -21176,7 +21203,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupStatus": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupStatus": {
       "description": "PodGroupStatus represents information about the status of a pod group.",
       "properties": {
         "conditions": {
@@ -21195,7 +21222,7 @@
         "resourceClaimStatuses": {
           "description": "Status of resource claims.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupResourceClaimStatus"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupResourceClaimStatus"
           },
           "type": "array",
           "x-kubernetes-list-map-keys": [
@@ -21209,12 +21236,12 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupTemplate": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupTemplate": {
       "description": "PodGroupTemplate represents a template for a set of pods with a scheduling policy.",
       "properties": {
         "disruptionMode": {
-          "description": "DisruptionMode defines the mode in which a given PodGroup can be disrupted. One of Pod, PodGroup. This field is available only when the WorkloadAwarePreemption feature gate is enabled.",
-          "type": "string"
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.DisruptionMode",
+          "description": "DisruptionMode defines the mode in which a given PodGroup can be disrupted. One of Single, All. This field is available only when the WorkloadAwarePreemption feature gate is enabled."
         },
         "name": {
           "description": "Name is a unique identifier for the PodGroupTemplate within the Workload. It must be a DNS label. This field is immutable.",
@@ -21232,7 +21259,7 @@
         "resourceClaims": {
           "description": "ResourceClaims defines which ResourceClaims may be shared among Pods in the group. Pods consume the devices allocated to a PodGroup's claim by defining a claim in its own Spec.ResourceClaims that matches the PodGroup's claim exactly. The claim must have the same name and refer to the same ResourceClaim or ResourceClaimTemplate.\n\nThis is an alpha-level field and requires that the DRAWorkloadResourceClaims feature gate is enabled.\n\nThis field is immutable.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupResourceClaim"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupResourceClaim"
           },
           "type": "array",
           "x-kubernetes-list-map-keys": [
@@ -21243,11 +21270,11 @@
           "x-kubernetes-patch-strategy": "merge,retainKeys"
         },
         "schedulingConstraints": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingConstraints",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupSchedulingConstraints",
           "description": "SchedulingConstraints defines optional scheduling constraints (e.g. topology) for this PodGroupTemplate. This field is only available when the TopologyAwareWorkloadScheduling feature gate is enabled."
         },
         "schedulingPolicy": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupSchedulingPolicy",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupSchedulingPolicy",
           "description": "SchedulingPolicy defines the scheduling policy for this PodGroupTemplate."
         }
       },
@@ -21258,11 +21285,11 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.PodGroupTemplateReference": {
+    "io.k8s.api.scheduling.v1alpha3.PodGroupTemplateReference": {
       "description": "PodGroupTemplateReference references a PodGroup template defined in some object (e.g. Workload). Exactly one reference must be set.",
       "properties": {
         "workload": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.WorkloadPodGroupTemplateReference",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.WorkloadPodGroupTemplateReference",
           "description": "Workload references the PodGroupTemplate within the Workload object that was used to create the PodGroup."
         }
       },
@@ -21276,7 +21303,11 @@
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.TopologyConstraint": {
+    "io.k8s.api.scheduling.v1alpha3.SingleDisruptionMode": {
+      "description": "SingleDisruptionMode specifies that children can be disrupted independently.",
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1alpha3.TopologyConstraint": {
       "description": "TopologyConstraint defines a topology constraint for a PodGroup.",
       "properties": {
         "key": {
@@ -21290,7 +21321,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.TypedLocalObjectReference": {
+    "io.k8s.api.scheduling.v1alpha3.TypedLocalObjectReference": {
       "description": "TypedLocalObjectReference allows to reference typed object inside the same namespace.",
       "properties": {
         "apiGroup": {
@@ -21313,7 +21344,7 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.Workload": {
+    "io.k8s.api.scheduling.v1alpha3.Workload": {
       "description": "Workload allows for expressing scheduling constraints that should be used when managing the lifecycle of workloads from the scheduling perspective, including scheduling, preemption, eviction and other phases. Workload API enablement is toggled by the GenericWorkload feature gate.",
       "properties": {
         "apiVersion": {
@@ -21332,7 +21363,7 @@
           "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
         },
         "spec": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.WorkloadSpec",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.WorkloadSpec",
           "description": "Spec defines the desired behavior of a Workload."
         }
       },
@@ -21344,12 +21375,12 @@
         {
           "group": "scheduling.k8s.io",
           "kind": "Workload",
-          "version": "v1alpha2"
+          "version": "v1alpha3"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.WorkloadList": {
+    "io.k8s.api.scheduling.v1alpha3.WorkloadList": {
       "description": "WorkloadList contains a list of Workload resources.",
       "properties": {
         "apiVersion": {
@@ -21359,7 +21390,7 @@
         "items": {
           "description": "Items is the list of Workloads.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.Workload"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.Workload"
           },
           "type": "array"
         },
@@ -21383,12 +21414,12 @@
         {
           "group": "scheduling.k8s.io",
           "kind": "WorkloadList",
-          "version": "v1alpha2"
+          "version": "v1alpha3"
         }
       ],
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.WorkloadPodGroupTemplateReference": {
+    "io.k8s.api.scheduling.v1alpha3.WorkloadPodGroupTemplateReference": {
       "description": "WorkloadPodGroupTemplateReference references the PodGroupTemplate within the Workload object.",
       "properties": {
         "podGroupTemplateName": {
@@ -21407,17 +21438,17 @@
       "type": "object",
       "additionalProperties": false
     },
-    "io.k8s.api.scheduling.v1alpha2.WorkloadSpec": {
+    "io.k8s.api.scheduling.v1alpha3.WorkloadSpec": {
       "description": "WorkloadSpec defines the desired state of a Workload.",
       "properties": {
         "controllerRef": {
-          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.TypedLocalObjectReference",
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.TypedLocalObjectReference",
           "description": "ControllerRef is an optional reference to the controlling object, such as a Deployment or Job. This field is intended for use by tools like CLIs to provide a link back to the original workload definition. This field is immutable."
         },
         "podGroupTemplates": {
           "description": "PodGroupTemplates is the list of templates that make up the Workload. The maximum number of templates is 8. This field is immutable.",
           "items": {
-            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha2.PodGroupTemplate"
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupTemplate"
           },
           "type": "array",
           "x-kubernetes-list-map-keys": [
@@ -23720,7 +23751,7 @@
         {
           "group": "scheduling.k8s.io",
           "kind": "DeleteOptions",
-          "version": "v1alpha2"
+          "version": "v1alpha3"
         },
         {
           "group": "scheduling.k8s.io",
@@ -24518,7 +24549,7 @@
         {
           "group": "scheduling.k8s.io",
           "kind": "WatchEvent",
-          "version": "v1alpha2"
+          "version": "v1alpha3"
         },
         {
           "group": "scheduling.k8s.io",
