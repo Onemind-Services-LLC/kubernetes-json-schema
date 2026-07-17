@@ -1984,6 +1984,30 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.BasicSchedulingPolicy"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeBasicSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeGangSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroup"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupTemplate"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.DisruptionMode"
     },
     {
