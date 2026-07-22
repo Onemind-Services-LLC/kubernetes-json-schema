@@ -2208,6 +2208,13 @@
                                       }
                                     ]
                                   },
+                                  "protocol": {
+                                    "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
                                   "scheme": {
                                     "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
                                     "type": [
@@ -2368,6 +2375,13 @@
                                           "null"
                                         ]
                                       }
+                                    ]
+                                  },
+                                  "protocol": {
+                                    "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "scheme": {
@@ -2575,6 +2589,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -2856,6 +2877,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -3486,6 +3514,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -4242,6 +4277,13 @@
                                       }
                                     ]
                                   },
+                                  "protocol": {
+                                    "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
                                   "scheme": {
                                     "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
                                     "type": [
@@ -4402,6 +4444,13 @@
                                           "null"
                                         ]
                                       }
+                                    ]
+                                  },
+                                  "protocol": {
+                                    "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "scheme": {
@@ -4609,6 +4658,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -4890,6 +4946,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -5520,6 +5583,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -6319,6 +6389,13 @@
                                       }
                                     ]
                                   },
+                                  "protocol": {
+                                    "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
                                   "scheme": {
                                     "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
                                     "type": [
@@ -6479,6 +6556,13 @@
                                           "null"
                                         ]
                                       }
+                                    ]
+                                  },
+                                  "protocol": {
+                                    "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "scheme": {
@@ -6686,6 +6770,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -6967,6 +7058,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {
@@ -7597,6 +7695,13 @@
                                       "null"
                                     ]
                                   }
+                                ]
+                              },
+                              "protocol": {
+                                "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+                                "type": [
+                                  "string",
+                                  "null"
                                 ]
                               },
                               "scheme": {

@@ -553,6 +553,18 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1.ClusterTrustBundleSpec"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1.PodCertificateRequest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1.PodCertificateRequestList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1.PodCertificateRequestSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1.PodCertificateRequestStatus"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.certificates.v1beta1.ClusterTrustBundle"
     },
     {
@@ -2011,6 +2023,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupList"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingConstraints"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingPolicy"
     },
     {
@@ -2099,6 +2114,81 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.WorkloadSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.AllDisruptionMode"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.BasicSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositeBasicSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositeGangSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupSchedulingConstraints"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupTemplate"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.DisruptionMode"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.GangSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroup"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupResourceClaim"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupResourceClaimStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSchedulingConstraints"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupTemplate"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.SingleDisruptionMode"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.TopologyConstraint"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.TypedLocalObjectReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.Workload"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.WorkloadList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.WorkloadReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.WorkloadSpec"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.CSIDriver"

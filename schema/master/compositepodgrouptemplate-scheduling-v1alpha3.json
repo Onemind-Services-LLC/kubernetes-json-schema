@@ -51,6 +51,10 @@
         "null"
       ]
     },
+    "schedulingConstraints": {
+      "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingConstraints",
+      "description": "schedulingConstraints defines optional scheduling constraints (e.g. topology) for this CompositePodGroupTemplate. This field is immutable."
+    },
     "schedulingPolicy": {
       "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingPolicy",
       "description": "schedulingPolicy defines the scheduling policy for this template."

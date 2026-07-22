@@ -5564,6 +5564,179 @@
       ],
       "type": "object"
     },
+    "io.k8s.api.certificates.v1.PodCertificateRequest": {
+      "description": "PodCertificateRequest encodes a pod requesting a certificate from a given signer.\n\nKubelets use this API to implement podCertificate projected volumes",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "PodCertificateRequest"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "metadata contains the object metadata."
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.certificates.v1.PodCertificateRequestSpec",
+          "description": "spec contains the details about the certificate being requested."
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.certificates.v1.PodCertificateRequestStatus",
+          "description": "status contains the issued certificate, and a standard set of conditions."
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "certificates.k8s.io",
+          "kind": "PodCertificateRequest",
+          "version": "v1"
+        }
+      ]
+    },
+    "io.k8s.api.certificates.v1.PodCertificateRequestList": {
+      "description": "PodCertificateRequestList is a collection of PodCertificateRequest objects",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is a collection of PodCertificateRequest objects",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.certificates.v1.PodCertificateRequest"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "PodCertificateRequestList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "metadata contains the list metadata."
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "certificates.k8s.io",
+          "kind": "PodCertificateRequestList",
+          "version": "v1"
+        }
+      ]
+    },
+    "io.k8s.api.certificates.v1.PodCertificateRequestSpec": {
+      "description": "PodCertificateRequestSpec describes the certificate request.  All fields are immutable after creation.",
+      "properties": {
+        "maxExpirationSeconds": {
+          "description": "maxExpirationSeconds is the maximum lifetime permitted for the certificate.\n\nIf omitted, kube-apiserver will set it to 86400(24 hours). kube-apiserver will reject values shorter than 3600 (1 hour).  The maximum allowable value is 7862400 (91 days).\n\nThe signer implementation is then free to issue a certificate with any lifetime *shorter* than MaxExpirationSeconds, but no shorter than 3600 seconds (1 hour).  This constraint is enforced by kube-apiserver. `kubernetes.io` signers will never issue certificates with a lifetime longer than 24 hours.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "nodeName": {
+          "description": "nodeName is the name of the node the pod is assigned to.",
+          "type": "string"
+        },
+        "nodeUID": {
+          "description": "nodeUID is the UID of the node the pod is assigned to.",
+          "type": "string"
+        },
+        "podName": {
+          "description": "podName is the name of the pod into which the certificate will be mounted.",
+          "type": "string"
+        },
+        "podUID": {
+          "description": "podUID is the UID of the pod into which the certificate will be mounted.",
+          "type": "string"
+        },
+        "serviceAccountName": {
+          "description": "serviceAccountName is the name of the service account the pod is running as.",
+          "type": "string"
+        },
+        "serviceAccountUID": {
+          "description": "serviceAccountUID is the UID of the service account the pod is running as.",
+          "type": "string"
+        },
+        "signerName": {
+          "description": "signerName indicates the requested signer.\n\nAll signer names beginning with `kubernetes.io` are reserved for use by the Kubernetes project.  There is currently one well-known signer documented by the Kubernetes project, `kubernetes.io/kube-apiserver-client-pod`, which will issue client certificates understood by kube-apiserver.  It is currently unimplemented.",
+          "type": "string"
+        },
+        "stubPKCS10Request": {
+          "description": "A PKCS#10 certificate signing request (DER-serialized) generated by Kubelet using the subject private key.\n\nMost signer implementations will ignore the contents of the CSR except to extract the subject public key. The API server automatically verifies the CSR signature during admission, so the signer does not need to repeat the verification.  CSRs generated by kubelet are completely empty.\n\nThe subject public key must be one of RSA3072, RSA4096, ECDSAP256, ECDSAP384, ECDSAP521, or ED25519. Note that this list may be expanded in the future.\n\nSigner implementations do not need to support all key types supported by kube-apiserver and kubelet.  If a signer does not support the key type used for a given PodCertificateRequest, it must deny the request by setting a status.conditions entry with a type of \"Denied\" and a reason of \"UnsupportedKeyType\". It may also suggest a key type that it does support in the message field.",
+          "format": "byte",
+          "type": "string"
+        },
+        "unverifiedUserAnnotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "unverifiedUserAnnotations allow pod authors to pass additional information to the signer implementation.  Kubernetes does not restrict or validate this metadata in any way.\n\nEntries are subject to the same validation as object metadata annotations, with the addition that all keys must be domain-prefixed. No restrictions are placed on values, except an overall size limitation on the entire field.\n\nSigners should document the keys and values they support.  Signers should deny requests that contain keys they do not recognize.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "signerName",
+        "podName",
+        "podUID",
+        "serviceAccountName",
+        "serviceAccountUID",
+        "nodeName",
+        "nodeUID",
+        "stubPKCS10Request"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.certificates.v1.PodCertificateRequestStatus": {
+      "description": "PodCertificateRequestStatus describes the status of the request, and holds the certificate data if the request is issued.",
+      "properties": {
+        "beginRefreshAt": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "beginRefreshAt is the time at which the kubelet should begin trying to refresh the certificate.  This field is set via the /status subresource, and must be set at the same time as certificateChain.  Once populated, this field is immutable.\n\nThis field is only a hint.  Kubelet may start refreshing before or after this time if necessary."
+        },
+        "certificateChain": {
+          "description": "certificateChain is populated with an issued certificate by the signer. This field is set via the /status subresource. Once populated, this field is immutable.\n\nIf the certificate signing request is denied, a condition of type \"Denied\" is added and this field remains empty. If the signer cannot issue the certificate, a condition of type \"Failed\" is added and this field remains empty.\n\nValidation requirements:\n 1. certificateChain must consist of one or more PEM-formatted certificates.\n 2. Each entry must be a valid PEM-wrapped, DER-encoded ASN.1 Certificate as\n    described in section 4 of RFC5280.\n\nIf more than one block is present, and the definition of the requested spec.signerName does not indicate otherwise, the first block is the issued certificate, and subsequent blocks should be treated as intermediate certificates and presented in TLS handshakes.  When projecting the chain into a pod volume, kubelet will drop any data in-between the PEM blocks, as well as any PEM block headers.",
+          "type": "string"
+        },
+        "conditions": {
+          "description": "conditions applied to the request.\n\nThe types \"Issued\", \"Denied\", and \"Failed\" have special handling.  At most one of these conditions may be present, and they must have status \"True\".\n\nIf the request is denied with `Reason=UnsupportedKeyType`, the signer may suggest a key type that will work in the message field.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "type",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "notAfter": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "notAfter is the time at which the certificate expires.  The value must be the same as the notAfter value in the leaf certificate in certificateChain.  This field is set via the /status subresource.  Once populated, it is immutable.  The signer must set this field at the same time it sets certificateChain."
+        },
+        "notBefore": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "notBefore is the time at which the certificate becomes valid.  The value must be the same as the notBefore value in the leaf certificate in certificateChain.  This field is set via the /status subresource.  Once populated, it is immutable. The signer must set this field at the same time it sets certificateChain."
+        }
+      },
+      "type": "object"
+    },
     "io.k8s.api.certificates.v1beta1.ClusterTrustBundle": {
       "description": "ClusterTrustBundle is a cluster-scoped container for X.509 trust anchors (root certificates).\n\nClusterTrustBundle objects are considered to be readable by any authenticated user in the cluster, because they can be mounted by pods using the `clusterTrustBundle` projection.  All service accounts have read access to ClusterTrustBundles by default.  Users who only have namespace-level access to a cluster can read ClusterTrustBundles by impersonating a serviceaccount that they have access to.\n\nIt can be optionally associated with a particular signer, in which case it contains one valid set of trust anchors for that signer. Signers may have multiple associated ClusterTrustBundles; each is an independent set of trust anchors for that signer. Admission control is used to enforce that only users with permissions on the signer can create or modify the corresponding bundle.",
       "properties": {
@@ -8357,6 +8530,10 @@
         "port": {
           "$ref": "#/definitions/io.k8s.apimachinery.pkg.util.intstr.IntOrString",
           "description": "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME."
+        },
+        "protocol": {
+          "description": "Protocol selects the wire protocol for the probe connection. Nil defaults to HTTP/1.1.",
+          "type": "string"
         },
         "scheme": {
           "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
@@ -20377,6 +20554,20 @@
         }
       ]
     },
+    "io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingConstraints": {
+      "description": "CompositePodGroupSchedulingConstraints defines scheduling constraints (e.g. topology) for a CompositePodGroup.",
+      "properties": {
+        "topology": {
+          "description": "topology defines the topology constraints for the composite pod group. Currently only a single topology constraint can be specified. This may change in the future.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.TopologyConstraint"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        }
+      },
+      "type": "object"
+    },
     "io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingPolicy": {
       "description": "CompositePodGroupSchedulingPolicy defines the scheduling configuration for a CompositePodGroup. Exactly one policy must be set.",
       "properties": {
@@ -20414,6 +20605,10 @@
         "priorityClassName": {
           "description": "priorityClassName defines the priority that should be considered when scheduling this CompositePodGroup. Controllers are expected to fill this field by copying it from a CompositePodGroupTemplate. If left unspecified, it is validated and resolved similarly to the PriorityClassName field in Pods (i.e. if no priority class is specified, admission control can set this to the global default priority class if it exists. Otherwise, the composite pod group's priority will be zero). This field is immutable.",
           "type": "string"
+        },
+        "schedulingConstraints": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingConstraints",
+          "description": "schedulingConstraints defines optional scheduling constraints (e.g. topology) for this CompositePodGroup. Controllers are expected to fill this field by copying it from a CompositePodGroupTemplate. This field is immutable."
         },
         "schedulingPolicy": {
           "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingPolicy",
@@ -20486,6 +20681,10 @@
         "priorityClassName": {
           "description": "priorityClassName indicates the priority that should be considered when scheduling a composite pod group created from this template. If no priority class is specified, admission control can set this to the global default priority class if it exists. Otherwise, composite pod groups created from this template will have the priority set to zero. This field is immutable.",
           "type": "string"
+        },
+        "schedulingConstraints": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingConstraints",
+          "description": "schedulingConstraints defines optional scheduling constraints (e.g. topology) for this CompositePodGroupTemplate. This field is immutable."
         },
         "schedulingPolicy": {
           "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.CompositePodGroupSchedulingPolicy",
@@ -21088,6 +21287,609 @@
       },
       "type": "object"
     },
+    "io.k8s.api.scheduling.v1beta1.AllDisruptionMode": {
+      "description": "AllDisruptionMode specifies that children can only be disrupted together.",
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.BasicSchedulingPolicy": {
+      "description": "BasicSchedulingPolicy indicates that standard Kubernetes scheduling behavior should be used.",
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.CompositeBasicSchedulingPolicy": {
+      "description": "CompositeBasicSchedulingPolicy indicates that the groups belonging to the composite group should be scheduled independently.",
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.CompositeGangSchedulingPolicy": {
+      "description": "CompositeGangSchedulingPolicy indicates that the groups belonging to the composite group should be scheduled using all-or-nothing semantics.",
+      "properties": {
+        "minGroupCount": {
+          "description": "minGroupCount is the minimum number of child groups that must be schedulable or scheduled at the same time for the scheduler to admit the entire group. It must be a positive integer.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minGroupCount"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.CompositePodGroupSchedulingConstraints": {
+      "description": "CompositePodGroupSchedulingConstraints defines scheduling constraints (e.g. topology) for a CompositePodGroup.",
+      "properties": {
+        "topology": {
+          "description": "topology defines the topology constraints for the composite pod group. Currently only a single topology constraint can be specified. This may change in the future.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.TopologyConstraint"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        }
+      },
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.CompositePodGroupSchedulingPolicy": {
+      "description": "CompositePodGroupSchedulingPolicy defines the scheduling configuration for a CompositePodGroup. Exactly one policy must be set.",
+      "properties": {
+        "basic": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositeBasicSchedulingPolicy",
+          "description": "basic specifies that the groups of this composite group should be scheduled independently. This field is immutable."
+        },
+        "gang": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositeGangSchedulingPolicy",
+          "description": "gang specifies that the groups of this composite group should be scheduled using all-or-nothing semantics."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "basic": "Basic",
+            "gang": "Gang"
+          }
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.CompositePodGroupTemplate": {
+      "description": "CompositePodGroupTemplate represents a template for a CompositePodGroup with a scheduling policy.",
+      "properties": {
+        "compositePodGroupTemplates": {
+          "description": "compositePodGroupTemplates is the list of templates for children CompositePodGroups. The maximum number of templates is 8. At least one entry in CompositePodGroupTemplates or PodGroupTemplates must be set.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupTemplate"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "name": {
+          "description": "name is a unique identifier for the CompositePodGroupTemplate within the Workload. It must be a DNS label. This field is required.",
+          "type": "string"
+        },
+        "podGroupTemplates": {
+          "description": "podGroupTemplates is the list of templates for children PodGroups. The maximum number of templates is 8. At least one entry in CompositePodGroupTemplates or PodGroupTemplates must be set.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupTemplate"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "priority": {
+          "description": "priority is the value of priority of composite pod groups created from this template. Various system components use this field to find the priority of the composite pod group. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority. This field is immutable.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "priorityClassName": {
+          "description": "priorityClassName indicates the priority that should be considered when scheduling a composite pod group created from this template. If no priority class is specified, admission control can set this to the global default priority class if it exists. Otherwise, composite pod groups created from this template will have the priority set to zero. This field is immutable.",
+          "type": "string"
+        },
+        "schedulingConstraints": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupSchedulingConstraints",
+          "description": "schedulingConstraints defines optional scheduling constraints (e.g. topology) for this CompositePodGroupTemplate. This field is immutable."
+        },
+        "schedulingPolicy": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupSchedulingPolicy",
+          "description": "schedulingPolicy defines the scheduling policy for this template."
+        }
+      },
+      "required": [
+        "name",
+        "schedulingPolicy"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.DisruptionMode": {
+      "description": "DisruptionMode defines how individual entities within a group can be disrupted. Exactly one mode can be set.",
+      "properties": {
+        "all": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.AllDisruptionMode",
+          "description": "all specifies that all children can only be disrupted together."
+        },
+        "single": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.SingleDisruptionMode",
+          "description": "single specifies that children can be disrupted independently from each other."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "all": "All",
+            "single": "Single"
+          }
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.GangSchedulingPolicy": {
+      "description": "GangSchedulingPolicy defines the parameters for gang scheduling.",
+      "properties": {
+        "minCount": {
+          "description": "minCount is the minimum number of pods that must be schedulable or scheduled at the same time for the scheduler to admit the entire group. It must be a positive integer. This field is mutable to support workload scaling.\n\nNote that the scheduler operates on an eventually consistent model. Updates to minCount may not be immediately reflected in scheduling decisions due to propagation delays. If minCount is updated while a scheduling cycle is in progress for that group, the new value may not take effect until the next cycle. Moreover, minCount is only enforced during scheduling, meaning that modifications to this field do not affect already-scheduled pods, applying only to those evaluated in future cycles.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minCount"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroup": {
+      "description": "PodGroup represents a runtime instance of pods grouped together. PodGroups are created by workload controllers (Job, LWS, JobSet, etc...) from Workload.podGroupTemplates. PodGroup API enablement is toggled by the GenericWorkload feature gate.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "PodGroup"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSpec",
+          "description": "spec defines the desired state of the PodGroup."
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupStatus",
+          "description": "status represents the current observed state of the PodGroup."
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "scheduling.k8s.io",
+          "kind": "PodGroup",
+          "version": "v1beta1"
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupList": {
+      "description": "PodGroupList contains a list of PodGroup resources.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "Items is the list of PodGroups.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroup"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "PodGroupList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "Standard list metadata."
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "scheduling.k8s.io",
+          "kind": "PodGroupList",
+          "version": "v1beta1"
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupResourceClaim": {
+      "description": "PodGroupResourceClaim references exactly one ResourceClaim, either directly or by naming a ResourceClaimTemplate which is then turned into a ResourceClaim for the PodGroup.\n\nIt adds a name to it that uniquely identifies the ResourceClaim inside the PodGroup. Pods that need access to the ResourceClaim define a matching reference in its own Spec.ResourceClaims. The Pod's claim must match all fields of the PodGroup's claim exactly.",
+      "properties": {
+        "name": {
+          "description": "name uniquely identifies this resource claim inside the PodGroup. This must be a DNS_LABEL.",
+          "type": "string"
+        },
+        "resourceClaimName": {
+          "description": "resourceClaimName is the name of a ResourceClaim object in the same namespace as this PodGroup. The ResourceClaim will be reserved for the PodGroup instead of its individual pods.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must be set.",
+          "type": "string"
+        },
+        "resourceClaimTemplateName": {
+          "description": "resourceClaimTemplateName is the name of a ResourceClaimTemplate object in the same namespace as this PodGroup.\n\nThe template will be used to create a new ResourceClaim, which will be bound to this PodGroup. When this PodGroup is deleted, the ResourceClaim will also be deleted. The PodGroup name and resource name, along with a generated component, will be used to form a unique name for the ResourceClaim, which will be recorded in podgroup.status.resourceClaimStatuses.\n\nThis field is immutable and no changes will be made to the corresponding ResourceClaim by the control plane after creating the ResourceClaim.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must be set.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupResourceClaimStatus": {
+      "description": "PodGroupResourceClaimStatus is stored in the PodGroupStatus for each PodGroupResourceClaim which references a ResourceClaimTemplate. It stores the generated name for the corresponding ResourceClaim.",
+      "properties": {
+        "name": {
+          "description": "name uniquely identifies this resource claim inside the PodGroup. This must match the name of an entry in podgroup.spec.resourceClaims, which implies that the string must be a DNS_LABEL.",
+          "type": "string"
+        },
+        "resourceClaimName": {
+          "description": "resourceClaimName is the name of the ResourceClaim that was generated for the PodGroup in the namespace of the PodGroup. If this is unset, then generating a ResourceClaim was not necessary. The podgroup.spec.resourceClaims entry can be ignored in this case.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupSchedulingConstraints": {
+      "description": "PodGroupSchedulingConstraints defines scheduling constraints (e.g. topology) for a PodGroup.",
+      "properties": {
+        "topology": {
+          "description": "topology defines the topology constraints for the pod group. Currently only a single topology constraint can be specified. This may change in the future.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.TopologyConstraint"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        }
+      },
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupSchedulingPolicy": {
+      "description": "PodGroupSchedulingPolicy defines the scheduling configuration for a PodGroup. Exactly one policy must be set. The policy is chosen at creation time by setting either the Basic or Gang field. The PodGroup may not change policy after creation. Fields within chosen policy may be updated after creation when their individual fields allow it.",
+      "properties": {
+        "basic": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.BasicSchedulingPolicy",
+          "description": "basic specifies that the pods in this group should be scheduled using standard Kubernetes scheduling behavior. Setting this field at group creation time opts this group to basic scheduling; this field cannot be changed afterward."
+        },
+        "gang": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.GangSchedulingPolicy",
+          "description": "gang specifies that the pods in this group should be scheduled using all-or-nothing semantics. Setting this field at group creation time opts this group to gang scheduling; this field cannot be set or unset afterward. The minCount field within Gang scheduling policy remains mutable after group creation."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "basic": "Basic",
+            "gang": "Gang"
+          }
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupSpec": {
+      "description": "PodGroupSpec defines the desired state of a PodGroup.",
+      "properties": {
+        "disruptionMode": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.DisruptionMode",
+          "description": "disruptionMode defines the mode in which a given PodGroup can be disrupted. Controllers are expected to fill this field by copying it from a PodGroupTemplate. One of Single, All. Defaults to Single if unset. This field is immutable."
+        },
+        "parentCompositePodGroupName": {
+          "description": "parentCompositePodGroupName contains the name of the parent composite pod group within the same namespace as this pod group. If it's nil, then this pod group is a root of a workload's hierarchy. This field is used only when the CompositePodGroup feature gate is enabled. This field is immutable.",
+          "type": "string"
+        },
+        "preemptionPolicy": {
+          "description": "preemptionPolicy is the Policy for preempting pods/podgroups with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. When Priority Admission Controller is enabled, it populates this field from PriorityClassName, and defaults to PreemptLowerPriority if value is unset in PriorityClass. This field is immutable. This field is available only when the PodGroupPreemptionPolicy feature gate is enabled.",
+          "type": "string"
+        },
+        "priority": {
+          "description": "priority is the value of priority of this pod group. Various system components use this field to find the priority of the pod group. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority. This field is immutable.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "priorityClassName": {
+          "description": "priorityClassName defines the priority that should be considered when scheduling this pod group. Controllers are expected to fill this field by copying it from a PodGroupTemplate. Otherwise, it is validated and resolved similarly to the PriorityClassName on PodGroupTemplate (i.e. if no priority class is specified, admission control can set this to the global default priority class if it exists. Otherwise, the pod group's priority will be zero). This field is immutable.",
+          "type": "string"
+        },
+        "resourceClaims": {
+          "description": "resourceClaims defines which ResourceClaims may be shared among Pods in the group. Pods consume the devices allocated to a PodGroup's claim by defining a claim in its own Spec.ResourceClaims that matches the PodGroup's claim exactly. The claim must have the same name and refer to the same ResourceClaim or ResourceClaimTemplate.\n\nThis is an alpha-level field and requires that the DRAWorkloadResourceClaims feature gate is enabled.\n\nThis field is immutable.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupResourceClaim"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge,retainKeys"
+        },
+        "schedulingConstraints": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSchedulingConstraints",
+          "description": "schedulingConstraints defines optional scheduling constraints (e.g. topology) for this PodGroup. Controllers are expected to fill this field by copying it from a PodGroupTemplate. This field is immutable. This field is only available when the TopologyAwareWorkloadScheduling feature gate is enabled."
+        },
+        "schedulingPolicy": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSchedulingPolicy",
+          "description": "schedulingPolicy defines the scheduling policy for this instance of the PodGroup. Controllers are expected to fill this field by copying it from a PodGroupTemplate."
+        },
+        "workloadRef": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.WorkloadReference",
+          "description": "workloadRef references an optional PodGroup template within the Workload object that was used to create the PodGroup. This field is immutable."
+        }
+      },
+      "required": [
+        "schedulingPolicy"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupStatus": {
+      "description": "PodGroupStatus represents information about the status of a pod group.",
+      "properties": {
+        "conditions": {
+          "description": "conditions represent the latest observations of the PodGroup's state.\n\nKnown condition types: - \"PodGroupInitiallyScheduled\": Indicates whether the scheduling requirement has been satisfied. Once this condition transitions to True, it serves as a terminal state and will never revert to False, even if pods are subsequently evicted and group constraints are no longer met. - \"DisruptionTarget\": Indicates whether the PodGroup is about to be terminated\n  due to disruption such as preemption.\n\nKnown reasons for the PodGroupInitiallyScheduled condition: - \"Unschedulable\": The PodGroup cannot be scheduled due to resource constraints,\n  affinity/anti-affinity rules, or insufficient capacity for the gang.\n- \"SchedulerError\": The PodGroup cannot be scheduled due to some internal error\n  that happened during scheduling, for example due to nodeAffinity parsing errors.\n\nKnown reasons for the DisruptionTarget condition: - \"PreemptionByScheduler\": The PodGroup was preempted by the scheduler to make room for\n  higher-priority PodGroups or Pods.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "type",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "resourceClaimStatuses": {
+          "description": "resourceClaimStatuses is status of resource claims.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupResourceClaimStatus"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge,retainKeys"
+        }
+      },
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.PodGroupTemplate": {
+      "description": "PodGroupTemplate represents a template for a set of pods with a scheduling policy.",
+      "properties": {
+        "disruptionMode": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.DisruptionMode",
+          "description": "disruptionMode defines the mode in which a given PodGroup can be disrupted. One of Single, All. This field is immutable."
+        },
+        "name": {
+          "description": "name is a unique identifier for the PodGroupTemplate within the Workload. It must be a DNS label. This field is immutable.",
+          "type": "string"
+        },
+        "preemptionPolicy": {
+          "description": "preemptionPolicy is the Policy for preempting pods/podgroups with lower priority. One of Never, PreemptLowerPriority. This field is immutable. This field is available only when the PodGroupPreemptionPolicy feature gate is enabled.",
+          "type": "string"
+        },
+        "priority": {
+          "description": "priority is the value of priority of pod groups created from this template. Various system components use this field to find the priority of the pod group. The higher the value, the higher the priority. This field is immutable.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "priorityClassName": {
+          "description": "priorityClassName indicates the priority that should be considered when scheduling a pod group created from this template. This field is immutable.",
+          "type": "string"
+        },
+        "resourceClaims": {
+          "description": "resourceClaims defines which ResourceClaims may be shared among Pods in the group. Pods consume the devices allocated to a PodGroup's claim by defining a claim in its own Spec.ResourceClaims that matches the PodGroup's claim exactly. The claim must have the same name and refer to the same ResourceClaim or ResourceClaimTemplate.\n\nThis is an alpha-level field and requires that the DRAWorkloadResourceClaims feature gate is enabled.\n\nThis field is immutable.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupResourceClaim"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge,retainKeys"
+        },
+        "schedulingConstraints": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSchedulingConstraints",
+          "description": "schedulingConstraints defines optional scheduling constraints (e.g. topology) for this PodGroupTemplate. This field is only available when the TopologyAwareWorkloadScheduling feature gate is enabled. This field is immutable."
+        },
+        "schedulingPolicy": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupSchedulingPolicy",
+          "description": "schedulingPolicy defines the scheduling policy for this PodGroupTemplate."
+        }
+      },
+      "required": [
+        "name",
+        "schedulingPolicy"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.SingleDisruptionMode": {
+      "description": "SingleDisruptionMode specifies that children can be disrupted independently.",
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.TopologyConstraint": {
+      "description": "TopologyConstraint defines a topology constraint for a PodGroup.",
+      "properties": {
+        "key": {
+          "description": "key specifies the key of the node label representing the topology domain. All pods within the PodGroup must be colocated within the same domain instance. Different PodGroups can land on different domain instances even if they derive from the same PodGroupTemplate. Examples: \"topology.kubernetes.io/rack\"",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.TypedLocalObjectReference": {
+      "description": "TypedLocalObjectReference allows to reference typed object inside the same namespace.",
+      "properties": {
+        "apiGroup": {
+          "description": "apiGroup is the group for the resource being referenced. If apiGroup is empty, the specified Kind must be in the core API group. For any other third-party types, setting apiGroup is required. It must be a DNS subdomain.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "kind is the type of resource being referenced. It must be a path segment name.",
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the name of resource being referenced. It must be a path segment name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.Workload": {
+      "description": "Workload allows for expressing scheduling constraints that should be used when managing the lifecycle of workloads from the scheduling perspective, including scheduling, preemption, eviction and other phases. Workload API enablement is toggled by the GenericWorkload feature gate.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "Workload"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.WorkloadSpec",
+          "description": "spec defines the desired behavior of a Workload."
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "scheduling.k8s.io",
+          "kind": "Workload",
+          "version": "v1beta1"
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.WorkloadList": {
+      "description": "WorkloadList contains a list of Workload resources.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is the list of Workloads.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.Workload"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "WorkloadList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "metadata is the standard list metadata."
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "scheduling.k8s.io",
+          "kind": "WorkloadList",
+          "version": "v1beta1"
+        }
+      ]
+    },
+    "io.k8s.api.scheduling.v1beta1.WorkloadReference": {
+      "description": "WorkloadReference references the Workload object together with the template that was used to create a particular PodGroup.",
+      "properties": {
+        "templateName": {
+          "description": "templateName is the name of a template within the Workload object that was used to create a pod group. It must be a DNS label. This field is required.",
+          "type": "string"
+        },
+        "workloadName": {
+          "description": "workloadName is the name of the Workload object that contains a template that was used when creating a pod group. It must be a DNS name. This field is required.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workloadName",
+        "templateName"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.WorkloadSpec": {
+      "description": "WorkloadSpec defines the desired state of a Workload.",
+      "properties": {
+        "compositePodGroupTemplates": {
+          "description": "compositePodGroupTemplates is the list of CompositePodGroup templates that make up the Workload. The maximum number of templates is 8. This field is immutable. Exactly one of CompositePodGroupTemplates and PodGroupTemplates must be set.\n\nThis field is used only when the CompositePodGroup feature gate is enabled.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositePodGroupTemplate"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
+        "controllerRef": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.TypedLocalObjectReference",
+          "description": "controllerRef is an optional reference to the controlling object, such as a Deployment or Job. This field is intended for use by tools like CLIs to provide a link back to the original workload definition. This field is immutable."
+        },
+        "podGroupTemplates": {
+          "description": "podGroupTemplates is the list of templates that make up the Workload. The maximum number of templates is 8. Templates cannot be added or removed after the workload is created. Existing templates may still be updated where their individual fields allow it. Exactly one of CompositePodGroupTemplates and PodGroupTemplates must be set.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupTemplate"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        }
+      },
+      "type": "object"
+    },
     "io.k8s.api.storage.v1.CSIDriver": {
       "description": "CSIDriver captures information about a Container Storage Interface (CSI) volume driver deployed on the cluster. Kubernetes attach detach controller uses this object to determine whether attach is required. Kubelet uses this object to determine whether pod information needs to be passed on mount. CSIDriver objects are non-namespaced.",
       "properties": {
@@ -21182,7 +21984,7 @@
           "type": "boolean"
         },
         "preventPodSchedulingIfMissing": {
-          "description": "preventPodSchedulingIfMissing indicates that the CSI driver wants to prevent pod scheduling if the CSI driver on the node is missing.\n\nEnabling this option will prevent the scheduler (or any other component which embeds default scheduler such as cluster-autoscaler) from scheduling pods to nodes where CSI driver is not installed.\n\nFor components(such as cluster-autoscaler) that embed the scheduler and run pod placement simulations using scheduler plugins, they MUST be aware of CSI driver registration information via CSINode object. They must create simulated CSINode objects in addition to Node objects during scheduling simulation, otherwise if PreventPodSchedulingIfMissing is enabled globally for CSIDriver object, any newly created node may be rejected by the scheduler because of missing CSI driver information from the node.\n\nThis is an alpha feature and requires the VolumeLimitScaling feature gate to be enabled. Default is \"false\".",
+          "description": "preventPodSchedulingIfMissing indicates that the CSI driver wants to prevent pod scheduling if the CSI driver on the node is missing.\n\nEnabling this option will prevent the scheduler (or any other component which embeds default scheduler such as cluster-autoscaler) from scheduling pods to nodes where CSI driver is not installed.\n\nFor components(such as cluster-autoscaler) that embed the scheduler and run pod placement simulations using scheduler plugins, they MUST be aware of CSI driver registration information via CSINode object. They must create simulated CSINode objects in addition to Node objects during scheduling simulation, otherwise if PreventPodSchedulingIfMissing is enabled globally for CSIDriver object, any newly created node may be rejected by the scheduler because of missing CSI driver information from the node.\n\nThis is a beta feature and requires the VolumeLimitScaling feature gate to be enabled. Default is \"false\".",
           "type": "boolean"
         },
         "requiresRepublish": {
