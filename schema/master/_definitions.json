@@ -6800,6 +6800,11 @@
         "signerName": {
           "description": "Select all ClusterTrustBundles that match this signer name. Mutually-exclusive with name.  The contents of all selected ClusterTrustBundles will be unified and deduplicated.",
           "type": "string"
+        },
+        "user": {
+          "description": "user is Optional: The owner UID of the created file. If specified, the item-level user field takes precedence over defaultUser. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -7092,6 +7097,11 @@
         "defaultMode": {
           "description": "defaultMode is optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
           "format": "int32",
+          "type": "integer"
+        },
+        "defaultUser": {
+          "description": "defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
           "type": "integer"
         },
         "items": {
@@ -7642,6 +7652,11 @@
         "resourceFieldRef": {
           "$ref": "#/definitions/io.k8s.api.core.v1.ResourceFieldSelector",
           "description": "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported."
+        },
+        "user": {
+          "description": "user is Optional: The owner UID of the created file. If specified, the item-level user field takes precedence over defaultUser. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -7655,6 +7670,11 @@
         "defaultMode": {
           "description": "Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
           "format": "int32",
+          "type": "integer"
+        },
+        "defaultUser": {
+          "description": "defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
           "type": "integer"
         },
         "items": {
@@ -8240,6 +8260,26 @@
       },
       "type": "object"
     },
+    "io.k8s.api.core.v1.EvictionResponder": {
+      "description": "EvictionResponder allows you to specify the responder reacting to an Eviction. Responders should observe and communicate through the Eviction Resource API to help with the graceful eviction of a target (e.g. termination of a pod).",
+      "properties": {
+        "name": {
+          "description": "name allows you to identify the responder responding to the Eviction.\n\nIt must be a valid domain-prefixed key (such as \"acme.io/foo\"). Domain names *.k8s.io and *.kubernetes.io are reserved. This field must be unique for each responder. This field is required.",
+          "type": "string"
+        },
+        "priority": {
+          "description": "priority for this responder. Higher priorities are selected first by the evictionrequest-controller. If there are responders with the same priority, the responder whose domain name comes first in the alphabetical higher domain order, will be picked. This means that the top domain labels are compared alphabetically first, followed by the lower domain labels. The key is compared last.\n\nThe responder that is the managing controller of the pod should set the value of this field to 10000 to allow both for preemption or fallback registration by other responders.\n\nThe minimum value is 0 and the maximum value is 100000. The interval 0-999 is reserved for responders with *.k8s.io suffix. This field is required.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "priority"
+      ],
+      "type": "object",
+      "x-kubernetes-map-type": "atomic"
+    },
     "io.k8s.api.core.v1.ExecAction": {
       "description": "ExecAction describes a \"run in container\" action.",
       "properties": {
@@ -8424,6 +8464,10 @@
     "io.k8s.api.core.v1.GRPCAction": {
       "description": "GRPCAction specifies an action involving a GRPC service.",
       "properties": {
+        "mode": {
+          "description": "mode specifies the connection mode for the gRPC health probe. Set to \"TLS\" to use TLS without certificate verification. Set to \"Plaintext\" to use a plaintext (insecure) connection explicitly. If not specified, the probe uses a plaintext (insecure) connection.",
+          "type": "string"
+        },
         "port": {
           "description": "Port number of the gRPC service. Number must be in the range 1 to 65535.",
           "format": "int32",
@@ -8776,6 +8820,11 @@
         "path": {
           "description": "path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.",
           "type": "string"
+        },
+        "user": {
+          "description": "user is Optional: The owner UID of the created file. If specified, the item-level user field takes precedence over defaultUser. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -10089,6 +10138,10 @@
           "description": "currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using. When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim",
           "type": "string"
         },
+        "healthStatus": {
+          "$ref": "#/definitions/io.k8s.api.core.v1.VolumeHealthStatus",
+          "description": "healthStatus contains the latest controller-reported health information for the volume bound to this claim."
+        },
         "modifyVolumeStatus": {
           "$ref": "#/definitions/io.k8s.api.core.v1.ModifyVolumeStatus",
           "description": "ModifyVolumeStatus represents the status object of ControllerModifyVolume operation. When this is unset, there is no ModifyVolume operation being attempted."
@@ -10506,6 +10559,11 @@
           "description": "Kubelet's generated CSRs will be addressed to this signer.",
           "type": "string"
         },
+        "user": {
+          "description": "user is Optional: The owner UID of the created file. If specified, the item-level user field takes precedence over defaultUser. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
+          "type": "integer"
+        },
         "userAnnotations": {
           "additionalProperties": {
             "type": "string"
@@ -10894,6 +10952,19 @@
           "x-kubernetes-patch-merge-key": "name",
           "x-kubernetes-patch-strategy": "merge"
         },
+        "evictionResponders": {
+          "description": "evictionResponders reference responders that react to Evictions based on EvictionRequests. Responders should observe and communicate through the Eviction Resource API to help with the graceful termination of a pod. The responders are selected sequentially, according to their specified priority.\n\nResponders should periodically report on an eviction progress by updating the .status.responders[].heartbeatTime field of the Eviction object. If this field is not updated within the heartbeat deadline defined by the Eviction API (currently 20 minutes), the eviction is passed over to the next responder with a lower priority. If there is no other responder, the last default imperative-eviction.k8s.io/evictor responder with a priority of 100 will evict the pod using the imperative Eviction API (pods/<name>/eviction subresource).\n\nThe maximum length of the responders list is 10. Responders are not supported when the pod is part of a PodGroup (.spec.schedulingGroup is set). This field can only be set on creation and is immutable afterwards.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.EvictionResponder"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
+        },
         "hostAliases": {
           "description": "HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.",
           "items": {
@@ -11256,6 +11327,17 @@
         "startTime": {
           "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
           "description": "RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod."
+        },
+        "volumeHealth": {
+          "description": "volumeHealth contains node-reported health for each volume the pod is using. Populated by the kubelet on the pod's node.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.PodVolumeHealth"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
         }
       },
       "type": "object"
@@ -11342,6 +11424,37 @@
           "description": "Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
         }
       },
+      "type": "object"
+    },
+    "io.k8s.api.core.v1.PodVolumeHealth": {
+      "description": "PodVolumeHealth contains health information for a volume used by a pod, reported by the CSI node plugin via the kubelet.",
+      "properties": {
+        "healthConditions": {
+          "description": "conditions is the set of adverse conditions reported by the CSI node plugin for this volume on this node. At most 16 conditions may be reported.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.VolumeHealthCondition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "status",
+            "reason"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "status",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "lastTransitionTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "lastTransitionTime is when the current set of conditions first appeared."
+        },
+        "name": {
+          "description": "name matches an entry in pod.spec.volumes.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
       "type": "object"
     },
     "io.k8s.api.core.v1.PortStatus": {
@@ -11465,6 +11578,11 @@
         "defaultMode": {
           "description": "defaultMode are the mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
           "format": "int32",
+          "type": "integer"
+        },
+        "defaultUser": {
+          "description": "defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
           "type": "integer"
         },
         "sources": {
@@ -11997,7 +12115,7 @@
       "description": "ResourceStatus represents the status of a single resource allocated to a Pod.",
       "properties": {
         "name": {
-          "description": "Name of the resource. Must be unique within the pod and in case of non-DRA resource, match one of the resources from the pod spec. For DRA resources, the value must be \"claim:<claim_name>/<request>\". When this status is reported about a container, the \"claim_name\" and \"request\" must match one of the claims of this container.",
+          "description": "Name of the resource. Must be unique within the pod and in case of non-DRA resource, match one of the resources from the pod spec. For DRA resources, the value must be \"claim:<claim_name>/<request>\" when container.resources.claims[*].request is set or \"claim:<claim_name>\" when container.resources.claims[*].request is empty. For DRA-backed extended resources, \"claim:<claim_name>/<request>\" is used when the claim name and request name are recorded in pod.status.extendedResourceClaimStatus. When this status is reported about a container, the \"claim_name\" and \"request\" must match one of the claims of this container.",
           "type": "string"
         },
         "resources": {
@@ -12377,6 +12495,11 @@
           "format": "int32",
           "type": "integer"
         },
+        "defaultUser": {
+          "description": "defaultUser is Optional: The owner UID of the created files by default. The defaultUser field is only used as a fallback when the item-level user field is unset. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
+          "type": "integer"
+        },
         "items": {
           "description": "items If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.",
           "items": {
@@ -12594,6 +12717,11 @@
         "path": {
           "description": "path is the path relative to the mount point of the file to project the token into.",
           "type": "string"
+        },
+        "user": {
+          "description": "user is Optional: The owner UID of the created file. If specified, the item-level user field takes precedence over defaultUser. (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.",
+          "format": "int64",
+          "type": "integer"
         }
       },
       "required": [
@@ -13262,6 +13390,52 @@
         "name",
         "devicePath"
       ],
+      "type": "object"
+    },
+    "io.k8s.api.core.v1.VolumeHealthCondition": {
+      "description": "VolumeHealthCondition represents an adverse health condition reported for a volume.",
+      "properties": {
+        "message": {
+          "description": "message is a human-readable description. Maximum permitted length of a message is 1024 bytes.",
+          "type": "string"
+        },
+        "reason": {
+          "description": "reason is a brief CamelCase machine-parseable reason. Together with status it forms the unique identity of a condition entry. Maximum permitted length of a reason is 256 bytes.",
+          "type": "string"
+        },
+        "status": {
+          "description": "status is the machine-parseable health category. Possible values: - \"Inaccessible\": the volume cannot be accessed. - \"DataLoss\": data loss has been detected on the volume. - \"Degraded\": the volume is functioning with reduced capability.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.core.v1.VolumeHealthStatus": {
+      "description": "VolumeHealthStatus contains health information for a volume reported by the CSI controller plugin.",
+      "properties": {
+        "healthConditions": {
+          "description": "conditions is the set of adverse conditions reported by the CSI controller plugin. An empty list means no adverse condition. At most 16 conditions may be reported.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.core.v1.VolumeHealthCondition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "status",
+            "reason"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "status",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "lastTransitionTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "lastTransitionTime is when the current set of conditions first appeared."
+        }
+      },
       "type": "object"
     },
     "io.k8s.api.core.v1.VolumeMount": {
@@ -14450,6 +14624,431 @@
         "name"
       ],
       "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.Eviction": {
+      "description": "Eviction initiates an eviction process, which should ideally result in a graceful eviction of a .spec.target (e.g. termination of a pod).\n\nThe evictionrequest-controller observes intents of all EvictionRequests and transforms them into Evictions. It manages the Eviction lifecycle. Requesters are preserved in .status.requesters even after they have withdrawn their request. If all requesters withdraw their eviction intent for a common target, the eviction will be canceled. Once all EvictionRequest corresponding to this Eviction .spec.target have been removed, this Eviction object will eventually be garbage collected.\n\nIf the target is a pod, the .status.targetResponders is populated from Pod's .spec.evictionResponders.\n\nResponders should observe and communicate through the .status to help with the eviction of the target when they see their state == Active in .status.targetResponders. ResponderStatus struct should then be periodically updated to indicate the progress or completion of the eviction process by each responder in .status.responders. If .status.responders[].heartbeatTime is not updated within the heartbeat deadline defined by the Eviction API (currently 20 minutes), the eviction is passed over to the next responder with a lower priority.\n\nIf there are no other responders and the target is a pod, the last default imperative-eviction.k8s.io/evictor responder with a priority of 100 will evict the pod using the imperative Eviction API (pods/<name>/eviction subresource).",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "Eviction"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "metadata is the standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata. .metadata.name set by the evictionrequest-controller is purely informative and subject to change. .spec.target field should be used to identify the target precisesly.\n\nThe requester and responder names will be used as label keys and added to the labels of the eviction in one of the following formats: 1. acme.io/foo: \"requester\" 2. acme.io/foo: \"responder\" 3. acme.io/foo: \"requester-responder\"\n\nPlease see EvictionParticipantRole for available role label values."
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionSpec",
+          "description": "spec defines the eviction specification. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionStatus",
+          "description": "status represents the most recently observed status of the eviction. Populated by responders and evictionrequest-controller. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "lifecycle.k8s.io",
+          "kind": "Eviction",
+          "version": "v1alpha1"
+        }
+      ]
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionList": {
+      "description": "EvictionList contains a list of Eviction resources.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is the list of Evictions.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.Eviction"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "EvictionList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "metadata is the standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "lifecycle.k8s.io",
+          "kind": "EvictionList",
+          "version": "v1alpha1"
+        }
+      ]
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionPodReference": {
+      "description": "EvictionPodReference contains enough information to locate the referenced pod inside the same namespace.",
+      "properties": {
+        "name": {
+          "description": "name of the target. This field is required.",
+          "type": "string"
+        },
+        "uid": {
+          "description": "uid of the target. It can be found in .metadata.uid of the target and is a lowercase UUID in 8-4-4-4-12 format. This field is required.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "uid"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionRequest": {
+      "description": "EvictionRequest defines a request that should ideally result in a graceful eviction of a .spec.target (e.g. termination of a pod).\n\nThe evictionrequest-controller observes intents of all EvictionRequests and transforms them into Evictions.\n  - .spec.requester is set as a label on the Eviction for easier lookup.\n  - Each target can have a set of responders assigned to it. Eviction objects are observed by\n    these responders, who implement the eviction logic and update the Eviction's status with\n    progress.\n\nThere is many-to-many relationship between EvictionRequests and Evictions in general. And many-to-one if the target is a  pod.\n\nIf all requesters withdraw their eviction intent for a common target, the eviction will be canceled. Deleting an EvictionRequest also counts as a withdrawal. Once all EvictionRequest of a target are removed, the corresponding Evictions are eventually garbage collected.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "EvictionRequest"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta",
+          "description": "metadata is the standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata."
+        },
+        "spec": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestSpec",
+          "description": "spec defines the eviction request specification. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestStatus",
+          "description": "status represents the most recently observed status of the eviction request. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "lifecycle.k8s.io",
+          "kind": "EvictionRequest",
+          "version": "v1alpha1"
+        }
+      ]
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionRequestList": {
+      "description": "EvictionRequestList contains a list of EvictionRequests resources.",
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is the list of EvictionRequests.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequest"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string",
+          "enum": [
+            "EvictionRequestList"
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta",
+          "description": "metadata is the standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-kubernetes-group-version-kind": [
+        {
+          "group": "lifecycle.k8s.io",
+          "kind": "EvictionRequestList",
+          "version": "v1alpha1"
+        }
+      ]
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionRequestPodReference": {
+      "description": "EvictionRequestPodReference contains enough information to locate the referenced pod inside the same namespace.",
+      "properties": {
+        "name": {
+          "description": "name of the target. This field is required.",
+          "type": "string"
+        },
+        "uid": {
+          "description": "uid of the target. It can be found in .metadata.uid of the target and is a lowercase UUID in 8-4-4-4-12 format. This field is required.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "uid"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionRequestSpec": {
+      "description": "EvictionRequestSpec is a specification of an EvictionRequest.",
+      "properties": {
+        "intent": {
+          "description": "intent specifies the action that should be taken for the specified target.\n\n- Eviction means that the requester is interested in the eviction of the target. - Withdrawn means that the requester is no longer interested in the eviction of the target.\n  If all requesters' intents are withdrawn for a common target, the eviction will be canceled.\n  Cancellation consequences:\n  - Inactive responders will never run.\n  - Active responders are expected to cancel the eviction.\n  - Completed or Interrupted responders should not take any action.",
+          "type": "string"
+        },
+        "requester": {
+          "description": "requester allows you to identify the entity, that requested the eviction of the target.\n\nIt must be a valid domain-prefixed key (such as \"acme.io/foo\"). Domain names *.k8s.io and *.kubernetes.io are reserved. This field is required and immutable.",
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestTarget",
+          "description": "target contains a reference to an object (e.g. a pod) that should be evicted. This field is required and immutable."
+        }
+      },
+      "required": [
+        "target",
+        "requester",
+        "intent"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionRequestStatus": {
+      "description": "EvictionRequestStatus represents the last observed status of the eviction request.",
+      "properties": {
+        "conditions": {
+          "description": "conditions contain information about the eviction request.\n\nEvictionRequest specific conditions are: TargetEvicted or Failed (managed by evictionrequest-controller). - Failed means that the eviction request is no longer being processed\n  by any eviction responder. This can happen if the request is canceled or if no responder\n  managed to evict the target (e.g. terminate or delete a pod).\n- TargetEvicted means that the target has been evicted (e.g. a pod has been terminated or deleted).\n\nThese conditions can be reset if the eviction was unsuccessful and a new Eviction intent has been submitted.\n\nThe maximum length of the conditions list is 100.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "type",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "observedGeneration": {
+          "description": "observedGeneration is EvictionRequest's .metadata.generation observed by the evictionrequest-controller. The observed generation value cannot be negative and can only be incremented. The minimum value is 1. This field is managed by evictionrequest-controller.",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionRequestTarget": {
+      "description": "EvictionRequestTarget contains a reference to an object that should be evicted.",
+      "properties": {
+        "pod": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestPodReference",
+          "description": "pod references a pod that is subject to eviction/termination. Pods that are part of a PodGroup (.spec.schedulingGroup is set) are not supported."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "pod": "Pod"
+          }
+        }
+      ]
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionSpec": {
+      "description": "EvictionSpec is a specification of an Eviction.",
+      "properties": {
+        "target": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionTarget",
+          "description": "target contains a reference to an object (e.g. a pod) that should be evicted. This field is required and immutable."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionStatus": {
+      "description": "EvictionStatus represents the last observed status of the eviction request.",
+      "properties": {
+        "conditions": {
+          "description": "conditions contain information about the eviction request.\n\nEviction specific conditions are: TargetEvicted or Failed (managed by evictionrequest-controller). - Failed means that the eviction request is no longer being processed\n  by any eviction responder. This can happen if the request is canceled or if no responder\n  managed to evict the target (e.g. terminate or delete a pod).\n- TargetEvicted means that the target has been evicted (e.g. a pod has been terminated or deleted).\n\n\tThe maximum length of the conditions list is 100.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "type",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "observedGeneration": {
+          "description": "observedGeneration is Eviction's .metadata.generation observed by the evictionrequest-controller. The observed generation value cannot be negative and can only be incremented. The minimum value is 1. This field is managed by evictionrequest-controller.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "requesters": {
+          "description": "requesters allow you to identify the entities, that requested the eviction of the target. If all the requesters withdraw their eviction intent, the eviction will be canceled.\n\nThe maximum length of the requesters list is 100. If this limit is exceeded, requesters with Withdrawn intent should be dropped first.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.Requester"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "responders": {
+          "description": "responders represents the eviction process status of each declared responder.\n\nThe responder list should be the same length and have the same .name fields as .status.targetResponders. Only responders with .name that have Active state in .targetResponders[].state should be updated and can be mutated. First initialization of the list is allowed.\n\nEach ResponderStatus is initialized by evictionrequest-controller and then managed by the designated responder.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.ResponderStatus"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
+        },
+        "targetResponders": {
+          "description": "targetResponders reference responders that should eventually respond to this eviction to help with the graceful eviction of a target. These responders are selected sequentially, according to their specified priority by setting the Active state to the TargetResponder .state field. The maximum number of active responders allowed is 1. Eventually each responder can end up in an Interrupted, Canceled or, Completed state. Responders should observe these states in order to navigate their lifecycle.\n\nIf the target is a pod, the field is populated from Pod's .spec.evictionResponders. Default responders may be added to the list according to the target.\n\nDefault responders: - imperative-eviction.k8s.io/evictor responder with a priority of 100 is added to the list if the\n  target is a pod. It will call the imperative Eviction API (pods/<name>/eviction subresource).\n  This call may not succeed due to PodDisruptionBudgets, which may block the pod termination.\n  It will update the responder message and try again with a backoff.\n\nThe maximum length of the responders list is 11. The length and keys of the list cannot change once set. This field is managed by evictionrequest-controller.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.TargetResponder"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
+        }
+      },
+      "type": "object"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.EvictionTarget": {
+      "description": "EvictionTarget contains a reference to an object that should be evicted.",
+      "properties": {
+        "pod": {
+          "$ref": "#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionPodReference",
+          "description": "pod references a pod that is subject to eviction/termination. Pods that are part of a PodGroup (.spec.schedulingGroup is set) are not supported."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "pod": "Pod"
+          }
+        }
+      ]
+    },
+    "io.k8s.api.lifecycle.v1alpha1.Requester": {
+      "description": "Requester allows you to identify the entity, that requested the eviction of the target.",
+      "properties": {
+        "intent": {
+          "description": "intent specifies the action that should be taken for the specified target.\n\n- Eviction means that the requester is interested in the eviction of the target. - Withdrawn means that the requester is no longer interested in the eviction of the target.\n  If all requesters' intents are withdrawn, the eviction will be canceled.\n  Cancellation consequences:\n  - Inactive responders will never run.\n  - Active responders are expected to cancel the eviction.\n  - Completed or Interrupted responders should not take any action.",
+          "type": "string"
+        },
+        "name": {
+          "description": "name allows you to identify the entity, that requested the eviction of the target.\n\nIt must be a valid domain-prefixed key (such as \"acme.io/foo\"). This field must be unique for each requester. This field is required.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "intent"
+      ],
+      "type": "object",
+      "x-kubernetes-map-type": "atomic"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.ResponderStatus": {
+      "description": "ResponderStatus represents the last observed status of the eviction process of the responder. It should be only updated by the designated responder whose name is .name field.",
+      "properties": {
+        "completionTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "completionTime tracks the time at which the Responder stopped processing the eviction request. Completion means that the responders has either fully or partially completed the eviction process, which may have resulted in target eviction (e.g. pod termination). It should reflect the present time when set. This field becomes immutable once set."
+        },
+        "expectedCompletionTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "expectedCompletionTime is the time at which the eviction process step is expected to end for the responder. The time cannot be set to the past. May be omitted if no estimate can be made."
+        },
+        "heartbeatTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "heartbeatTime is the last time at which the eviction process was reported to be in progress by the responder. It should reflect the present time when set. Responders should avoid heartbeats more frequent than 20 seconds to avoid overloading the control-plane."
+        },
+        "message": {
+          "description": "message provides human-readable details about the state of the responder and the eviction process. Maximum length is 4000 characters.",
+          "type": "string"
+        },
+        "name": {
+          "description": "name allows you to identify the responder reacting to the Eviction.\n\nIt must be a valid domain-prefixed key (such as \"acme.io/foo\"). This field is initialized by Kubernetes and must be unique for each responder. This field is required.",
+          "type": "string"
+        },
+        "startTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "startTime tracks the time at which this responder was designated as active and should start processing the eviction request. It should reflect the present time when set. This field is initialized by Kubernetes when this responder becomes active. This field becomes immutable once set."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "x-kubernetes-map-type": "granular"
+    },
+    "io.k8s.api.lifecycle.v1alpha1.TargetResponder": {
+      "description": "TargetResponder allows you to specify the responder reacting to the Eviction. Responders should observe and communicate through the Eviction API (see .state) to help with the graceful eviction of a target (e.g. termination of a pod).",
+      "properties": {
+        "name": {
+          "description": "name allows you to identify the responder reacting to the Eviction.\n\nIt must be a valid domain-prefixed key (such as \"acme.io/foo\"). This field must be unique for each responder. This field is required.",
+          "type": "string"
+        },
+        "priority": {
+          "description": "priority for this responder. Higher priorities are selected first by the evictionrequest-controller. If there are responders with the same priority, the responder whose domain name comes first in the alphabetical higher domain order, will be picked. This means that the top domain labels are compared alphabetically first, followed by the lower domain labels. The key is compared last.\n\nThe responder that is the managing controller of the pod should set the value of this field to 10000 to allow both for preemption or fallback registration by other responders.\n\nThe minimum value is 0 and the maximum value is 100000. The interval 0-999 is reserved for responders with *.k8s.io suffix. This field is required and immutable.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "description": "state specifies a state that is assigned by the evictionrequest-controller. Responders should observe this state in order to navigate their lifecycle. - Inactive means that the responder should not yet process this eviction request. - Active means that the responder is either running or expected to start soon.\n  Also, startTime has been set in the ResponderStatus by the evictionrequest-controller.\n\n  An active responder should currently interact with the eviction process by updating\n  .status.responders, where .name is the active responder name. ResponderStatus fields\n  should be periodically updated to indicate the progress or completion of the eviction process.\n  If .status.responders[].heartbeatTime field is not updated within the heartbeat deadline defined\n  by the Eviction API (currently 20 minutes), the eviction is passed over to the next responder\n\t with a lower priority. Only one responder can be active at a time.\n- Interrupted means that the responder has failed to start or failed to update\n  heartbeatTime in ResponderStatus in a timely manner.\n- Canceled means that the responder has been canceled. In other words, there\tis no\n  EvictionRequest with the same target and Eviction intent in .spec.intent.\n- Completed means that the responder has successfully completed and set completionTime\n  in ResponderStatus.\n\nPlease refer to the ResponderStatus in .status.responders for more details on each responder.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "priority",
+        "state"
+      ],
+      "type": "object",
+      "x-kubernetes-map-type": "atomic"
     },
     "io.k8s.api.networking.v1.HTTPIngressPath": {
       "description": "HTTPIngressPath associates a path with a backend. Incoming urls matching the path are forwarded to the backend.",
@@ -17248,7 +17847,7 @@
           "type": "integer"
         },
         "name": {
-          "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.",
+          "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required. A field selector can be used to list only ResourceSlice objects belonging to a certain pool.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.",
           "type": "string"
         },
         "resourceSliceCount": {
@@ -17363,6 +17962,10 @@
         "nodeSelector": {
           "$ref": "#/definitions/io.k8s.api.core.v1.NodeSelector",
           "description": "NodeSelector defines which nodes have access to the resources in the pool, when that pool is not limited to a single node.\n\nMust use exactly one term.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set."
+        },
+        "partitionTypeAttribute": {
+          "description": "PartitionTypeAttribute names a string device attribute (by fully qualified name, e.g. \"gpu.example.com/profile\") whose value labels each device with its partition type, such as \"Full\" or \"Half\" for a MIG-style GPU.\n\nWhen set, every partitionable device in the slice must carry the attribute and devices sharing a value must share the same ConsumesCounters cost.",
+          "type": "string"
         },
         "perDeviceNodeSelection": {
           "description": "PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.",
@@ -17544,6 +18147,36 @@
       },
       "type": "object"
     },
+    "io.k8s.api.resource.v1alpha3.PartitionTypeStatus": {
+      "description": "PartitionTypeStatus reports allocatability for a single partition type, identified by the value of a grouping attribute.",
+      "properties": {
+        "allocatable": {
+          "description": "Allocatable is the number of additional devices of this partition type that could still be allocated given current shared-counter consumption.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "attribute": {
+          "description": "Attribute is the fully qualified name of the device attribute whose value groups this entry. It is the PartitionTypeAttribute declared by the devices' own slice, or the default named in the request when their slice declares none.",
+          "type": "string"
+        },
+        "total": {
+          "description": "Total is the number of devices of this partition type in the pool.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "type": {
+          "description": "Type is the partition type value (e.g. \"Full\" or \"Half\").",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attribute",
+        "type",
+        "total",
+        "allocatable"
+      ],
+      "type": "object"
+    },
     "io.k8s.api.resource.v1alpha3.PoolStatus": {
       "description": "PoolStatus contains status information for a single resource pool.",
       "properties": {
@@ -17570,6 +18203,14 @@
           "description": "NodeName is the node this pool is associated with. When omitted, the pool is not associated with a specific node. Must be a valid DNS subdomain name (RFC1123).",
           "type": "string"
         },
+        "partitionSummary": {
+          "description": "PartitionSummary reports allocatability per (attribute, partition type) for a partitionable pool that publishes SharedCounters. Each entry names the grouping attribute it was resolved from: the PartitionTypeAttribute declared by a device's own slice, or for devices whose slice declares none, the default named in the request. A pool that mixes partitions declared under different attributes reports each independently. When no slice declares an attribute and the request names no default, the pool reports no partition summary.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha3.PartitionTypeStatus"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
         "poolName": {
           "description": "PoolName is the name of the pool. Must be a valid resource pool name (DNS subdomains separated by \"/\").",
           "type": "string"
@@ -17578,6 +18219,10 @@
           "description": "ResourceSliceCount is the number of ResourceSlices that make up this pool. May be unset when validationError is set.",
           "format": "int32",
           "type": "integer"
+        },
+        "shareableSummary": {
+          "$ref": "#/definitions/io.k8s.api.resource.v1alpha3.ShareableSummaryStatus",
+          "description": "ShareableSummary reports aggregate capacity for a pool that contains devices with AllowMultipleAllocations. It is populated only when at least one device in the pool is shareable."
         },
         "totalDevices": {
           "description": "TotalDevices is the total number of devices in the pool across all slices. A value of 0 means the pool has no devices. May be unset when validationError is set.",
@@ -17682,6 +18327,10 @@
     "io.k8s.api.resource.v1alpha3.ResourcePoolStatusRequestSpec": {
       "description": "ResourcePoolStatusRequestSpec defines the filters for the pool status request.",
       "properties": {
+        "defaultPartitionTypeAttribute": {
+          "description": "DefaultPartitionTypeAttribute optionally names a device attribute (by its fully qualified name, e.g. \"gpu.example.com/profile\") to use as the default grouping attribute for partitionable devices whose slice has not declared one themselves.\n\nA slice's own PartitionTypeAttribute always takes precedence. This default applies only to devices whose slice does not declare one, so that a request can still get an accurate partitionSummary from a driver that has not been updated to declare it. When neither the slice nor this default names an attribute, a partitionable pool reports no partitionSummary.\n\nMust include the domain qualifier.",
+          "type": "string"
+        },
         "driver": {
           "description": "Driver specifies the DRA driver name to filter pools. Only pools from ResourceSlices with this driver will be included. Must be a DNS subdomain (e.g., \"gpu.example.com\").",
           "type": "string"
@@ -17733,6 +18382,62 @@
       },
       "required": [
         "poolCount"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.resource.v1alpha3.ShareableCapacityStatus": {
+      "description": "ShareableCapacityStatus reports aggregate amounts for a single shareable capacity key.",
+      "properties": {
+        "available": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity",
+          "description": "Available is Total minus Consumed, never negative."
+        },
+        "consumed": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity",
+          "description": "Consumed is the amount drawn by current allocations."
+        },
+        "name": {
+          "description": "Name is the capacity name.",
+          "type": "string"
+        },
+        "total": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity",
+          "description": "Total is the sum of this capacity across shareable devices in the pool."
+        }
+      },
+      "required": [
+        "name",
+        "total",
+        "consumed",
+        "available"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.resource.v1alpha3.ShareableSummaryStatus": {
+      "description": "ShareableSummaryStatus reports aggregate capacity for a pool that contains devices with AllowMultipleAllocations.",
+      "properties": {
+        "capacity": {
+          "description": "Capacity reports aggregate total, consumed, and available amounts per shareable capacity key across the pool.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.resource.v1alpha3.ShareableCapacityStatus"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "fullyAvailableDevices": {
+          "description": "FullyAvailableDevices is the number of shareable devices with no capacity consumed.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "partiallyAvailableDevices": {
+          "description": "PartiallyAvailableDevices is the number of shareable devices with some but not all capacity consumed.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "fullyAvailableDevices",
+        "partiallyAvailableDevices"
       ],
       "type": "object"
     },
@@ -18846,7 +19551,7 @@
           "type": "integer"
         },
         "name": {
-          "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.",
+          "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required. A field selector can be used to list only ResourceSlice objects belonging to a certain pool.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.",
           "type": "string"
         },
         "resourceSliceCount": {
@@ -18961,6 +19666,10 @@
         "nodeSelector": {
           "$ref": "#/definitions/io.k8s.api.core.v1.NodeSelector",
           "description": "NodeSelector defines which nodes have access to the resources in the pool, when that pool is not limited to a single node.\n\nMust use exactly one term.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set."
+        },
+        "partitionTypeAttribute": {
+          "description": "PartitionTypeAttribute names a string device attribute (by fully qualified name, e.g. \"gpu.example.com/profile\") whose value labels each device with its partition type, such as \"Full\" or \"Half\" for a MIG-style GPU.\n\nWhen set, every partitionable device in the slice must carry the attribute and devices sharing a value must share the same ConsumesCounters cost.",
+          "type": "string"
         },
         "perDeviceNodeSelection": {
           "description": "PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.",
@@ -20229,7 +20938,7 @@
           "type": "integer"
         },
         "name": {
-          "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.",
+          "description": "Name is used to identify the pool. For node-local devices, this is often the node name, but this is not required. A field selector can be used to list only ResourceSlice objects belonging to a certain pool.\n\nIt must not be longer than 253 characters and must consist of one or more DNS sub-domains separated by slashes. This field is immutable.",
           "type": "string"
         },
         "resourceSliceCount": {
@@ -20345,6 +21054,10 @@
           "$ref": "#/definitions/io.k8s.api.core.v1.NodeSelector",
           "description": "NodeSelector defines which nodes have access to the resources in the pool, when that pool is not limited to a single node.\n\nMust use exactly one term.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set."
         },
+        "partitionTypeAttribute": {
+          "description": "PartitionTypeAttribute names a string device attribute (by fully qualified name, e.g. \"gpu.example.com/profile\") whose value labels each device with its partition type, such as \"Full\" or \"Half\" for a MIG-style GPU.\n\nWhen set, every partitionable device in the slice must carry the attribute and devices sharing a value must share the same ConsumesCounters cost.",
+          "type": "string"
+        },
         "perDeviceNodeSelection": {
           "description": "PerDeviceNodeSelection defines whether the access from nodes to resources in the pool is set on the ResourceSlice level or on each device. If it is set to true, every device defined the ResourceSlice must specify this individually.\n\nExactly one of NodeName, NodeSelector, AllNodes, and PerDeviceNodeSelection must be set.",
           "type": "boolean"
@@ -20451,6 +21164,10 @@
         }
       ]
     },
+    "io.k8s.api.scheduling.v1alpha3.AllCompositeDisruptionMode": {
+      "description": "AllCompositeDisruptionMode means that children of a CompositePodGroup can only be disrupted or preempted together.",
+      "type": "object"
+    },
     "io.k8s.api.scheduling.v1alpha3.AllDisruptionMode": {
       "description": "AllDisruptionMode specifies that children can only be disrupted together.",
       "type": "object"
@@ -20462,6 +21179,28 @@
     "io.k8s.api.scheduling.v1alpha3.CompositeBasicSchedulingPolicy": {
       "description": "CompositeBasicSchedulingPolicy indicates that the groups belonging to the composite group should be scheduled independently.",
       "type": "object"
+    },
+    "io.k8s.api.scheduling.v1alpha3.CompositeDisruptionMode": {
+      "description": "CompositeDisruptionMode defines how individual entities within a composite pod group can be disrupted. Exactly one mode must be set.",
+      "properties": {
+        "all": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.AllCompositeDisruptionMode",
+          "description": "all specifies that all children groups can only be disrupted together."
+        },
+        "single": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.SingleCompositeDisruptionMode",
+          "description": "single specifies that children groups can be disrupted independently from each other."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "all": "All",
+            "single": "Single"
+          }
+        }
+      ]
     },
     "io.k8s.api.scheduling.v1alpha3.CompositeGangSchedulingPolicy": {
       "description": "CompositeGangSchedulingPolicy indicates that the groups belonging to the composite group should be scheduled using all-or-nothing semantics.",
@@ -20593,8 +21332,16 @@
     "io.k8s.api.scheduling.v1alpha3.CompositePodGroupSpec": {
       "description": "CompositePodGroupSpec defines the desired state of CompositePodGroup.",
       "properties": {
+        "disruptionMode": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeDisruptionMode",
+          "description": "disruptionMode defines the mode in which a given CompositePodGroup can be disrupted. Controllers are expected to fill this field by copying it from a CompositePodGroupTemplate. One of Single, All. Defaults to Single if unset. This field is immutable."
+        },
         "parentCompositePodGroupName": {
           "description": "parentCompositePodGroupName contains the name of the parent composite pod group within the same namespace as this composite pod group. It must be a DNS name. If it's nil, then this composite pod group is a root of a workload's hierarchy. This field is immutable.",
+          "type": "string"
+        },
+        "preemptionPolicy": {
+          "description": "preemptionPolicy is the Policy for preempting pods/podgroups with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. When Priority Admission Controller is enabled, it populates this field from PriorityClassName, and defaults to PreemptLowerPriority if value is unset in PriorityClass. This field is immutable. This field is available only when the PodGroupPreemptionPolicy feature gate is enabled.",
           "type": "string"
         },
         "priority": {
@@ -20658,6 +21405,10 @@
           ],
           "x-kubernetes-list-type": "map"
         },
+        "disruptionMode": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeDisruptionMode",
+          "description": "disruptionMode defines the mode in which a given CompositePodGroup can be disrupted. One of Single, All. This field is immutable."
+        },
         "name": {
           "description": "name is a unique identifier for the CompositePodGroupTemplate within the Workload. It must be a DNS label. This field is required.",
           "type": "string"
@@ -20672,6 +21423,10 @@
             "name"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "preemptionPolicy": {
+          "description": "preemptionPolicy is the Policy for preempting pods/podgroups with lower priority. One of Never, PreemptLowerPriority. This field is immutable. This field is available only when the PodGroupPreemptionPolicy feature gate is enabled.",
+          "type": "string"
         },
         "priority": {
           "description": "priority is the value of priority of composite pod groups created from this template. Various system components use this field to find the priority of the composite pod group. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority. This field is immutable.",
@@ -21023,6 +21778,10 @@
       ],
       "type": "object"
     },
+    "io.k8s.api.scheduling.v1alpha3.SingleCompositeDisruptionMode": {
+      "description": "SingleCompositeDisruptionMode means that individual children of a CompositePodGroup can be disrupted or preempted independently.",
+      "type": "object"
+    },
     "io.k8s.api.scheduling.v1alpha3.SingleDisruptionMode": {
       "description": "SingleDisruptionMode specifies that children can be disrupted independently.",
       "type": "object"
@@ -21287,6 +22046,10 @@
       },
       "type": "object"
     },
+    "io.k8s.api.scheduling.v1beta1.AllCompositeDisruptionMode": {
+      "description": "AllCompositeDisruptionMode means that children of a CompositePodGroup can only be disrupted or preempted together.",
+      "type": "object"
+    },
     "io.k8s.api.scheduling.v1beta1.AllDisruptionMode": {
       "description": "AllDisruptionMode specifies that children can only be disrupted together.",
       "type": "object"
@@ -21298,6 +22061,28 @@
     "io.k8s.api.scheduling.v1beta1.CompositeBasicSchedulingPolicy": {
       "description": "CompositeBasicSchedulingPolicy indicates that the groups belonging to the composite group should be scheduled independently.",
       "type": "object"
+    },
+    "io.k8s.api.scheduling.v1beta1.CompositeDisruptionMode": {
+      "description": "CompositeDisruptionMode defines how individual entities within a composite pod group can be disrupted. Exactly one mode must be set.",
+      "properties": {
+        "all": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.AllCompositeDisruptionMode",
+          "description": "all specifies that all children groups can only be disrupted together."
+        },
+        "single": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.SingleCompositeDisruptionMode",
+          "description": "single specifies that children groups can be disrupted independently from each other."
+        }
+      },
+      "type": "object",
+      "x-kubernetes-unions": [
+        {
+          "fields-to-discriminateBy": {
+            "all": "All",
+            "single": "Single"
+          }
+        }
+      ]
     },
     "io.k8s.api.scheduling.v1beta1.CompositeGangSchedulingPolicy": {
       "description": "CompositeGangSchedulingPolicy indicates that the groups belonging to the composite group should be scheduled using all-or-nothing semantics.",
@@ -21363,6 +22148,10 @@
           ],
           "x-kubernetes-list-type": "map"
         },
+        "disruptionMode": {
+          "$ref": "#/definitions/io.k8s.api.scheduling.v1beta1.CompositeDisruptionMode",
+          "description": "disruptionMode defines the mode in which a given CompositePodGroup can be disrupted. One of Single, All. This field is immutable."
+        },
         "name": {
           "description": "name is a unique identifier for the CompositePodGroupTemplate within the Workload. It must be a DNS label. This field is required.",
           "type": "string"
@@ -21377,6 +22166,10 @@
             "name"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "preemptionPolicy": {
+          "description": "preemptionPolicy is the Policy for preempting pods/podgroups with lower priority. One of Never, PreemptLowerPriority. This field is immutable. This field is available only when the PodGroupPreemptionPolicy feature gate is enabled.",
+          "type": "string"
         },
         "priority": {
           "description": "priority is the value of priority of composite pod groups created from this template. Various system components use this field to find the priority of the composite pod group. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority. This field is immutable.",
@@ -21728,6 +22521,10 @@
       ],
       "type": "object"
     },
+    "io.k8s.api.scheduling.v1beta1.SingleCompositeDisruptionMode": {
+      "description": "SingleCompositeDisruptionMode means that individual children of a CompositePodGroup can be disrupted or preempted independently.",
+      "type": "object"
+    },
     "io.k8s.api.scheduling.v1beta1.SingleDisruptionMode": {
       "description": "SingleDisruptionMode specifies that children can be disrupted independently.",
       "type": "object"
@@ -22043,6 +22840,10 @@
         "spec": {
           "$ref": "#/definitions/io.k8s.api.storage.v1.CSINodeSpec",
           "description": "spec is the specification of CSINode"
+        },
+        "status": {
+          "$ref": "#/definitions/io.k8s.api.storage.v1.CSINodeStatus",
+          "description": "status contains health and status information for the node's storage."
         }
       },
       "required": [
@@ -22145,6 +22946,25 @@
       "required": [
         "drivers"
       ],
+      "type": "object"
+    },
+    "io.k8s.api.storage.v1.CSINodeStatus": {
+      "description": "CSINodeStatus contains health and status information for storage on a node.",
+      "properties": {
+        "storageHealth": {
+          "description": "storageHealth contains backend health reports for CSI drivers registered on the node.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.storage.v1.StorageHealth"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map",
+          "x-kubernetes-patch-merge-key": "name",
+          "x-kubernetes-patch-strategy": "merge"
+        }
+      },
       "type": "object"
     },
     "io.k8s.api.storage.v1.CSIStorageCapacity": {
@@ -22339,6 +23159,61 @@
           "version": "v1"
         }
       ]
+    },
+    "io.k8s.api.storage.v1.StorageHealth": {
+      "description": "StorageHealth contains storage backend health reported by a CSI driver on a node.",
+      "properties": {
+        "healthConditions": {
+          "description": "healthConditions are the adverse storage backend conditions reported by the CSI driver. At most 16 conditions may be reported.",
+          "items": {
+            "$ref": "#/definitions/io.k8s.api.storage.v1.StorageHealthCondition"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "name": {
+          "description": "name is the CSI driver name, matching CSINodeDriver.name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "io.k8s.api.storage.v1.StorageHealthCondition": {
+      "description": "StorageHealthCondition represents an adverse health condition reported by a CSI driver for its storage backend on a node.",
+      "properties": {
+        "accessMode": {
+          "description": "accessMode is the access mode affected. Nil means all access modes are affected.",
+          "type": "string"
+        },
+        "lastTransitionTime": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Time",
+          "description": "lastTransitionTime is when this condition first appeared at its current state."
+        },
+        "message": {
+          "description": "message is a human-readable description. Maximum permitted length of a message is 1024 characters.",
+          "type": "string"
+        },
+        "reason": {
+          "description": "reason is a brief CamelCase machine-parseable reason. Maximum permitted length of a reason is 256 characters.",
+          "type": "string"
+        },
+        "status": {
+          "description": "status is the health status category. One of \"StorageUnreachable\", \"StorageDegraded\".",
+          "type": "string"
+        },
+        "volumeMode": {
+          "description": "volumeMode is the volume mode affected. Nil means both are affected.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "type": "object"
     },
     "io.k8s.api.storage.v1.TokenRequest": {
       "description": "TokenRequest contains parameters of a service account token.",
@@ -24079,6 +24954,11 @@
           "version": "v1alpha1"
         },
         {
+          "group": "lifecycle.k8s.io",
+          "kind": "DeleteOptions",
+          "version": "v1alpha1"
+        },
+        {
           "group": "networking.k8s.io",
           "kind": "DeleteOptions",
           "version": "v1"
@@ -24862,6 +25742,11 @@
         },
         {
           "group": "internal.apiserver.k8s.io",
+          "kind": "WatchEvent",
+          "version": "v1alpha1"
+        },
+        {
+          "group": "lifecycle.k8s.io",
           "kind": "WatchEvent",
           "version": "v1alpha1"
         },

@@ -790,6 +790,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.EventSource"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.EvictionResponder"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.ExecAction"
     },
     {
@@ -1078,6 +1081,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PodTemplateSpec"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PodVolumeHealth"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.PortStatus"
     },
     {
@@ -1255,6 +1261,12 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.VolumeDevice"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.VolumeHealthCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.VolumeHealthStatus"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.core.v1.VolumeMount"
     },
     {
@@ -1382,6 +1394,51 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.flowcontrol.v1.UserSubject"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.Eviction"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionPodReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestPodReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionRequestTarget"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.EvictionTarget"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.Requester"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.ResponderStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.lifecycle.v1alpha1.TargetResponder"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.networking.v1.HTTPIngressPath"
@@ -1711,6 +1768,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.DeviceTaintSelector"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.PartitionTypeStatus"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.PoolStatus"
     },
     {
@@ -1724,6 +1784,12 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ResourcePoolStatusRequestStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ShareableCapacityStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1alpha3.ShareableSummaryStatus"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.resource.v1beta1.AllocatedDeviceStatus"
@@ -2005,6 +2071,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1.PriorityClassList"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.AllCompositeDisruptionMode"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.AllDisruptionMode"
     },
     {
@@ -2012,6 +2081,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeBasicSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeDisruptionMode"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.CompositeGangSchedulingPolicy"
@@ -2071,6 +2143,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.PodGroupTemplate"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.SingleCompositeDisruptionMode"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.SingleDisruptionMode"
     },
     {
@@ -2116,6 +2191,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1alpha3.WorkloadSpec"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.AllCompositeDisruptionMode"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.AllDisruptionMode"
     },
     {
@@ -2123,6 +2201,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositeBasicSchedulingPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositeDisruptionMode"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.CompositeGangSchedulingPolicy"
@@ -2170,6 +2251,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.PodGroupTemplate"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.SingleCompositeDisruptionMode"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.scheduling.v1beta1.SingleDisruptionMode"
     },
     {
@@ -2212,6 +2296,9 @@
       "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.CSINodeSpec"
     },
     {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.CSINodeStatus"
+    },
+    {
       "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.CSIStorageCapacity"
     },
     {
@@ -2222,6 +2309,12 @@
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.StorageClassList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.StorageHealth"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.StorageHealthCondition"
     },
     {
       "$ref": "_definitions.json#/definitions/io.k8s.api.storage.v1.TokenRequest"
