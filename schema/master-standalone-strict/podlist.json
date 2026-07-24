@@ -3400,6 +3400,20 @@
                       "items": {
                         "description": "VolumeMount describes a mounting of a Volume within a container.",
                         "properties": {
+                          "bindMountOptions": {
+                            "description": "bindMountOptions is the list of additional bind mount options to apply when mounting this volume into the container. Allowed values are noexec, nodev, and nosuid. These are Linux mount options and have no effect on Windows nodes. This field is not supported with image volumes. This is an alpha field and requires enabling the VolumeBindMountOptions feature gate.",
+                            "items": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "x-kubernetes-list-type": "set"
+                          },
                           "mountPath": {
                             "description": "Path within the container at which the volume should be mounted.",
                             "type": "string"
@@ -5555,6 +5569,20 @@
                       "items": {
                         "description": "VolumeMount describes a mounting of a Volume within a container.",
                         "properties": {
+                          "bindMountOptions": {
+                            "description": "bindMountOptions is the list of additional bind mount options to apply when mounting this volume into the container. Allowed values are noexec, nodev, and nosuid. These are Linux mount options and have no effect on Windows nodes. This field is not supported with image volumes. This is an alpha field and requires enabling the VolumeBindMountOptions feature gate.",
+                            "items": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "x-kubernetes-list-type": "set"
+                          },
                           "mountPath": {
                             "description": "Path within the container at which the volume should be mounted.",
                             "type": "string"
@@ -5765,7 +5793,7 @@
                 ]
               },
               "hostnameOverride": {
-                "description": "HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod. This field only specifies the pod's hostname and does not affect its DNS records. When this field is set to a non-empty string: - It takes precedence over the values set in `hostname` and `subdomain`. - The Pod's hostname will be set to this value. - `setHostnameAsFQDN` must be nil or set to false. - `hostNetwork` must be set to false.\n\nThis field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters. Requires the HostnameOverride feature gate to be enabled.",
+                "description": "HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod. This field only specifies the pod's hostname and does not affect its DNS records. When this field is set to a non-empty string: - It takes precedence over the values set in `hostname` and `subdomain`. - The Pod's hostname will be set to this value. - `setHostnameAsFQDN` must be nil or set to false. - `hostNetwork` must be set to false.\n\nThis field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters.",
                 "type": [
                   "string",
                   "null"
@@ -7776,6 +7804,20 @@
                       "items": {
                         "description": "VolumeMount describes a mounting of a Volume within a container.",
                         "properties": {
+                          "bindMountOptions": {
+                            "description": "bindMountOptions is the list of additional bind mount options to apply when mounting this volume into the container. Allowed values are noexec, nodev, and nosuid. These are Linux mount options and have no effect on Windows nodes. This field is not supported with image volumes. This is an alpha field and requires enabling the VolumeBindMountOptions feature gate.",
+                            "items": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "x-kubernetes-list-type": "set"
+                          },
                           "mountPath": {
                             "description": "Path within the container at which the volume should be mounted.",
                             "type": "string"
@@ -9207,6 +9249,14 @@
                           "description": "medium represents what type of storage medium should back this directory. The default is \"\" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir",
                           "type": [
                             "string",
+                            "null"
+                          ]
+                        },
+                        "mode": {
+                          "description": "mode specifies the permission bits for the emptyDir directory, in numeric notation (e.g., 0755, 01777). Must be a value between 0000 and 01777. If not specified, defaults to 0777. This might be in conflict with other options that affect the file mode, like fsGroup. If fsGroup is specified, the fsGroup permissions will override the mode specified here. This field has no effect on Windows. This field is alpha and requires EmptyDirVolumeMode featuregate to be enabled.",
+                          "format": "int32",
+                          "type": [
+                            "integer",
                             "null"
                           ]
                         },
@@ -13245,34 +13295,122 @@
                       ],
                       "x-kubernetes-list-type": "set"
                     },
+                    "mapping": {
+                      "description": "Mapping contains allocations through devices mapped in the device spec's `nodeAllocatableResources[...].mapping` field. This is used by kubelet for pod level and container-level cgroup enforcement.",
+                      "items": {
+                        "description": "NodeAllocatableMappedResources describes mapped node allocatable resource allocations.",
+                        "properties": {
+                          "name": {
+                            "description": "Name is the name of the resource (e.g., cpu, memory).",
+                            "type": "string"
+                          },
+                          "quantity": {
+                            "oneOf": [
+                              {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              {
+                                "type": [
+                                  "number",
+                                  "null"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "quantity"
+                        ],
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "x-kubernetes-list-map-keys": [
+                        "name"
+                      ],
+                      "x-kubernetes-list-type": "map",
+                      "x-kubernetes-patch-merge-key": "name",
+                      "x-kubernetes-patch-strategy": "merge"
+                    },
+                    "overhead": {
+                      "description": "Overhead contains allocations through devices mapped in the device spec's `nodeAllocatableResources[...].overhead` field. This is used by kubelet for pod level and container-level cgroup enforcement.",
+                      "items": {
+                        "description": "NodeAllocatableOverheadResources describes auxiliary overhead resource allocations.",
+                        "properties": {
+                          "name": {
+                            "description": "Name is the name of the resource (e.g., cpu, memory).",
+                            "type": "string"
+                          },
+                          "perContainer": {
+                            "oneOf": [
+                              {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              {
+                                "type": [
+                                  "number",
+                                  "null"
+                                ]
+                              }
+                            ]
+                          },
+                          "perPod": {
+                            "oneOf": [
+                              {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              {
+                                "type": [
+                                  "number",
+                                  "null"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ],
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "x-kubernetes-list-map-keys": [
+                        "name"
+                      ],
+                      "x-kubernetes-list-type": "map",
+                      "x-kubernetes-patch-merge-key": "name",
+                      "x-kubernetes-patch-strategy": "merge"
+                    },
                     "resourceClaimName": {
                       "description": "ResourceClaimName is the resource claim referenced by the pod that resulted in this node allocatable resource allocation.",
                       "type": "string"
-                    },
-                    "resources": {
-                      "additionalProperties": {
-                        "oneOf": [
-                          {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          {
-                            "type": [
-                              "number",
-                              "null"
-                            ]
-                          }
-                        ]
-                      },
-                      "description": "Resources is a map of the node-allocatable resource name to the aggregate quantity allocated to the claim.",
-                      "type": "object"
                     }
                   },
                   "required": [
-                    "resourceClaimName",
-                    "resources"
+                    "resourceClaimName"
                   ],
                   "type": [
                     "object",
@@ -13284,7 +13422,12 @@
                   "array",
                   "null"
                 ],
-                "x-kubernetes-list-type": "atomic"
+                "x-kubernetes-list-map-keys": [
+                  "resourceClaimName"
+                ],
+                "x-kubernetes-list-type": "map",
+                "x-kubernetes-patch-merge-key": "resourceClaimName",
+                "x-kubernetes-patch-strategy": "merge"
               },
               "nominatedNodeName": {
                 "description": "nominatedNodeName is set only when this pod preempts other pods on the node, but it cannot be scheduled right away as preemption victims receive their graceful termination periods. This field does not guarantee that the pod will be scheduled on this node. Scheduler may decide to place the pod elsewhere if other nodes become available sooner. Scheduler may also decide to give the resources on this node to a higher priority pod that is created after preemption. As a result, this field may be different than PodSpec.nodeName when the pod is scheduled.",
