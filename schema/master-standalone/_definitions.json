@@ -582,6 +582,9 @@
           "description": "selector can be used to match multiple param objects based on their labels. Supply selector: {} to match all resources of the ParamKind.\n\nIf multiple params are found, they are all evaluated with the policy expressions and the results are ANDed together.\n\nOne of `name` or `selector` must be set, but `name` and `selector` are mutually exclusive properties. If one is set, the other must be unset."
         }
       },
+      "required": [
+        "parameterNotFoundAction"
+      ],
       "type": "object",
       "x-kubernetes-map-type": "atomic"
     },
@@ -1945,6 +1948,9 @@
           "description": "selector can be used to match multiple param objects based on their labels. Supply selector: {} to match all resources of the ParamKind.\n\nIf multiple params are found, they are all evaluated with the policy expressions and the results are ANDed together.\n\nOne of `name` or `selector` must be set, but `name` and `selector` are mutually exclusive properties. If one is set, the other must be unset."
         }
       },
+      "required": [
+        "parameterNotFoundAction"
+      ],
       "type": "object",
       "x-kubernetes-map-type": "atomic"
     },
@@ -23062,9 +23068,6 @@
           "description": "spec represents the specification of the CSI Driver."
         }
       },
-      "required": [
-        "spec"
-      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -23198,9 +23201,6 @@
           "description": "status contains health and status information for the node's storage."
         }
       },
-      "required": [
-        "spec"
-      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -23295,9 +23295,6 @@
           "x-kubernetes-patch-strategy": "merge"
         }
       },
-      "required": [
-        "drivers"
-      ],
       "type": "object"
     },
     "io.k8s.api.storage.v1.CSINodeStatus": {
@@ -23580,9 +23577,6 @@
           "type": "integer"
         }
       },
-      "required": [
-        "audience"
-      ],
       "type": "object"
     },
     "io.k8s.api.storage.v1.VolumeAttachment": {
@@ -23722,9 +23716,6 @@
           "description": "detachError represents the last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher."
         }
       },
-      "required": [
-        "attached"
-      ],
       "type": "object"
     },
     "io.k8s.api.storage.v1.VolumeAttributesClass": {
@@ -23758,7 +23749,8 @@
         }
       },
       "required": [
-        "driverName"
+        "driverName",
+        "parameters"
       ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
@@ -23864,6 +23856,9 @@
           "description": "Status of the migration."
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
@@ -23974,6 +23969,9 @@
           "description": "Status of the migration."
         }
       },
+      "required": [
+        "spec"
+      ],
       "type": "object",
       "x-kubernetes-group-version-kind": [
         {
